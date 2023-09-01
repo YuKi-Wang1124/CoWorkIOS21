@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="184" id="KGk-i7-Jjw" customClass="ProductDescriptionTableViewCell" customModule="STYLiSH" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="342" height="184"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="342" height="183.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="500" horizontalCompressionResistancePriority="500" text="厚實毛呢格子外套" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1s-vw-gPi">
+                        <rect key="frame" x="16" y="24" width="144" height="26"/>
+                        <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="18"/>
+                        <color key="textColor" red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                                <real key="value" value="2.7000000000000002"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NT$2140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nI9-wZ-yeU">
+                        <rect key="frame" x="251" y="24" width="75" height="26"/>
+                        <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="18"/>
+                        <color key="textColor" red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                                <real key="value" value="2.7000000000000002"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="500" text="WS18479127" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hg7-DJ-QZK">
+                        <rect key="frame" x="16" y="54" width="326" height="20"/>
+                        <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="14"/>
+                        <color key="textColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                                <real key="value" value="2.1000000000000001"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="500" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CvJ-RP-jMV">
+                        <rect key="frame" x="16" y="98" width="310" height="73.5"/>
+                        <attributedString key="attributedText">
+                            <fragment content="採用高級100%棉質素材的外套。輕盈保暖高質感的針織大衣！精緻做工升級，展現高質感氛圍。">
+                                <attributes>
+                                    <color key="NSColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <font key="NSFont" size="15" name="PingFangTC-Regular"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                                <real key="value" value="2.25"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="hg7-DJ-QZK" firstAttribute="top" secondItem="j1s-vw-gPi" secondAttribute="bottom" constant="4" id="4IA-ZP-FqR"/>
+                    <constraint firstItem="hg7-DJ-QZK" firstAttribute="leading" secondItem="j1s-vw-gPi" secondAttribute="leading" id="74k-Fh-U77"/>
+                    <constraint firstAttribute="trailing" secondItem="nI9-wZ-yeU" secondAttribute="trailing" constant="16" id="B13-yc-0bH"/>
+                    <constraint firstItem="CvJ-RP-jMV" firstAttribute="top" secondItem="hg7-DJ-QZK" secondAttribute="bottom" constant="24" id="C0I-Tx-HzJ"/>
+                    <constraint firstAttribute="bottom" secondItem="CvJ-RP-jMV" secondAttribute="bottom" priority="750" constant="12" id="EXI-Fb-GZT"/>
+                    <constraint firstItem="nI9-wZ-yeU" firstAttribute="centerY" secondItem="j1s-vw-gPi" secondAttribute="centerY" id="GYp-ck-Vi9"/>
+                    <constraint firstItem="CvJ-RP-jMV" firstAttribute="leading" secondItem="hg7-DJ-QZK" secondAttribute="leading" id="KjK-dp-xkG"/>
+                    <constraint firstItem="j1s-vw-gPi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="YNo-29-tpI"/>
+                    <constraint firstItem="j1s-vw-gPi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="aqf-oX-VB5"/>
+                    <constraint firstItem="CvJ-RP-jMV" firstAttribute="trailing" secondItem="nI9-wZ-yeU" secondAttribute="trailing" id="aqj-90-bmC"/>
+                    <constraint firstItem="nI9-wZ-yeU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="j1s-vw-gPi" secondAttribute="trailing" constant="40" id="e83-hL-Fgd"/>
+                    <constraint firstAttribute="trailing" secondItem="hg7-DJ-QZK" secondAttribute="trailing" id="tGj-M3-IIv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="detailLbl" destination="CvJ-RP-jMV" id="TwB-mA-n3x"/>
+                <outlet property="idLbl" destination="hg7-DJ-QZK" id="Wg3-fT-UMm"/>
+                <outlet property="priceLbl" destination="nI9-wZ-yeU" id="sDX-gq-kZr"/>
+                <outlet property="titleLbl" destination="j1s-vw-gPi" id="WhG-dm-qMf"/>
+            </connections>
+            <point key="canvasLocation" x="57.600000000000001" y="169.11544227886057"/>
+        </tableViewCell>
+    </objects>
+</document>

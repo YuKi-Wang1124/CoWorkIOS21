@@ -1,0 +1,86 @@
+/* 
+  Localizable.strings
+  STYLiSH
+
+  Created by WU CHIH WEI on 2019/8/12.
+  Copyright © 2019 AppWorks School. All rights reserved.
+*/
+
+
+"女裝" = "Women";
+
+"男裝" = "Men";
+
+"配件" = "Accessories";
+
+"購物車目前沒有物品!" = "There is nothing in the trolley!";
+
+"前往結帳" = "Checkout";
+
+"請先登入會員" = "Please Login First.";
+
+"登入會員後即可完成結帳" = "Finish Purchase After Login";
+
+"Facebook 登入" = "Facebook Login";
+
+"加入購物車" = "Add to Trolley";
+
+"選擇顏色" = "Choose Color";
+
+"選擇尺寸" = "Choose Size";
+
+"選擇數量" = "Choose Amount";
+
+"庫存" = "Stock";
+
+"結帳商品" = "Checkout Products";
+
+"收件資訊" = "Reciever Info";
+
+"付款詳情" = "Payment Info";
+
+"配送時間" = "Deliever Time";
+
+"商品總金額" = "Total Product Amount";
+
+"運費總金額" = "Total Freight";
+
+"總計" = "Total Amount";
+
+"貨到付款" = "Cash on delivery";
+
+"信用卡付款" = "Credit Card Payment";
+
+"確定結帳" = "Checkout";
+
+"待付款" = "Wait for payment";
+
+"待出貨" = "Wait for shipping";
+
+"待簽收" = "Wait for signing";
+
+"待評價" = "Wait for reviewing";
+
+"退換貨" = "Wait for returning";
+
+"收藏" = "Collection";
+
+"貨到通知" = "Notification";
+
+"帳戶退款" = "Refund";
+
+"地址" = "Address";
+
+"客服訊息" = "Customer service";
+
+"系統回饋" = "System Feedback";
+
+"手機綁定" = "Bind Phone";
+
+"設定" = "Configuration";
+
+"我的訂單" = "My Orders";
+
+"更多服務" = "More Services";
+
+"查看全部" = "See All";

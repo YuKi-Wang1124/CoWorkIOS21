@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "NT$2140"; ObjectID = "0Lk-te-l3n"; */
+"0Lk-te-l3n.text" = "NT$2140";
+
+/* Class = "UILabel"; text = "厚實毛呢格子外套"; ObjectID = "7Q2-wQ-QTB"; */
+"7Q2-wQ-QTB.text" = "厚實毛呢格子外套";
+
+/* Class = "UIButton"; normalTitle = "男裝"; ObjectID = "ELV-1w-gpV"; */
+"ELV-1w-gpV.normalTitle" = "Men";
+
+/* Class = "UIButton"; normalTitle = "配件"; ObjectID = "Vep-Ll-LpG"; */
+"Vep-Ll-LpG.normalTitle" = "Accessories";
+
+/* Class = "UIButton"; normalTitle = "加入購物車"; ObjectID = "Vgc-kd-UhY"; */
+"Vgc-kd-UhY.normalTitle" = "Add to Trolley";
+
+/* Class = "UINavigationItem"; title = "型錄"; ObjectID = "dI3-PV-yB4"; */
+"dI3-PV-yB4.title" = "List";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "fMg-rv-MfI"; */
+"fMg-rv-MfI.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "女裝"; ObjectID = "mIU-pU-Sui"; */
+"mIU-pU-Sui.normalTitle" = "Women";

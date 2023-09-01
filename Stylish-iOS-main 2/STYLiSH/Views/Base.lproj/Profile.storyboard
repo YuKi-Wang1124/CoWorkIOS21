@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="q6d-iX-ijm">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--個人-->
+        <scene sceneID="806-ur-kqq">
+            <objects>
+                <viewController id="jmF-8q-0Gj" customClass="ProfileViewController" customModule="STYLiSH" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="g0V-be-ccK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rwc-aW-35L">
+                                <rect key="frame" x="0.0" y="136" width="375" height="531"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0kw-EQ-oIY">
+                                    <size key="itemSize" width="174" height="118"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProfileCollectionViewCell" id="JMV-YZ-TRF" customClass="ProfileCollectionViewCell" customModule="STYLiSH" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="174" height="118"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="174" height="118"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="待付款" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xt7-hW-Fc7">
+                                                    <rect key="frame" x="67.5" y="32" width="39" height="18.5"/>
+                                                    <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="13"/>
+                                                    <color key="textColor" name="B1"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jKb-IM-QKM">
+                                                    <rect key="frame" x="75" y="0.0" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="KZk-z4-fC7"/>
+                                                        <constraint firstAttribute="width" secondItem="jKb-IM-QKM" secondAttribute="height" multiplier="1:1" id="k6t-n7-1Na"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="Xt7-hW-Fc7" firstAttribute="centerX" secondItem="JMV-YZ-TRF" secondAttribute="centerX" id="RsW-tk-PWU"/>
+                                            <constraint firstItem="jKb-IM-QKM" firstAttribute="centerX" secondItem="JMV-YZ-TRF" secondAttribute="centerX" id="aFv-RI-uCf"/>
+                                            <constraint firstItem="Xt7-hW-Fc7" firstAttribute="top" secondItem="jKb-IM-QKM" secondAttribute="bottom" constant="8" id="qUf-tv-bIz"/>
+                                            <constraint firstItem="jKb-IM-QKM" firstAttribute="top" secondItem="JMV-YZ-TRF" secondAttribute="top" id="uM3-7t-EsT"/>
+                                        </constraints>
+                                        <size key="customSize" width="174" height="118"/>
+                                        <connections>
+                                            <outlet property="imgView" destination="jKb-IM-QKM" id="AAV-Ef-pxL"/>
+                                            <outlet property="textLbl" destination="Xt7-hW-Fc7" id="jwb-9Z-Ks2"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProfileCollectionReusableView" id="9ip-aI-UfW" customClass="ProfileCollectionReusableView" customModule="STYLiSH" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的訂單" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFV-b8-qZG">
+                                            <rect key="frame" x="16" y="24" width="64" height="22.5"/>
+                                            <fontDescription key="fontDescription" name="PingFangTC-Medium" family="PingFang TC" pointSize="16"/>
+                                            <color key="textColor" name="B1"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kle-jd-isM">
+                                            <rect key="frame" x="294" y="20" width="65" height="31"/>
+                                            <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="13"/>
+                                            <state key="normal" title="查看全部 &gt;">
+                                                <color key="titleColor" name="B2"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="kle-jd-isM" firstAttribute="centerY" secondItem="IFV-b8-qZG" secondAttribute="centerY" id="VXP-ED-YFV"/>
+                                        <constraint firstAttribute="trailing" secondItem="kle-jd-isM" secondAttribute="trailing" constant="16" id="deC-lz-ck5"/>
+                                        <constraint firstItem="IFV-b8-qZG" firstAttribute="top" secondItem="9ip-aI-UfW" secondAttribute="top" constant="24" id="gM8-kG-Heu"/>
+                                        <constraint firstItem="IFV-b8-qZG" firstAttribute="leading" secondItem="9ip-aI-UfW" secondAttribute="leading" constant="16" id="ipw-Lr-von"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="actionBtn" destination="kle-jd-isM" id="aj6-if-8cR"/>
+                                        <outlet property="titleLbl" destination="IFV-b8-qZG" id="OSt-Aq-WyQ"/>
+                                    </connections>
+                                </collectionReusableView>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fb-Kk-nRw">
+                                <rect key="frame" x="0.0" y="44" width="375" height="92"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icons_36px_Profile_Normal" translatesAutoresizingMaskIntoConstraints="NO" id="n54-dD-RdY">
+                                        <rect key="frame" x="16" y="16" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="n54-dD-RdY" secondAttribute="height" id="JdT-QH-3ew"/>
+                                            <constraint firstAttribute="width" constant="60" id="o3B-rx-WAr"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="30"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OiT-gC-UmJ">
+                                        <rect key="frame" x="92" y="33.5" width="199" height="25.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNj-wu-sFn">
+                                                <rect key="frame" x="0.0" y="0.0" width="199" height="25.5"/>
+                                                <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="18"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you wanna build a snowman?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfu-2b-3uF">
+                                                <rect key="frame" x="0.0" y="0.0" width="199" height="0.0"/>
+                                                <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="13"/>
+                                                <color key="textColor" name="B2"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="B1"/>
+                                <constraints>
+                                    <constraint firstItem="OiT-gC-UmJ" firstAttribute="leading" secondItem="n54-dD-RdY" secondAttribute="trailing" constant="16" id="CNq-ds-3K7"/>
+                                    <constraint firstItem="n54-dD-RdY" firstAttribute="top" secondItem="4fb-Kk-nRw" secondAttribute="top" constant="16" id="UHr-hN-xFT"/>
+                                    <constraint firstItem="OiT-gC-UmJ" firstAttribute="centerY" secondItem="4fb-Kk-nRw" secondAttribute="centerY" id="e8R-jd-dBr"/>
+                                    <constraint firstItem="n54-dD-RdY" firstAttribute="leading" secondItem="4fb-Kk-nRw" secondAttribute="leading" constant="16" id="vIS-ed-SBc"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="bBO-el-9xj"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bBO-el-9xj" firstAttribute="trailing" secondItem="4fb-Kk-nRw" secondAttribute="trailing" id="BrL-6Y-e1T"/>
+                            <constraint firstItem="bBO-el-9xj" firstAttribute="bottom" secondItem="Rwc-aW-35L" secondAttribute="bottom" id="CH6-pJ-70C"/>
+                            <constraint firstItem="4fb-Kk-nRw" firstAttribute="top" secondItem="bBO-el-9xj" secondAttribute="top" id="HXA-H6-joT"/>
+                            <constraint firstItem="bBO-el-9xj" firstAttribute="trailing" secondItem="Rwc-aW-35L" secondAttribute="trailing" id="POJ-PF-LCT"/>
+                            <constraint firstItem="Rwc-aW-35L" firstAttribute="top" secondItem="bBO-el-9xj" secondAttribute="top" constant="92" id="bOK-Kq-gnK"/>
+                            <constraint firstItem="Rwc-aW-35L" firstAttribute="leading" secondItem="bBO-el-9xj" secondAttribute="leading" id="e6L-KA-8BO"/>
+                            <constraint firstItem="Rwc-aW-35L" firstAttribute="top" secondItem="4fb-Kk-nRw" secondAttribute="bottom" id="eQx-TX-ayb"/>
+                            <constraint firstItem="4fb-Kk-nRw" firstAttribute="leading" secondItem="bBO-el-9xj" secondAttribute="leading" id="yz3-kc-Bj4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="個人" id="x05-vx-TQW"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Rwc-aW-35L" id="zPF-Nk-tPD"/>
+                        <outlet property="imageProfile" destination="n54-dD-RdY" id="9Ad-tH-pFQ"/>
+                        <outlet property="labelInfo" destination="lfu-2b-3uF" id="PVp-Wg-s50"/>
+                        <outlet property="labelName" destination="yNj-wu-sFn" id="Aje-d3-pVE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zgO-tk-LoJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="964" y="144.3778110944528"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="HWM-t4-4rC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q6d-iX-ijm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ub3-vw-yyR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="jmF-8q-0Gj" kind="relationship" relationship="rootViewController" id="TtI-6t-8La"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3qZ-Mb-OlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="24.800000000000001" y="144.3778110944528"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Icons_36px_Profile_Normal" width="36" height="36"/>
+        <namedColor name="B1">
+            <color red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="B2">
+            <color red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

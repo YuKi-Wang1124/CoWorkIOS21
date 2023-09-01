@@ -1,0 +1,61 @@
+PODS:
+  - FBAEMKit (16.1.0):
+    - FBSDKCoreKit_Basics (= 16.1.0)
+  - FBSDKCoreKit (16.1.0):
+    - FBAEMKit (= 16.1.0)
+    - FBSDKCoreKit_Basics (= 16.1.0)
+  - FBSDKCoreKit_Basics (16.1.0)
+  - FBSDKLoginKit (16.1.0):
+    - FBSDKCoreKit (= 16.1.0)
+  - IQKeyboardManagerSwift (6.5.11)
+  - JGProgressHUD (2.2)
+  - KeychainAccess (4.2.2)
+  - Kingfisher (7.6.2)
+  - MJRefresh (3.7.5)
+  - SwiftLint (0.52.2)
+
+DEPENDENCIES:
+  - FBSDKLoginKit
+  - IQKeyboardManagerSwift
+  - JGProgressHUD (from `https://github.com/ronanociosoig/JGProgressHUD`)
+  - KeychainAccess
+  - Kingfisher (~> 7.6.0)
+  - MJRefresh
+  - SwiftLint
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
+    - IQKeyboardManagerSwift
+    - KeychainAccess
+    - Kingfisher
+    - MJRefresh
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  JGProgressHUD:
+    :git: https://github.com/ronanociosoig/JGProgressHUD
+
+CHECKOUT OPTIONS:
+  JGProgressHUD:
+    :commit: 9b720f2501846903b092d0f8d6eb2f681ca7c82f
+    :git: https://github.com/ronanociosoig/JGProgressHUD
+
+SPEC CHECKSUMS:
+  FBAEMKit: c7efe06720a8b15b1d25b68921ba46dee20996e0
+  FBSDKCoreKit: ca77d40d46786157b7b31ad3516f5ad9c2315339
+  FBSDKCoreKit_Basics: d39c3361379def7297bf76738cdd4fd2e0eb1a68
+  FBSDKLoginKit: 8fa1a0e3be1c9e8ae6df522844235a05cb03d835
+  IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
+  JGProgressHUD: 29a7fe0e5143a4798d8cd6b9630bb5d443a85458
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
+  SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
+
+PODFILE CHECKSUM: 5e26878e7b4884fbdfba84b92eeb2027c14f5e53
+
+COCOAPODS: 1.12.0

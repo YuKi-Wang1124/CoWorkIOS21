@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="LSColor" representedClassName="LSColor" syncable="YES" codeGenerationType="class">
+        <attribute name="code" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="order" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LSOrder" inverseName="selectedColor" inverseEntity="LSOrder"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LSProduct" inverseName="colors" inverseEntity="LSProduct"/>
+    </entity>
+    <entity name="LSOrder" representedClassName="LSOrder" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createTime" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="seletedSize" optional="YES" attributeType="String"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LSProduct" inverseName="order" inverseEntity="LSProduct"/>
+        <relationship name="selectedColor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LSColor" inverseName="order" inverseEntity="LSColor"/>
+    </entity>
+    <entity name="LSProduct" representedClassName="LSProduct" syncable="YES" codeGenerationType="class">
+        <attribute name="detail" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="images" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="mainImage" attributeType="String"/>
+        <attribute name="note" attributeType="String"/>
+        <attribute name="place" attributeType="String"/>
+        <attribute name="price" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sizes" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="story" attributeType="String"/>
+        <attribute name="texture" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="wash" attributeType="String"/>
+        <relationship name="colors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LSColor" inverseName="product" inverseEntity="LSColor"/>
+        <relationship name="order" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LSOrder" inverseName="product" inverseEntity="LSOrder"/>
+        <relationship name="variants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LSVariant" inverseName="product" inverseEntity="LSVariant"/>
+    </entity>
+    <entity name="LSVariant" representedClassName="LSVariant" syncable="YES" codeGenerationType="class">
+        <attribute name="colorCode" attributeType="String"/>
+        <attribute name="size" attributeType="String"/>
+        <attribute name="stocks" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LSProduct" inverseName="variants" inverseEntity="LSProduct"/>
+    </entity>
+    <elements>
+        <element name="LSColor" positionX="-36" positionY="72" width="128" height="89"/>
+        <element name="LSOrder" positionX="-54" positionY="-9" width="128" height="104"/>
+        <element name="LSProduct" positionX="-63" positionY="-18" width="128" height="268"/>
+        <element name="LSVariant" positionX="-18" positionY="99" width="128" height="105"/>
+    </elements>
+</model>

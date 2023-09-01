@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZYD-N5-aSi">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Auth View Controller-->
+        <scene sceneID="MYP-py-3HF">
+            <objects>
+                <viewController id="ZYD-N5-aSi" customClass="AuthViewController" customModule="STYLiSH" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s4b-th-ekT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9o-Yz-YW5">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YKh-PK-dkx">
+                                <rect key="frame" x="0.0" y="457.5" width="375" height="209.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請先登入會員" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYN-rZ-Xq9">
+                                        <rect key="frame" x="16" y="24" width="108" height="26.5"/>
+                                        <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="18"/>
+                                        <color key="textColor" name="B1"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhL-D6-TGl">
+                                        <rect key="frame" x="335" y="16" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="TN4-Eh-Gc8"/>
+                                            <constraint firstAttribute="width" constant="24" id="eMQ-B0-7bX"/>
+                                        </constraints>
+                                        <state key="normal" image="Icons_24px_Close"/>
+                                        <connections>
+                                            <action selector="dismissView:" destination="ZYD-N5-aSi" eventType="touchUpInside" id="a5S-Pb-rS8"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="登入會員後即可完成結帳。" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaM-LH-iKw">
+                                        <rect key="frame" x="16" y="74.5" width="343" height="22"/>
+                                        <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="15"/>
+                                        <color key="textColor" name="B1"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D6W-U8-6MM">
+                                        <rect key="frame" x="16" y="120.5" width="343" height="1"/>
+                                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="5ey-Kg-ogr"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L51-58-3lp">
+                                        <rect key="frame" x="16" y="137.5" width="343" height="48"/>
+                                        <color key="backgroundColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="eqH-cE-dF4"/>
+                                        </constraints>
+                                        <state key="normal" title="Facebook 登入">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onFacebookLogin" destination="ZYD-N5-aSi" eventType="touchUpInside" id="grV-3o-TNx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="L51-58-3lp" secondAttribute="bottom" constant="16" id="Ell-R7-lUY"/>
+                                    <constraint firstAttribute="trailing" secondItem="L51-58-3lp" secondAttribute="trailing" constant="16" id="FJp-zr-9Cy"/>
+                                    <constraint firstItem="D6W-U8-6MM" firstAttribute="leading" secondItem="YKh-PK-dkx" secondAttribute="leading" constant="16" id="Kec-50-eA9"/>
+                                    <constraint firstAttribute="trailing" secondItem="D6W-U8-6MM" secondAttribute="trailing" constant="16" id="Njj-P9-5Z9"/>
+                                    <constraint firstItem="KYN-rZ-Xq9" firstAttribute="leading" secondItem="YKh-PK-dkx" secondAttribute="leading" constant="16" id="Poh-jr-wYa"/>
+                                    <constraint firstItem="D6W-U8-6MM" firstAttribute="top" secondItem="UaM-LH-iKw" secondAttribute="bottom" constant="24" id="PsG-Gv-je6"/>
+                                    <constraint firstItem="L51-58-3lp" firstAttribute="top" secondItem="D6W-U8-6MM" secondAttribute="bottom" constant="16" id="Qtd-Bi-3aj"/>
+                                    <constraint firstItem="L51-58-3lp" firstAttribute="leading" secondItem="YKh-PK-dkx" secondAttribute="leading" constant="16" id="RRG-7R-G14"/>
+                                    <constraint firstAttribute="trailing" secondItem="QhL-D6-TGl" secondAttribute="trailing" constant="16" id="Rrz-4J-8sB"/>
+                                    <constraint firstItem="QhL-D6-TGl" firstAttribute="top" secondItem="YKh-PK-dkx" secondAttribute="top" constant="16" id="S8D-QG-IZ2"/>
+                                    <constraint firstItem="UaM-LH-iKw" firstAttribute="top" secondItem="KYN-rZ-Xq9" secondAttribute="bottom" constant="24" id="XNT-Fk-Gcm"/>
+                                    <constraint firstItem="KYN-rZ-Xq9" firstAttribute="top" secondItem="YKh-PK-dkx" secondAttribute="top" constant="24" id="cB0-Gd-RRl"/>
+                                    <constraint firstAttribute="trailing" secondItem="UaM-LH-iKw" secondAttribute="trailing" constant="16" id="reg-b3-8vz"/>
+                                    <constraint firstItem="UaM-LH-iKw" firstAttribute="leading" secondItem="YKh-PK-dkx" secondAttribute="leading" constant="16" id="xEk-WS-Up1"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="lkCornerRadius">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YKh-PK-dkx" firstAttribute="trailing" secondItem="udH-fd-2Vy" secondAttribute="trailing" id="Ewe-mU-IsD"/>
+                            <constraint firstItem="e9o-Yz-YW5" firstAttribute="bottom" secondItem="s4b-th-ekT" secondAttribute="bottom" id="GaB-JS-5TJ"/>
+                            <constraint firstItem="e9o-Yz-YW5" firstAttribute="leading" secondItem="udH-fd-2Vy" secondAttribute="leading" id="RA5-sG-3fQ"/>
+                            <constraint firstItem="YKh-PK-dkx" firstAttribute="leading" secondItem="udH-fd-2Vy" secondAttribute="leading" id="aJn-Rp-zwr"/>
+                            <constraint firstItem="udH-fd-2Vy" firstAttribute="trailing" secondItem="e9o-Yz-YW5" secondAttribute="trailing" id="eci-3c-dfc"/>
+                            <constraint firstItem="e9o-Yz-YW5" firstAttribute="top" secondItem="s4b-th-ekT" secondAttribute="top" id="vGN-KP-wb2"/>
+                            <constraint firstItem="YKh-PK-dkx" firstAttribute="bottom" secondItem="s4b-th-ekT" secondAttribute="bottom" id="wzL-s5-shp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="udH-fd-2Vy"/>
+                    </view>
+                    <connections>
+                        <outlet property="contentView" destination="YKh-PK-dkx" id="iqH-Ab-zkx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ns5-wt-cWl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="27.436281859070466"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Icons_24px_Close" width="24" height="24"/>
+        <namedColor name="B1">
+            <color red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

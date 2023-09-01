@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrolleyProductBaseView" customModule="STYLiSH" customModuleProvider="target">
+            <connections>
+                <outlet property="colorView" destination="7he-KB-nAJ" id="qii-1j-hhA"/>
+                <outlet property="contentView" destination="CJV-Lv-wJY" id="dy8-fv-LLE"/>
+                <outlet property="priceLbl" destination="ial-IO-e2A" id="4I8-6D-hfG"/>
+                <outlet property="removeBtn" destination="ZmM-h2-OeO" id="LYt-QJ-WjI"/>
+                <outlet property="sizeLbl" destination="RTd-gl-twP" id="4TA-Yu-xQQ"/>
+                <outlet property="titleLbl" destination="WnF-XX-hkl" id="1X9-k7-txq"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="CJV-Lv-wJY">
+            <rect key="frame" x="0.0" y="0.0" width="267" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="厚實毛呢格子外套厚實毛呢格子外套厚實毛呢格子外套厚實毛呢格子外套厚實毛呢格子外套" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnF-XX-hkl">
+                    <rect key="frame" x="0.0" y="0.0" width="171" height="22"/>
+                    <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="15"/>
+                    <color key="textColor" red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZmM-h2-OeO">
+                    <rect key="frame" x="221" y="-6" width="30" height="34"/>
+                    <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="15"/>
+                    <state key="normal" title="移除">
+                        <color key="titleColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="didTouchRemoveButton:" destination="-1" eventType="touchUpInside" id="540-2c-u50"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7he-KB-nAJ">
+                    <rect key="frame" x="0.0" y="30" width="22" height="22"/>
+                    <color key="backgroundColor" red="0.3529411764705882" green="0.39215686274509803" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="EUp-4S-v8z"/>
+                        <constraint firstAttribute="width" constant="22" id="vO7-wM-oDA"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T84-cx-tCs">
+                    <rect key="frame" x="38" y="34" width="1" height="14"/>
+                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="14" id="FiD-PY-7Io"/>
+                        <constraint firstAttribute="width" constant="1" id="TQ9-dS-R8T"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTd-gl-twP">
+                    <rect key="frame" x="55" y="30.5" width="13.5" height="21"/>
+                    <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="15"/>
+                    <color key="textColor" red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="NT$2140NT$2140NT$2140NT$2140NT$2140NT$2140NT$2140NT$2140NT$2140NT$2140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ial-IO-e2A">
+                    <rect key="frame" x="118.5" y="30" width="132.5" height="22"/>
+                    <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="15"/>
+                    <color key="textColor" red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                            <real key="value" value="2.25"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="7he-KB-nAJ" firstAttribute="leading" secondItem="WnF-XX-hkl" secondAttribute="leading" id="6ZF-IV-Hf8"/>
+                <constraint firstItem="RTd-gl-twP" firstAttribute="leading" secondItem="T84-cx-tCs" secondAttribute="trailing" constant="16" id="CdM-Eo-qtx"/>
+                <constraint firstItem="RTd-gl-twP" firstAttribute="centerY" secondItem="7he-KB-nAJ" secondAttribute="centerY" id="O2g-l2-Vkt"/>
+                <constraint firstItem="61q-ED-Zxm" firstAttribute="trailing" secondItem="ial-IO-e2A" secondAttribute="trailing" constant="16" id="SBF-IB-ao8"/>
+                <constraint firstItem="ZmM-h2-OeO" firstAttribute="centerY" secondItem="WnF-XX-hkl" secondAttribute="centerY" id="c3n-57-FAJ"/>
+                <constraint firstItem="WnF-XX-hkl" firstAttribute="top" secondItem="61q-ED-Zxm" secondAttribute="top" id="ceY-9d-rcF"/>
+                <constraint firstItem="ial-IO-e2A" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RTd-gl-twP" secondAttribute="trailing" constant="50" id="dix-ic-FTg"/>
+                <constraint firstItem="7he-KB-nAJ" firstAttribute="top" secondItem="WnF-XX-hkl" secondAttribute="bottom" constant="8" id="f08-d2-G2v"/>
+                <constraint firstItem="ial-IO-e2A" firstAttribute="centerY" secondItem="7he-KB-nAJ" secondAttribute="centerY" id="fkW-BE-YTD"/>
+                <constraint firstItem="ZmM-h2-OeO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WnF-XX-hkl" secondAttribute="trailing" constant="50" id="gBr-IU-Ry6"/>
+                <constraint firstItem="WnF-XX-hkl" firstAttribute="leading" secondItem="61q-ED-Zxm" secondAttribute="leading" id="gY4-7k-pYY"/>
+                <constraint firstItem="61q-ED-Zxm" firstAttribute="trailing" secondItem="ZmM-h2-OeO" secondAttribute="trailing" constant="16" id="jh3-Nf-EZ6"/>
+                <constraint firstItem="T84-cx-tCs" firstAttribute="leading" secondItem="7he-KB-nAJ" secondAttribute="trailing" constant="16" id="nMx-un-GSK"/>
+                <constraint firstItem="T84-cx-tCs" firstAttribute="centerY" secondItem="7he-KB-nAJ" secondAttribute="centerY" id="zB5-ho-aWu"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="61q-ED-Zxm"/>
+            <point key="canvasLocation" x="130.40000000000001" y="-481.70914542728639"/>
+        </view>
+    </objects>
+</document>

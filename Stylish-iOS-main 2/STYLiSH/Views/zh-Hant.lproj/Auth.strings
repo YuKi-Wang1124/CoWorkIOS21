@@ -1,0 +1,9 @@
+
+/* Class = "UILabel"; text = "請先登入會員"; ObjectID = "KYN-rZ-Xq9"; */
+"KYN-rZ-Xq9.text" = "請先登入會員";
+
+/* Class = "UIButton"; normalTitle = "Facebook 登入"; ObjectID = "L51-58-3lp"; */
+"L51-58-3lp.normalTitle" = "Facebook 登入";
+
+/* Class = "UILabel"; text = "登入會員後即可完成結帳。"; ObjectID = "UaM-LH-iKw"; */
+"UaM-LH-iKw.text" = "登入會員後即可完成結帳。";

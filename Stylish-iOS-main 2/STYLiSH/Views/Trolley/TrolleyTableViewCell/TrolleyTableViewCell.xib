@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="165" id="Eyy-2h-FXm" customClass="TrolleyTableViewCell" customModule="STYLiSH" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="165"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Eyy-2h-FXm" id="CX4-WJ-Alm">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="164.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mTP-ko-0aM">
+                        <rect key="frame" x="16" y="24" width="82" height="110"/>
+                        <color key="backgroundColor" red="0.0" green="0.75294117650000003" blue="0.78823529410000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="mTP-ko-0aM" secondAttribute="height" multiplier="82/110" id="VlW-Q7-uMi"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fuO-bJ-jcQ" customClass="TrolleyProductBaseView" customModule="STYLiSH" customModuleProvider="target">
+                        <rect key="frame" x="122" y="24" width="237" height="52"/>
+                        <color key="backgroundColor" name="B2"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="52" id="HAz-uJ-4Sb"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XPI-rD-T3S" customClass="TrolleySelectionView" customModule="STYLiSH" customModuleProvider="target">
+                        <rect key="frame" x="122" y="84" width="150" height="32"/>
+                        <color key="backgroundColor" name="B4"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="WGZ-I7-qUa"/>
+                            <constraint firstAttribute="width" constant="150" id="dTl-6p-7iv"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="XPI-rD-T3S" firstAttribute="leading" secondItem="fuO-bJ-jcQ" secondAttribute="leading" id="BEs-wB-hQA"/>
+                    <constraint firstItem="mTP-ko-0aM" firstAttribute="leading" secondItem="CX4-WJ-Alm" secondAttribute="leading" constant="16" id="CvL-eQ-jJU"/>
+                    <constraint firstItem="mTP-ko-0aM" firstAttribute="width" secondItem="CX4-WJ-Alm" secondAttribute="width" multiplier="82/375" id="OKm-Am-ZbZ"/>
+                    <constraint firstItem="mTP-ko-0aM" firstAttribute="top" secondItem="CX4-WJ-Alm" secondAttribute="top" constant="24" id="PYS-ii-gDj"/>
+                    <constraint firstItem="fuO-bJ-jcQ" firstAttribute="leading" secondItem="mTP-ko-0aM" secondAttribute="trailing" constant="24" id="SAb-lB-Ge9"/>
+                    <constraint firstItem="XPI-rD-T3S" firstAttribute="top" secondItem="fuO-bJ-jcQ" secondAttribute="bottom" constant="8" id="W5V-gR-4fR"/>
+                    <constraint firstItem="fuO-bJ-jcQ" firstAttribute="top" secondItem="mTP-ko-0aM" secondAttribute="top" id="jOf-cf-F5Q"/>
+                    <constraint firstAttribute="bottom" secondItem="mTP-ko-0aM" secondAttribute="bottom" priority="750" id="lBQ-BV-L0t"/>
+                    <constraint firstAttribute="trailing" secondItem="fuO-bJ-jcQ" secondAttribute="trailing" constant="16" id="u4y-pw-pZ6"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="productImg" destination="mTP-ko-0aM" id="hoq-q7-K6p"/>
+                <outlet property="trolleyBaseView" destination="fuO-bJ-jcQ" id="uDS-fw-VEE"/>
+                <outlet property="trolleySelectionView" destination="XPI-rD-T3S" id="l9Q-cb-ffa"/>
+            </connections>
+            <point key="canvasLocation" x="-1074.4000000000001" y="-1980.3598200899551"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="B2">
+            <color red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="B4">
+            <color red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

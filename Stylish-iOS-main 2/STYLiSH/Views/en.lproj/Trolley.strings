@@ -1,0 +1,30 @@
+
+/* Class = "UILabel"; text = "結帳成功"; ObjectID = "5Od-VM-TUn"; */
+"5Od-VM-TUn.text" = "Purchase success";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "BWy-ky-L6o"; */
+"BWy-ky-L6o.title" = " ";
+
+/* Class = "UILabel"; text = "我們收到您的訂單了！將以最快的速度為您安排出貨。"; ObjectID = "HtF-Pw-8JW"; */
+"HtF-Pw-8JW.text" = "We recieve your orders! We will send your products to you as soon as possible!";
+
+/* Class = "UIButton"; normalTitle = "前往結帳"; ObjectID = "KjU-we-SkD"; */
+"KjU-we-SkD.normalTitle" = "Checkout";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "LYH-BL-1YW"; */
+"LYH-BL-1YW.title" = " ";
+
+/* Class = "UINavigationItem"; title = "結帳結果"; ObjectID = "XB5-vQ-K5N"; */
+"XB5-vQ-K5N.title" = "Checkout Result";
+
+/* Class = "UILabel"; text = "購物車目前沒有物品！"; ObjectID = "bP4-Sc-qZ7"; */
+"bP4-Sc-qZ7.text" = "There is nothing in the Trolley！";
+
+/* Class = "UINavigationItem"; title = "結帳"; ObjectID = "fvt-K1-lAR"; */
+"fvt-K1-lAR.title" = "Checkcout";
+
+/* Class = "UINavigationItem"; title = "購物車"; ObjectID = "iCo-m7-9cw"; */
+"iCo-m7-9cw.title" = "Trolley";
+
+/* Class = "UIButton"; normalTitle = "再 去 逛 逛"; ObjectID = "iOf-S9-APR"; */
+"iOf-S9-APR.normalTitle" = "Go Shopping Again";

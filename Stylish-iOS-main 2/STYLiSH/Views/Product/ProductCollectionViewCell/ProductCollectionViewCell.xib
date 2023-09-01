@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="iHP-d2-s9B" customClass="ProductCollectionViewCell" customModule="STYLiSH" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="158" height="286"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="158" height="286"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4k9-1u-bcx">
+                        <rect key="frame" x="0.0" y="0.0" width="158" height="212"/>
+                        <color key="backgroundColor" red="0.1960784314" green="0.28627450980000002" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="4k9-1u-bcx" secondAttribute="height" multiplier="164/220" id="aeg-ES-ltn"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="厚實毛呢格子外套" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQM-d6-GZo">
+                        <rect key="frame" x="0.0" y="224" width="158" height="21"/>
+                        <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="15"/>
+                        <color key="textColor" red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NT$2140" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tvh-x4-ytZ">
+                        <rect key="frame" x="0.0" y="253" width="158" height="21"/>
+                        <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="15"/>
+                        <color key="textColor" red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="xhS-QO-FWw"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="4k9-1u-bcx" firstAttribute="top" secondItem="iHP-d2-s9B" secondAttribute="top" id="67r-0w-O6s"/>
+                <constraint firstItem="yQM-d6-GZo" firstAttribute="top" secondItem="4k9-1u-bcx" secondAttribute="bottom" constant="12" id="MpZ-yx-itE"/>
+                <constraint firstItem="Tvh-x4-ytZ" firstAttribute="leading" secondItem="iHP-d2-s9B" secondAttribute="leading" id="VoE-NW-RPv"/>
+                <constraint firstAttribute="trailing" secondItem="4k9-1u-bcx" secondAttribute="trailing" id="jst-7S-rdI"/>
+                <constraint firstAttribute="trailing" secondItem="yQM-d6-GZo" secondAttribute="trailing" id="jyl-VF-BnP"/>
+                <constraint firstItem="Tvh-x4-ytZ" firstAttribute="top" secondItem="yQM-d6-GZo" secondAttribute="bottom" constant="8" id="kZY-EL-Kwg"/>
+                <constraint firstAttribute="trailing" secondItem="Tvh-x4-ytZ" secondAttribute="trailing" id="saC-y8-P6h"/>
+                <constraint firstItem="yQM-d6-GZo" firstAttribute="leading" secondItem="iHP-d2-s9B" secondAttribute="leading" id="w2m-vP-x4K"/>
+                <constraint firstItem="4k9-1u-bcx" firstAttribute="leading" secondItem="iHP-d2-s9B" secondAttribute="leading" id="xQv-yo-RZb"/>
+            </constraints>
+            <size key="customSize" width="158" height="286"/>
+            <connections>
+                <outlet property="productImg" destination="4k9-1u-bcx" id="HBO-vH-21p"/>
+                <outlet property="productPriceLbl" destination="Tvh-x4-ytZ" id="LHm-5b-bKg"/>
+                <outlet property="productTitleLbl" destination="yQM-d6-GZo" id="94T-fv-ebd"/>
+            </connections>
+            <point key="canvasLocation" x="296" y="221.28935532233885"/>
+        </collectionViewCell>
+    </objects>
+</document>

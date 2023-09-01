@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; text = "我的訂單"; ObjectID = "IFV-b8-qZG"; */
+"IFV-b8-qZG.text" = "我的訂單";
+
+/* Class = "UILabel"; text = "待付款"; ObjectID = "Xt7-hW-Fc7"; */
+"Xt7-hW-Fc7.text" = "待付款";
+
+/* Class = "UIButton"; normalTitle = "查看全部 >"; ObjectID = "kle-jd-isM"; */
+"kle-jd-isM.normalTitle" = "查看全部 >";
+
+/* Class = "UINavigationItem"; title = "個人"; ObjectID = "x05-vx-TQW"; */
+"x05-vx-TQW.title" = "個人";

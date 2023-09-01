@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="182" id="G8L-QC-zHo" customClass="AmountSelectionCell" customModule="STYLiSH" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="182"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G8L-QC-zHo" id="dFY-6O-qXE">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="181.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="選擇數量" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLd-No-h9w">
+                        <rect key="frame" x="16" y="24" width="343" height="69.5"/>
+                        <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="14"/>
+                        <color key="textColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                                <real key="value" value="2.1000000000000001"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1De-vf-AGc" customClass="TrolleySelectionView" customModule="STYLiSH" customModuleProvider="target">
+                        <rect key="frame" x="16" y="101.5" width="343" height="48"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="48" id="RNT-fy-bWq"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zz8-zA-Vdu">
+                        <rect key="frame" x="16" y="180.5" width="343" height="1"/>
+                        <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="qs9-CR-Nxn"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="庫存：24" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAu-fv-NqQ">
+                        <rect key="frame" x="300" y="73" width="59" height="20.5"/>
+                        <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="14"/>
+                        <color key="textColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="characterSpacing">
+                                <real key="value" value="2.1000000000000001"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="PLd-No-h9w" secondAttribute="trailing" constant="16" id="78s-4N-G1F"/>
+                    <constraint firstItem="PLd-No-h9w" firstAttribute="leading" secondItem="dFY-6O-qXE" secondAttribute="leading" constant="16" id="BjT-cD-jb3"/>
+                    <constraint firstItem="PLd-No-h9w" firstAttribute="top" secondItem="dFY-6O-qXE" secondAttribute="top" constant="24" id="CVJ-9x-VmX"/>
+                    <constraint firstItem="1De-vf-AGc" firstAttribute="top" secondItem="iAu-fv-NqQ" secondAttribute="bottom" constant="8" id="Ecm-SB-zOM"/>
+                    <constraint firstItem="1De-vf-AGc" firstAttribute="leading" secondItem="PLd-No-h9w" secondAttribute="leading" id="GgY-XP-5DC"/>
+                    <constraint firstItem="1De-vf-AGc" firstAttribute="top" secondItem="PLd-No-h9w" secondAttribute="bottom" constant="8" id="Hgw-5S-yBn"/>
+                    <constraint firstAttribute="bottom" secondItem="Zz8-zA-Vdu" secondAttribute="bottom" id="JPA-k4-SN5"/>
+                    <constraint firstItem="iAu-fv-NqQ" firstAttribute="trailing" secondItem="1De-vf-AGc" secondAttribute="trailing" id="JeS-3w-EdJ"/>
+                    <constraint firstItem="Zz8-zA-Vdu" firstAttribute="leading" secondItem="dFY-6O-qXE" secondAttribute="leading" constant="16" id="SU1-SV-XBv"/>
+                    <constraint firstAttribute="trailing" secondItem="Zz8-zA-Vdu" secondAttribute="trailing" constant="16" id="b1C-fa-ul9"/>
+                    <constraint firstAttribute="trailing" secondItem="1De-vf-AGc" secondAttribute="trailing" constant="16" id="e7H-XV-sLm"/>
+                    <constraint firstAttribute="bottom" secondItem="1De-vf-AGc" secondAttribute="bottom" priority="750" constant="32" id="xjR-H9-itb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="selectionView" destination="1De-vf-AGc" id="vek-W8-fzC"/>
+                <outlet property="stockLbl" destination="iAu-fv-NqQ" id="zvj-PA-t4i"/>
+            </connections>
+            <point key="canvasLocation" x="-44" y="167.31634182908547"/>
+        </tableViewCell>
+    </objects>
+</document>
