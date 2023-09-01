@@ -124,6 +124,8 @@
 		3CED80AF2301301300B7DA8E /* Trolley.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CED80B12301301300B7DA8E /* Trolley.storyboard */; };
 		3CFAC67322EEF71C00785FAB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFAC67222EEF71C00785FAB /* String+Extension.swift */; };
 		58A77AA0262F3CC800B88679 /* LSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */; };
+		CC59E7442AA1B1030086D7D5 /* Auction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC59E7432AA1B1030086D7D5 /* Auction.storyboard */; };
+		CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */; };
 		D306B883B370DFD3ED8ACD74 /* Pods_STYLiSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */; };
 /* End PBXBuildFile section */
 
@@ -259,6 +261,8 @@
 		3CFAC67222EEF71C00785FAB /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_STYLiSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LSColor+Extension.swift"; sourceTree = "<group>"; };
+		CC59E7432AA1B1030086D7D5 /* Auction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auction.storyboard; sourceTree = "<group>"; };
+		CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionViewController.swift; sourceTree = "<group>"; };
 		E921004E251C9FC3CBC174F5 /* Pods-STYLiSH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.release.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.release.xcconfig"; sourceTree = "<group>"; };
 		F551E8F447D7C8DC42B53B98 /* Pods-STYLiSH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.debug.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -536,6 +540,7 @@
 		3CD2911B221135E2008B8A2D /* STYLiSH */ = {
 			isa = PBXGroup;
 			children = (
+				CC59E7472AA1B20D0086D7D5 /* Auction */,
 				3CB8011F2229A0580029A552 /* Third Party Wrappers */,
 				3C09F51F22115A9F00C5B3E2 /* Extensions */,
 				3CD2913122113D12008B8A2D /* Resource */,
@@ -709,6 +714,15 @@
 			path = APIProviders;
 			sourceTree = "<group>";
 		};
+		CC59E7472AA1B20D0086D7D5 /* Auction */ = {
+			isa = PBXGroup;
+			children = (
+				CC59E7432AA1B1030086D7D5 /* Auction.storyboard */,
+				CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */,
+			);
+			path = Auction;
+			sourceTree = "<group>";
+		};
 		F26A8A19BFED7C956C38BFE8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,6 +815,7 @@
 				3CD29122221135E2008B8A2D /* Main.storyboard in Resources */,
 				3CC706172216B34800CAD850 /* ProductTableViewCell.xib in Resources */,
 				3C831C6122E9945500112298 /* STOrderProductCell.xib in Resources */,
+				CC59E7442AA1B1030086D7D5 /* Auction.storyboard in Resources */,
 				3C4B10D522292732009942B7 /* card_unknown@2x.png in Resources */,
 				3C4B10CF22292732009942B7 /* card_visa.png in Resources */,
 				3CED808C2301138800B7DA8E /* Localizable.strings in Resources */,
@@ -926,6 +941,7 @@
 				3C09F51C22114A0100C5B3E2 /* STTabBarViewController.swift in Sources */,
 				3C7036D1222C4E0A00F6C58B /* ProductPickerController.swift in Sources */,
 				3CC7061A2216B36800CAD850 /* ProductCollectionViewCell.swift in Sources */,
+				CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */,
 				3CED4C0F2214222A00121D4B /* STParser.swift in Sources */,
 				3CED4C0A2214192100121D4B /* Product.swift in Sources */,
 				3C33691A2227D20B008A5A7A /* UIView+Extension.swift in Sources */,
@@ -1176,7 +1192,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FRH9H66G29;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/STYLiSH/Resource/TapPay",
@@ -1188,7 +1204,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = AppWorksSchool.STYLiSH;
+				PRODUCT_BUNDLE_IDENTIFIER = AppWorksSchool.kiki.STYLiSH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "STYLiSH/Resource/STYLiSH-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1202,7 +1218,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FRH9H66G29;
+				DEVELOPMENT_TEAM = VP4GBKDNYR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/STYLiSH/Resource/TapPay",
@@ -1214,7 +1230,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = AppWorksSchool.STYLiSH;
+				PRODUCT_BUNDLE_IDENTIFIER = AppWorksSchool.kiki.STYLiSH;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "STYLiSH/Resource/STYLiSH-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

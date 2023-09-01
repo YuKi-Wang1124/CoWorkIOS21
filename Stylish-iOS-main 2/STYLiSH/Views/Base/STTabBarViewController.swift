@@ -10,7 +10,7 @@ import UIKit
 
 class STTabBarViewController: UITabBarController {
 
-    private let tabs: [Tab] = [.lobby, .product, .trolley, .profile]
+    private let tabs: [Tab] = [.lobby, .product, .auction, .trolley, .profile]
     
     private var trolleyTabBarItem: UITabBarItem?
     
@@ -48,6 +48,7 @@ extension STTabBarViewController {
     private enum Tab {
         case lobby
         case product
+        case auction
         case profile
         case trolley
 
@@ -56,6 +57,10 @@ extension STTabBarViewController {
             switch self {
             case .lobby: controller = UIStoryboard.lobby.instantiateInitialViewController()!
             case .product: controller = UIStoryboard.product.instantiateInitialViewController()!
+                
+            case .auction: controller = UIStoryboard.auction.instantiateInitialViewController()!
+
+                
             case .profile: controller = UIStoryboard.profile.instantiateInitialViewController()!
             case .trolley: controller = UIStoryboard.trolley.instantiateInitialViewController()!
             }
@@ -74,6 +79,11 @@ extension STTabBarViewController {
                 return .asset(.Icons_36px_Home_Normal)
             case .product:
                 return .asset(.Icons_36px_Catalog_Normal)
+            
+                // TODO
+            case .auction:
+                return .asset(.Icons_36px_Catalog_Normal)
+                
             case .trolley:
                 return .asset(.Icons_36px_Cart_Normal)
             case .profile:
@@ -87,6 +97,11 @@ extension STTabBarViewController {
                 return .asset(.Icons_36px_Home_Selected)
             case .product:
                 return .asset(.Icons_36px_Catalog_Selected)
+                
+                // TODO
+            case .auction:
+                return .asset(.Icons_36px_Catalog_Normal)
+                
             case .trolley:
                 return .asset(.Icons_36px_Cart_Selected)
             case .profile:
