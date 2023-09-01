@@ -60,7 +60,6 @@ class ProductViewController: UIViewController {
 
         isListLayout = false
         
-        navigationItem.rightBarButtonItem = nil
     }
 
     // MARK: - Action
