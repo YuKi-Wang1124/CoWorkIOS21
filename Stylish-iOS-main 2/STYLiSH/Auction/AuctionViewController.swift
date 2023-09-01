@@ -10,14 +10,35 @@ import UIKit
 
 class AuctionViewController: UIViewController {
 
+    @IBOutlet weak var auctionTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("11111")
+        auctionTableView.dataSource = self
+        auctionTableView.delegate = self
 
+        
+    }
+
+}
+
+
+extension AuctionViewController: UITableViewDelegate {
+    
+}
+
+extension AuctionViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        12
     }
     
-
-  
-
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as! AuctionTableViewCell
+        
+        return cell
+    }
+    
+    
 }

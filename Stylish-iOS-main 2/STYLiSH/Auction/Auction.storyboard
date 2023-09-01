@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,10 +17,69 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="450" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YuD-m8-DOD">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AuctionTableViewCell" id="UI2-3s-W0P" customClass="AuctionTableViewCell" customModule="STYLiSH" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="450"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UI2-3s-W0P" id="FTp-cH-E0n">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="450"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uhk-7U-uLf">
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xed-wE-TrX">
+                                                            <rect key="frame" x="34" y="15" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" name="B1"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="luC-wz-RH9"/>
+                                                    </constraints>
+                                                </view>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Image_Placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="F3p-ND-30j">
+                                                    <rect key="frame" x="20" y="68" width="158" height="208"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKn-d9-pyz">
+                                                    <rect key="frame" x="217" y="82" width="115" height="55"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="uhk-7U-uLf" secondAttribute="trailing" id="GCK-Mj-Zoa"/>
+                                                <constraint firstItem="uhk-7U-uLf" firstAttribute="leading" secondItem="FTp-cH-E0n" secondAttribute="leading" id="Nwe-7v-khI"/>
+                                                <constraint firstItem="uhk-7U-uLf" firstAttribute="top" secondItem="FTp-cH-E0n" secondAttribute="top" id="Tfe-qQ-KX7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="YuD-m8-DOD" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="GdD-bF-fkd"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="YuD-m8-DOD" secondAttribute="trailing" id="JKG-m1-jrf"/>
+                            <constraint firstItem="YuD-m8-DOD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="WOu-9w-yRT"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="YuD-m8-DOD" secondAttribute="bottom" id="WWv-xq-TRp"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0Ne-dz-XyP"/>
+                    <connections>
+                        <outlet property="auctionTableView" destination="YuD-m8-DOD" id="5wN-OQ-oTD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -45,6 +105,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Image_Placeholder" width="375" height="375"/>
+        <namedColor name="B1">
+            <color red="0.24705882352941178" green="0.22745098039215686" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
