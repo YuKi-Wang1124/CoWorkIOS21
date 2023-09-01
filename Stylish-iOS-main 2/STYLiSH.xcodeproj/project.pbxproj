@@ -124,6 +124,8 @@
 		3CED80AF2301301300B7DA8E /* Trolley.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CED80B12301301300B7DA8E /* Trolley.storyboard */; };
 		3CFAC67322EEF71C00785FAB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFAC67222EEF71C00785FAB /* String+Extension.swift */; };
 		58A77AA0262F3CC800B88679 /* LSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */; };
+		C8612C122AA22DB4001F504F /* LobbyGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8612C112AA22DB3001F504F /* LobbyGridViewController.swift */; };
+		C89D995D2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89D995C2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift */; };
 		CC59E7442AA1B1030086D7D5 /* Auction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC59E7432AA1B1030086D7D5 /* Auction.storyboard */; };
 		CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */; };
 		CC59E74D2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */; };
@@ -262,6 +264,8 @@
 		3CFAC67222EEF71C00785FAB /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_STYLiSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LSColor+Extension.swift"; sourceTree = "<group>"; };
+		C8612C112AA22DB3001F504F /* LobbyGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyGridViewController.swift; sourceTree = "<group>"; };
+		C89D995C2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyCompondViewController.swift; sourceTree = "<group>"; };
 		CC59E7432AA1B1030086D7D5 /* Auction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auction.storyboard; sourceTree = "<group>"; };
 		CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionViewController.swift; sourceTree = "<group>"; };
 		CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionTableViewCell.swift; sourceTree = "<group>"; };
@@ -321,6 +325,8 @@
 				3C8F191A22E5BA9F00EECE90 /* LobbyView.swift */,
 				3C0DD87D2213533F00F5237E /* LobbyTableViewCell.xib */,
 				3C8F191822E5997B00EECE90 /* LobbyTableViewHeaderView.swift */,
+				C89D995C2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift */,
+				C8612C112AA22DB3001F504F /* LobbyGridViewController.swift */,
 			);
 			path = Lobby;
 			sourceTree = "<group>";
@@ -910,6 +916,7 @@
 			files = (
 				3C0DD87822134EC100F5237E /* UIFont+Extension.swift in Sources */,
 				3CE7A507223042CE009FF003 /* STBaseTextField.swift in Sources */,
+				C89D995D2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift in Sources */,
 				3CB80E78222FCCC20095F18C /* Bundle+Extension.swift in Sources */,
 				3CE7A519223064C7009FF003 /* UserObject.swift in Sources */,
 				3CB801272229AFF10029A552 /* UICollectionView+Extension.swift in Sources */,
@@ -944,6 +951,7 @@
 				3C09F51C22114A0100C5B3E2 /* STTabBarViewController.swift in Sources */,
 				3C7036D1222C4E0A00F6C58B /* ProductPickerController.swift in Sources */,
 				3CC7061A2216B36800CAD850 /* ProductCollectionViewCell.swift in Sources */,
+				C8612C122AA22DB4001F504F /* LobbyGridViewController.swift in Sources */,
 				CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */,
 				3CED4C0F2214222A00121D4B /* STParser.swift in Sources */,
 				3CED4C0A2214192100121D4B /* Product.swift in Sources */,

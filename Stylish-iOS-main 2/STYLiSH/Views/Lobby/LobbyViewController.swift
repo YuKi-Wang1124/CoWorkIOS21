@@ -8,17 +8,30 @@
 
 import UIKit
 
+
 class LobbyViewController: STBaseViewController {
 
-    @IBOutlet weak var lobbyView: LobbyView! {
+//    @IBOutlet weak var lobbyView: LobbyView! {
+//        didSet {
+//            lobbyView.delegate = self
+//        }
+//    }
+//
+//    private var datas: [PromotedProducts] = [] {
+//        didSet {
+//            lobbyView.reloadData()
+//        }
+//    }
+    
+    var lobbyGridView = LobbyGridView() {
         didSet {
-            lobbyView.delegate = self
+            lobbyGridView.delegate = self
         }
     }
 
-    private var datas: [PromotedProducts] = [] {
+    private var datas: [Product] = [] {
         didSet {
-            lobbyView.reloadData()
+            lobbyGridView.reloadData()
         }
     }
 
@@ -29,47 +42,44 @@ class LobbyViewController: STBaseViewController {
         super.viewDidLoad()
         
         print("This is from May")
-
-//        let url = URL(string: "http://3.24.100.29:8000/get_headers")!
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//        
-//        let encoder = JSONEncoder()
-//        let user = "Mandy"
-//        let data = try? encoder.encode(user)
-//
-//        request.httpBody = data
-//
-//        print("===========")
-//        print(data)
-//
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//
-//            if let data {
-//                do {
-//
-//                    print(response)
-//
-//
-//                } catch  {
-//                    print(error)
-//                }
-//            }
-//        }.resume()
+        if let uuid = UIDevice.current.identifierForVendor?.uuidString {
+           print("Device ID: \(uuid)")
+        } else {
+           print("Unable to retrieve device ID.")
+        }
         
         navigationItem.titleView = UIImageView(image: .asset(.Image_Logo02))
         
-        lobbyView.beginHeaderRefresh()
+        //lobbyView.beginHeaderRefresh()
+        
+        setGridLayout()
+        lobbyGridView.beginHeaderRefresh()
     }
 
     // MARK: - Action
+    private func setGridLayout() {
+        view.addSubview(lobbyGridView)
+        lobbyGridView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            lobbyGridView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            lobbyGridView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            lobbyGridView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            lobbyGridView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
     private func fetchData() {
         marketProvider.fetchHots(completion: { [weak self] result in
             switch result {
-            case .success(let products):
-                self?.datas = products
+            case .success(let hots):
+                //self?.datas = products
+                var productList: [Product] = []
+                for hot in hots {
+                    for product in hot.products {
+                        productList.append(product)
+                    }
+                }
+                self?.datas = productList
             case .failure:
                 LKProgressHUD.showFailure(text: "讀取資料失敗！")
             }
@@ -77,104 +87,102 @@ class LobbyViewController: STBaseViewController {
     }
 }
 
-extension LobbyViewController: LobbyViewDelegate {
-    
-    func triggerRefresh(_ lobbyView: LobbyView) {
+//extension LobbyViewController: LobbyViewDelegate {
+//
+//    func triggerRefresh(_ lobbyView: LobbyView) {
+//        fetchData()
+//    }
+//
+//    // MARK: - UITableViewDataSource and UITableViewDelegate
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return datas.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return datas[section].products.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(
+//            withIdentifier: String(describing: LobbyTableViewCell.self),
+//            for: indexPath
+//        )
+//        guard let lobbyCell = cell as? LobbyTableViewCell else { return cell }
+//        let product = datas[indexPath.section].products[indexPath.row]
+//        if indexPath.row % 2 == 0 {
+//            lobbyCell.singlePage(
+//                img: product.mainImage,
+//                title: product.title,
+//                description: product.description
+//            )
+//        } else {
+//            lobbyCell.multiplePages(
+//                imgs: product.images,
+//                title: product.title,
+//                description: product.description
+//            )
+//        }
+//        return lobbyCell
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 67.0 }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return 258.0 }
+//
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return 0.01 }
+//
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+//                withIdentifier: String(describing: LobbyTableViewHeaderView.self)
+//            ) as? LobbyTableViewHeaderView else {
+//                return nil
+//        }
+//        headerView.titleLabel.text = datas[section].title
+//        return headerView
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard
+//            let detailVC = UIStoryboard.product.instantiateViewController(
+//                withIdentifier: String(describing: ProductDetailViewController.self)
+//            ) as? ProductDetailViewController
+//        else {
+//            return
+//        }
+//        detailVC.product = datas[indexPath.section].products[indexPath.row]
+//        show(detailVC, sender: nil)
+//
+//    }
+//}
+
+extension LobbyViewController: LobbyGridViewDelegate {
+    func triggerRefresh(_ lobbyGridView: LobbyGridView) {
         fetchData()
     }
-
-    // MARK: - UITableViewDataSource and UITableViewDelegate
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return datas.count
+    // MARK: - UICOllectionViewDataSource and UICOllectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        datas.count
     }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return datas[section].products.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: String(describing: LobbyTableViewCell.self),
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: String(describing: ProductCollectionViewCell.self),
             for: indexPath
         )
-        guard let lobbyCell = cell as? LobbyTableViewCell else { return cell }
-        let product = datas[indexPath.section].products[indexPath.row]
-        if indexPath.row % 2 == 0 {
-            lobbyCell.singlePage(
-                img: product.mainImage,
-                title: product.title,
-                description: product.description
-            )
-        } else {
-            lobbyCell.multiplePages(
-                imgs: product.images,
-                title: product.title,
-                description: product.description
-            )
-        }
-        return lobbyCell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 67.0 }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return 258.0 }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return 0.01 }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(
-                withIdentifier: String(describing: LobbyTableViewHeaderView.self)
-            ) as? LobbyTableViewHeaderView else {
-                return nil
-        }
-        headerView.titleLabel.text = datas[section].title
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
-            let detailVC = UIStoryboard.product.instantiateViewController(
-                withIdentifier: String(describing: ProductDetailViewController.self)
-            ) as? ProductDetailViewController
+            let productCell = cell as? ProductCollectionViewCell
         else {
-            return
+            return cell
         }
-        detailVC.product = datas[indexPath.section].products[indexPath.row]
-        show(detailVC, sender: nil)
         
-        let url = URL(string: "http://3.24.100.29:8000/get_headers")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let encoder = JSONEncoder()
-        let user = CreateUserBody(name: "Peter", job: "情歌王子")
-        let data = try? encoder.encode(user)
-        request.httpBody = data
+        let product = datas[indexPath.row]
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            print("response: ", response)
-            if let data {
-                do {
-                    print(data)
-//                    let decoder = JSONDecoder()
-//                    let createUserResponse = try decoder.decode(CreateUserResponse.self, from: data)
-//                    print(createUserResponse)
-                } catch  {
-                    print(error)
-                }
-            }
-        }.resume()
+        productCell.layoutCell(
+            image: product.mainImage,
+            title: product.title,
+            price: product.price
+        )
         
+        return productCell
     }
-}
-
-struct CreateUserBody: Codable {
-    let name: String
-    let job: String
-}
-
-struct CreateUserResponse: Decodable {
-    let name: String
-    let job: String
-    let id: String
 }

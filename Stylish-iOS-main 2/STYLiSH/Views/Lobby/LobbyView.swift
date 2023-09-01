@@ -63,3 +63,57 @@ class LobbyView: UIView {
         })
     }
 }
+
+// MARK: for grid view
+protocol LobbyGridViewDelegate: UICollectionViewDataSource, UICollectionViewDelegate {
+    func triggerRefresh(_ lobbyGridView: LobbyGridView)
+}
+
+class LobbyGridView: UIView {
+
+    var collectionView = UICollectionView() 
+    
+    weak var delegate: LobbyGridViewDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupCollectionView()
+    }
+    // MARK: - Action
+    
+    func beginHeaderRefresh() {
+        collectionView.beginHeaderRefreshing()
+    }
+    
+    func reloadData() {
+        collectionView.endHeaderRefreshing()
+        collectionView.reloadData()
+    }
+    
+    // MARK: - Private Method
+    private func setupCollectionView() {
+//        collectionView.lk_registerCellWithNib(
+//            identifier: String(describing: ProductCollectionViewCell.self),
+//            bundle: nil
+//        )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        addSubview(collectionView)
+        
+        collectionView.addRefreshHeader(refreshingBlock: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.triggerRefresh(self)
+        })
+        
+        collectionView.dataSource = self.delegate
+        collectionView.delegate = self.delegate
+        
+    }
+}
