@@ -28,37 +28,6 @@ class LobbyViewController: STBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("This is from May")
-
-//        let url = URL(string: "http://3.24.100.29:8000/get_headers")!
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//        
-//        let encoder = JSONEncoder()
-//        let user = "Mandy"
-//        let data = try? encoder.encode(user)
-//
-//        request.httpBody = data
-//
-//        print("===========")
-//        print(data)
-//
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//
-//            if let data {
-//                do {
-//
-//                    print(response)
-//
-//
-//                } catch  {
-//                    print(error)
-//                }
-//            }
-//        }.resume()
-        
         navigationItem.titleView = UIImageView(image: .asset(.Image_Logo02))
         
         lobbyView.beginHeaderRefresh()

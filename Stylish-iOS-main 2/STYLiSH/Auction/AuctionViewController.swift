@@ -35,9 +35,17 @@ extension AuctionViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as! AuctionTableViewCell
-        
-        return cell
+        if indexPath.row == 0 {
+            let cell = auctionTableView.dequeueReusableCell(withIdentifier: MarqueeTableViewCell.identifier) as? MarqueeTableViewCell
+            
+            
+            return cell ?? UITableViewCell()
+        } else {
+            let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
+            
+            
+            return cell ?? UITableViewCell()
+        }
     }
     
     

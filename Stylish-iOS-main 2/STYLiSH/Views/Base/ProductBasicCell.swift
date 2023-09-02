@@ -12,7 +12,6 @@ class ProductBasicCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     // Implement by child class
