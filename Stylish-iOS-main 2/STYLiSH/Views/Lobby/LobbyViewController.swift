@@ -110,5 +110,40 @@ extension LobbyViewController: LobbyViewDelegate {
         }
         detailVC.product = datas[indexPath.section].products[indexPath.row]
         show(detailVC, sender: nil)
+        
+        let url = URL(string: "http://3.24.100.29:8000/get_headers")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let encoder = JSONEncoder()
+        let user = CreateUserBody(name: "Peter", job: "情歌王子")
+        let data = try? encoder.encode(user)
+        request.httpBody = data
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            print("response: ", response)
+            if let data {
+                do {
+                    print(data)
+//                    let decoder = JSONDecoder()
+//                    let createUserResponse = try decoder.decode(CreateUserResponse.self, from: data)
+//                    print(createUserResponse)
+                } catch  {
+                    print(error)
+                }
+            }
+        }.resume()
+        
     }
+}
+
+struct CreateUserBody: Codable {
+    let name: String
+    let job: String
+}
+
+struct CreateUserResponse: Decodable {
+    let name: String
+    let job: String
+    let id: String
 }
