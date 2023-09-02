@@ -19,6 +19,8 @@ class STTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tabBar.tintColor = UIColor.B1
+        
         viewControllers = tabs.map { $0.makeViewController() }
 
         trolleyTabBarItem = viewControllers?[2].tabBarItem
@@ -82,7 +84,7 @@ extension STTabBarViewController {
             
                 // TODO
             case .auction:
-                return .asset(.Icons_36px_Catalog_Normal)
+                return .asset(.bid)
                 
             case .trolley:
                 return .asset(.Icons_36px_Cart_Normal)
@@ -100,7 +102,7 @@ extension STTabBarViewController {
                 
                 // TODO
             case .auction:
-                return .asset(.Icons_36px_Catalog_Normal)
+                return .asset(.bid)
                 
             case .trolley:
                 return .asset(.Icons_36px_Cart_Selected)

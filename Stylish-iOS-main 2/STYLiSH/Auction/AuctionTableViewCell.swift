@@ -9,16 +9,29 @@
 import UIKit
 
 class AuctionTableViewCell: UITableViewCell {
-
+    
+    
+    @IBOutlet weak var productImageView: UIImageView!
+    
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    @IBOutlet weak var productLabel: UILabel!
+    
+    @IBOutlet weak var priceLabel: UILabel!
+    
+    @IBOutlet weak var addPriceBtn: UIButton!
+    
+    @IBOutlet weak var confirmBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+      
     }
 
+    
 }

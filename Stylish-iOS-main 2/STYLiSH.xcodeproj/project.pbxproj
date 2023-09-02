@@ -128,6 +128,8 @@
 		CC59E7442AA1B1030086D7D5 /* Auction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC59E7432AA1B1030086D7D5 /* Auction.storyboard */; };
 		CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */; };
 		CC59E74D2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */; };
+		CC59E7532AA357A20086D7D5 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */; };
+		CC59E7552AA375E30086D7D5 /* MarqueeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7542AA375E30086D7D5 /* MarqueeTableViewCell.swift */; };
 		D306B883B370DFD3ED8ACD74 /* Pods_STYLiSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */; };
 /* End PBXBuildFile section */
 
@@ -267,6 +269,8 @@
 		CC59E7432AA1B1030086D7D5 /* Auction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auction.storyboard; sourceTree = "<group>"; };
 		CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionViewController.swift; sourceTree = "<group>"; };
 		CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionTableViewCell.swift; sourceTree = "<group>"; };
+		CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		CC59E7542AA375E30086D7D5 /* MarqueeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeTableViewCell.swift; sourceTree = "<group>"; };
 		E921004E251C9FC3CBC174F5 /* Pods-STYLiSH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.release.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.release.xcconfig"; sourceTree = "<group>"; };
 		F551E8F447D7C8DC42B53B98 /* Pods-STYLiSH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.debug.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -723,8 +727,10 @@
 			isa = PBXGroup;
 			children = (
 				CC59E7432AA1B1030086D7D5 /* Auction.storyboard */,
+				CC59E7542AA375E30086D7D5 /* MarqueeTableViewCell.swift */,
 				CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */,
 				CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */,
+				CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */,
 			);
 			path = Auction;
 			sourceTree = "<group>";
@@ -952,6 +958,7 @@
 				3CED4C0F2214222A00121D4B /* STParser.swift in Sources */,
 				3CED4C0A2214192100121D4B /* Product.swift in Sources */,
 				3C33691A2227D20B008A5A7A /* UIView+Extension.swift in Sources */,
+				CC59E7552AA375E30086D7D5 /* MarqueeTableViewCell.swift in Sources */,
 				3CB8011E22299B460029A552 /* STCompondViewController.swift in Sources */,
 				3CCB3BC4222AA8FD00976A1C /* ProductDetailViewController.swift in Sources */,
 				3C9EF5342213C5C800DEE152 /* HTTPClient.swift in Sources */,
@@ -965,6 +972,7 @@
 				3CE7A51522305E5A009FF003 /* KeyChainManager.swift in Sources */,
 				3C1ACFEB22153114005583E2 /* ProfileCollectionReusableView.swift in Sources */,
 				3C9C0D532215400900595689 /* ProfileItem.swift in Sources */,
+				CC59E7532AA357A20086D7D5 /* SearchCollectionViewCell.swift in Sources */,
 				3C9EF5362213C97D00DEE152 /* MarketRequest.swift in Sources */,
 				3CB801252229AEE30029A552 /* UITableView+Extension.swift in Sources */,
 				3CDC5A6A222D860B0071D0D1 /* SizeSelectionCell.swift in Sources */,

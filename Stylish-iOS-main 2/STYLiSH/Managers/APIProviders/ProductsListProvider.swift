@@ -14,6 +14,8 @@ class ProductsProvider: ProductListDataProvider {
         case men
         case women
         case accessories
+        case all
+
     }
 
     private let productType: ProductType
@@ -27,6 +29,7 @@ class ProductsProvider: ProductListDataProvider {
 
     func fetchData(paging: Int, completion: @escaping ProductsResponseWithPaging) {
         switch productType {
+        case .all: dataProvider.fetchProductForAll(paging: paging, completion: completion)
         case .women: dataProvider.fetchProductForWomen(paging: paging, completion: completion)
         case .men: dataProvider.fetchProductForMen(paging: paging, completion: completion)
         case .accessories: dataProvider.fetchProductForAccessories(paging: paging, completion: completion)

@@ -19,6 +19,7 @@ class MarketProvider {
         case men(Int)
         case women(Int)
         case accessories(Int)
+        case all(Int)
     }
 
     // MARK: - Public method
@@ -42,6 +43,10 @@ class MarketProvider {
                 completion(Result.failure(error))
             }
         })
+    }
+    
+    func fetchProductForAll(paging: Int, completion: @escaping ProductsResponseWithPaging) {
+        fetchProducts(request: STMarketRequest.all(paging: paging), completion: completion)
     }
 
     func fetchProductForMen(paging: Int, completion: @escaping ProductsResponseWithPaging) {

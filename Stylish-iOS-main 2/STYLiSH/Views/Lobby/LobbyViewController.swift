@@ -40,13 +40,6 @@ class LobbyViewController: STBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("This is from May")
-        if let uuid = UIDevice.current.identifierForVendor?.uuidString {
-           print("Device ID: \(uuid)")
-        } else {
-           print("Unable to retrieve device ID.")
-        }
-        
         navigationItem.titleView = UIImageView(image: .asset(.Image_Logo02))
         
         if UserDefaults.standard.bool(forKey: "IsGridLobby") {
