@@ -71,9 +71,20 @@ protocol LobbyGridViewDelegate: UICollectionViewDataSource, UICollectionViewDele
 
 class LobbyGridView: UIView {
 
-    var collectionView = UICollectionView() 
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.dataSource = self.delegate
+            collectionView.delegate = self.delegate
+        }
+    }
     
-    weak var delegate: LobbyGridViewDelegate?
+    weak var delegate: LobbyGridViewDelegate? {
+        didSet {
+            guard let collectionView = collectionView else { return }
+            collectionView.dataSource = self.delegate
+            collectionView.delegate = self.delegate
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -93,27 +104,33 @@ class LobbyGridView: UIView {
     
     // MARK: - Private Method
     private func setupCollectionView() {
-//        collectionView.lk_registerCellWithNib(
-//            identifier: String(describing: ProductCollectionViewCell.self),
-//            bundle: nil
-//        )
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        collectionView.lk_registerCellWithNib(
+            identifier: String(describing: ProductCollectionViewCell.self),
+            bundle: nil
+        )
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            collectionView.topAnchor.constraint(equalTo: topAnchor),
+//            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+//        ])
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(
+            width: Int(164.0 / 375.0 * UIScreen.width),
+            height: Int(164.0 / 375.0 * UIScreen.width * 308.0 / 164.0)
+        )
+        flowLayout.sectionInset = UIEdgeInsets(top: 24.0, left: 16.0, bottom: 24.0, right: 16.0)
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 24.0
+        collectionView.collectionViewLayout = flowLayout
         
-        addSubview(collectionView)
+        //addSubview(collectionView)
         
         collectionView.addRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.delegate?.triggerRefresh(self)
         })
-        
-        collectionView.dataSource = self.delegate
-        collectionView.delegate = self.delegate
         
     }
 }
