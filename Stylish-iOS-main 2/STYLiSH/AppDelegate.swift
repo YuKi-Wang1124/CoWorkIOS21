@@ -29,6 +29,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        let isGridLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
+        print(isGridLobby)
+        if let isGridLobby = isGridLobby {
+            print("Not First launch")
+            print(isGridLobby)
+        } else {
+            UserDefaults.standard.set(Bool.random(), forKey: "IsGridLobby")
+            print("First launch")
+            let setedLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
+            print(setedLobby)
+        }
 
         return true
     }

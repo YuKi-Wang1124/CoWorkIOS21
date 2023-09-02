@@ -108,13 +108,6 @@ class LobbyGridView: UIView {
             identifier: String(describing: ProductCollectionViewCell.self),
             bundle: nil
         )
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            collectionView.topAnchor.constraint(equalTo: topAnchor),
-//            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-//        ])
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(
             width: Int(164.0 / 375.0 * UIScreen.width),
@@ -124,9 +117,6 @@ class LobbyGridView: UIView {
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 24.0
         collectionView.collectionViewLayout = flowLayout
-        
-        //addSubview(collectionView)
-        
         collectionView.addRefreshHeader(refreshingBlock: { [weak self] in
             guard let self = self else { return }
             self.delegate?.triggerRefresh(self)

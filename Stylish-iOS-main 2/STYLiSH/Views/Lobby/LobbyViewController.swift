@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class LobbyViewController: STBaseViewController {
 
     @IBOutlet weak var lobbyView: LobbyView! {
@@ -50,10 +49,13 @@ class LobbyViewController: STBaseViewController {
         
         navigationItem.titleView = UIImageView(image: .asset(.Image_Logo02))
         
-        //lobbyView.beginHeaderRefresh()
-
-        lobbyGridView.beginHeaderRefresh()
-        lobbyView.isHidden = true
+        if UserDefaults.standard.bool(forKey: "IsGridLobby") {
+            lobbyGridView.beginHeaderRefresh()
+            lobbyView.isHidden = true
+        } else {
+            lobbyView.beginHeaderRefresh()
+            lobbyGridView.isHidden = true
+        }
     }
 
     // MARK: - Action
@@ -63,27 +65,17 @@ class LobbyViewController: STBaseViewController {
             switch result {
             case .success(let hots):
                 
-                var productList: [Product] = []
-                for hot in hots {
-                    for product in hot.products {
-                        productList.append(product)
+                if UserDefaults.standard.bool(forKey: "IsGridLobby") { // collection view
+                    var productList: [Product] = []
+                    for hot in hots {
+                        for product in hot.products {
+                            productList.append(product)
+                        }
                     }
+                    self?.datasGird = productList
+                } else {
+                    self?.datas = hots
                 }
-                self?.datasGird = productList
-                
-//                if lobbyView.isHidden == true { // collection view
-//                    var productList: [Product] = []
-//                    for hot in hots {
-//                        for product in hot.products {
-//                            productList.append(product)
-//                        }
-//                    }
-//                    self?.datasGird = productList
-//                } else {
-//                    self?.datas = hots
-//                }
-                
-                
                 
             case .failure:
                 LKProgressHUD.showFailure(text: "讀取資料失敗！")
@@ -169,7 +161,8 @@ extension LobbyViewController: LobbyGridViewDelegate {
         datasGird.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: String(describing: ProductCollectionViewCell.self),
             for: indexPath
