@@ -16,15 +16,17 @@ class ProductViewController: UIViewController {
     }
 
     private enum ProductType: Int {
-        case women = 0
-        case men = 1
-        case accessories = 2
+        case all = 0
+        case women = 1
+        case men = 2
+        case accessories = 3
     }
 
     private struct Segue {
         static let men = "SegueMen"
         static let women = "SegueWomen"
         static let accessories = "SegueAccessories"
+        static let all = "SegueAll"
     }
 
     @IBOutlet weak var indicatorView: UIView!
@@ -38,11 +40,22 @@ class ProductViewController: UIViewController {
     @IBOutlet weak var womenProductsContainerView: UIView!
 
     @IBOutlet weak var accessoriesProductsContainerView: UIView!
+    
+    @IBOutlet weak var allProductsContainerView: UIView!
 
-    @IBOutlet var productBtns: [UIButton]!
-
+    
+    @IBOutlet weak var allBtn: UIButton!
+    
+    @IBOutlet weak var womenBtn: UIButton!
+    
+    @IBOutlet weak var menBtn: UIButton!
+    
+    @IBOutlet weak var accessoriesBtn: UIButton!
+    
+    @IBOutlet weak var searchTableView: UITableView!
+    
     private var containerViews: [UIView] {
-        return [menProductsContainerView, womenProductsContainerView, accessoriesProductsContainerView]
+        return [menProductsContainerView, womenProductsContainerView, accessoriesProductsContainerView, allProductsContainerView]
     }
 
     private var isListLayout: Bool = false {
@@ -53,19 +66,58 @@ class ProductViewController: UIViewController {
             }
         }
     }
+    
+    
+    let searchController = UISearchController()
 
+    @IBOutlet weak var serchView: UIView!
+    
+    let viewWidth = UIScreen.main.bounds.width
+    let viewHeight = UIScreen.main.bounds.height
+    
+    var collectionView: UICollectionView! = nil
+    
     // MARK: - View Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         isListLayout = false
         
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchResultsUpdater = self
+        
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: serchView.frame.height), collectionViewLayout: generateLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        serchView.addSubview(collectionView)
+
+        serchView.isHidden = true
+       
+    }
+    
+    func generateLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(330))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        return UICollectionViewCompositionalLayout(section: section)
     }
 
     // MARK: - Action
     @IBAction func onChangeProducts(_ sender: UIButton) {
+        
+        var productBtns = [allBtn, womenBtn, menBtn, accessoriesBtn]
+        
         for btn in productBtns {
-            btn.isSelected = false
+            btn?.isSelected = false
         }
         sender.isSelected = true
         moveIndicatorView(reference: sender)
@@ -85,15 +137,23 @@ class ProductViewController: UIViewController {
         let marketProvider = MarketProvider()
         
         if identifier == Segue.men {
-            provider = ProductsProvider(productType: ProductsProvider.ProductType.men, dataProvider: marketProvider)
+            provider = ProductsProvider(
+                productType: ProductsProvider.ProductType.men,
+                dataProvider: marketProvider)
         } else if identifier == Segue.women {
-            provider = ProductsProvider(productType: ProductsProvider.ProductType.women, dataProvider: marketProvider)
+            provider = ProductsProvider(
+                productType: ProductsProvider.ProductType.women,
+                dataProvider: marketProvider)
         } else if identifier == Segue.accessories {
             provider = ProductsProvider(
                 productType: ProductsProvider.ProductType.accessories,
-                dataProvider: marketProvider
-            )
+                dataProvider: marketProvider)
+        }  else if identifier == Segue.all {
+            provider = ProductsProvider(
+                productType: ProductsProvider.ProductType.all,
+                dataProvider: marketProvider)
         }
+        
         productListVC.provider = provider
     }
 
@@ -133,6 +193,8 @@ class ProductViewController: UIViewController {
         containerViews.forEach { $0.isHidden = true }
         
         switch type {
+        case .all:
+            allProductsContainerView.isHidden = false
         case .men:
             menProductsContainerView.isHidden = false
         case .women:
@@ -142,3 +204,51 @@ class ProductViewController: UIViewController {
         }
     }
 }
+
+
+extension ProductViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text,
+           searchText.isEmpty == false  {
+            
+            serchView.isHidden = false
+
+        } else {
+            
+            serchView.isHidden = true
+
+        }
+    }
+}
+
+
+
+extension ProductViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell
+        
+        cell?.productNameLabel.text = "商品名稱"
+        cell?.priceLabel.text = "\(indexPath.row)"
+        
+        
+        return cell ?? UICollectionViewCell()
+    }
+
+    
+}
+
+
