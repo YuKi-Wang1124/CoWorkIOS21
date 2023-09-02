@@ -211,17 +211,18 @@ extension ProductViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text,
            searchText.isEmpty == false  {
-            
             serchView.isHidden = false
 
-        } else {
+            print(searchText)
             
+            fetchSearchProducts(text: searchText)
+            
+        } else {
             serchView.isHidden = true
 
         }
     }
 }
-
 
 
 extension ProductViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -248,6 +249,23 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
         return cell ?? UICollectionViewCell()
     }
 
+    private func fetchSearchProducts(text: String) {
+        
+        let url = URL(string: "http://3.24.100.29/api/1.0/products/search?keyword=\(text)")
+        
+        guard let url = url else {
+            print("no url")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data,
+               let content = String(data: data, encoding: .utf8) {
+                print(content)
+            }
+        }.resume()
+    }
     
 }
 
