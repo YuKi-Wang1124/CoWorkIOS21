@@ -47,6 +47,4 @@ extension AuctionViewController: UITableViewDataSource {
             return cell ?? UITableViewCell()
         }
     }
-    
-    
 }
