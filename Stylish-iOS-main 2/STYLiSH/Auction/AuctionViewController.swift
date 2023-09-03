@@ -16,9 +16,8 @@ class AuctionViewController: UIViewController {
     
     @IBOutlet weak var marqueeLabel: UILabel!
     
-    var marqueeTitleArray = ["冬季新品洋裝拍賣中", "夏季新品洋裝拍賣中"]
+    var marqueeTitleArray = ["冬季新品洋裝拍賣中      ", "夏季新品洋裝拍賣中      "]
     
-
     @IBOutlet weak var auctionTableView: UITableView!
     
     override func viewDidLoad() {
@@ -28,7 +27,6 @@ class AuctionViewController: UIViewController {
         auctionTableView.delegate = self
 
         marqueeLabel.text = marqueeTitleArray[marqueeIndex]
-       
         
     }
     

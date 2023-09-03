@@ -250,7 +250,7 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
         } else {
             cell?.productNameLabel.text = searchDataArray[0].data[indexPath.row].title
             cell?.priceLabel.text = "NTD" + "\(searchDataArray[0].data[indexPath.row].price)"
-            cell?.imageView.loadImage("\(searchDataArray[0].data[indexPath.row].images[0])", placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
+            cell?.imageView.loadImage(searchDataArray[0].data[indexPath.row].images[0], placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
         }
         
         return cell ?? UICollectionViewCell()
