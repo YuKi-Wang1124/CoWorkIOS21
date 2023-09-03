@@ -15,7 +15,6 @@ class ProductsProvider: ProductListDataProvider {
         case women
         case accessories
         case all
-
     }
 
     private let productType: ProductType

@@ -18,6 +18,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
     var imageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(imageLiteralResourceName: "Image_Placeholder")
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     

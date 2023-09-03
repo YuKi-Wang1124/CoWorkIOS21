@@ -29,6 +29,8 @@ class ProductViewController: UIViewController {
         static let all = "SegueAll"
     }
 
+   
+    
     @IBOutlet weak var indicatorView: UIView!
 
     @IBOutlet weak var indicatorCenterXConstraint: NSLayoutConstraint!
@@ -52,7 +54,7 @@ class ProductViewController: UIViewController {
     
     @IBOutlet weak var accessoriesBtn: UIButton!
     
-    @IBOutlet weak var searchTableView: UITableView!
+    
     
     private var containerViews: [UIView] {
         return [menProductsContainerView, womenProductsContainerView, accessoriesProductsContainerView, allProductsContainerView]
@@ -77,6 +79,10 @@ class ProductViewController: UIViewController {
     
     var collectionView: UICollectionView! = nil
     
+    var cellCount = 0
+    
+    var searchDataArray = [SearchData]()
+    
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -85,7 +91,7 @@ class ProductViewController: UIViewController {
         isListLayout = false
         
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.hidesSearchBarWhenScrolling = true
         searchController.searchResultsUpdater = self
         
         collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: serchView.frame.height), collectionViewLayout: generateLayout())
@@ -212,16 +218,16 @@ extension ProductViewController: UISearchResultsUpdating {
         if let searchText = searchController.searchBar.text,
            searchText.isEmpty == false  {
             
-            serchView.isHidden = false
-
-        } else {
             
+            serchView.isHidden = false
+            fetchSearchProducts(text: searchText)
+            
+        } else {
             serchView.isHidden = true
 
         }
     }
 }
-
 
 
 extension ProductViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -231,7 +237,7 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return cellCount
     }
 
     func collectionView(
@@ -241,13 +247,67 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell
         
-        cell?.productNameLabel.text = "商品名稱"
-        cell?.priceLabel.text = "\(indexPath.row)"
-        
+        if searchDataArray.isEmpty {
+            cell?.productNameLabel.text = "沒有相關商品"
+        } else {
+            cell?.productNameLabel.text = searchDataArray[0].data[indexPath.row].title
+            cell?.priceLabel.text = "NTD" + "\(searchDataArray[0].data[indexPath.row].price)"
+            cell?.imageView.loadImage(searchDataArray[0].data[indexPath.row].images[0], placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
+        }
         
         return cell ?? UICollectionViewCell()
     }
 
+    private func fetchSearchProducts(text: String) {
+        
+        let baseURL = "http://3.24.100.29/api/1.0/products/search"
+        let keywordEncoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let urlString = "\(baseURL)?keyword=\(keywordEncoded)"
+        
+
+        
+        guard let url = URL(string: urlString) else {
+            print("no url")
+            return
+        }
+        var request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let product = try JSONDecoder().decode(SearchData.self, from: data)
+                    
+                    self.searchDataArray.removeAll()
+                    
+                    self.searchDataArray.append(product)
+                    
+//                    if self.searchDataArray.count == 0 {
+//                        DispatchQueue.main.async {
+//                            self.cellCount = 1
+//                        }
+//                    } else {
+//                        
+//                    }
+                    
+                    DispatchQueue.main.async {
+                        
+                        self.cellCount = product.data.count
+                        
+                        self.collectionView.reloadData()
+                    }
+                    
+                } catch {
+                    print("Error decoding JSON: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
     
 }
 

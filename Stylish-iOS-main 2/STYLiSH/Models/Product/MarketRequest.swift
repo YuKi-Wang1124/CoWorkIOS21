@@ -15,7 +15,6 @@ enum STMarketRequest: STRequest {
     case accessories(paging: Int)
     case all(paging: Int)
 
-
     var headers: [String: String] {
         switch self {
         case .hots, .women, .men, .accessories, .all: return [:]

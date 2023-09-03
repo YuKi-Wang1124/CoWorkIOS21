@@ -13,6 +13,10 @@ struct PromotedProducts: Codable {
     let products: [Product]
 }
 
+struct SearchData: Codable {
+    let data: [SearchProduct]
+}
+
 struct Product: Codable {
     let id: Int
     let title: String
@@ -73,3 +77,46 @@ struct Variant: Codable {
         case stock
     }
 }
+
+
+
+struct SearchProduct: Codable {
+    let category: String
+    let colors: [Color]
+    let description: String
+    let id: String
+    let images: [String]
+    let mainImage: String
+    let note: String
+    let place: String
+    let price: Int
+    let sizes: [String]
+    let source: String
+    let story: String
+    let texture: String
+    let title: String
+    let variants: [Variant]
+    let wash: String
+    
+    enum CodingKeys: String, CodingKey {
+        case category
+        case colors
+        case description
+        case id
+        case images
+        case mainImage = "main_image"
+        case note
+        case place
+        case price
+        case sizes
+        case source
+        case story
+        case texture
+        case title
+        case variants
+        case wash
+    }
+}
+
+
+
