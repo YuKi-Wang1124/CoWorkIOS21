@@ -89,7 +89,7 @@ class ProductViewController: UIViewController {
         isListLayout = false
         
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.hidesSearchBarWhenScrolling = true
         searchController.searchResultsUpdater = self
         
         collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: serchView.frame.height), collectionViewLayout: generateLayout())
