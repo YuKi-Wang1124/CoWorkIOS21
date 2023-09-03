@@ -29,6 +29,8 @@ class ProductViewController: UIViewController {
         static let all = "SegueAll"
     }
 
+   
+    
     @IBOutlet weak var indicatorView: UIView!
 
     @IBOutlet weak var indicatorCenterXConstraint: NSLayoutConstraint!
@@ -52,7 +54,7 @@ class ProductViewController: UIViewController {
     
     @IBOutlet weak var accessoriesBtn: UIButton!
     
-    @IBOutlet weak var searchTableView: UITableView!
+    
     
     private var containerViews: [UIView] {
         return [menProductsContainerView, womenProductsContainerView, accessoriesProductsContainerView, allProductsContainerView]
@@ -285,7 +287,13 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
                     
                     self.searchDataArray.append(product)
                     
-//                    print(self.searchDataArray)
+//                    if self.searchDataArray.count == 0 {
+//                        DispatchQueue.main.async {
+//                            self.cellCount = 1
+//                        }
+//                    } else {
+//                        
+//                    }
                     
                     DispatchQueue.main.async {
                         

@@ -22,6 +22,7 @@ class AuctionViewController: UIViewController {
     
     @IBOutlet weak var auctionTableView: UITableView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,17 +30,15 @@ class AuctionViewController: UIViewController {
         auctionTableView.delegate = self
 
         marqueeLabel.text = marqueeTitleArray[marqueeIndex]
-        
+
         let session = URLSession(configuration: .default,
                                  delegate: self,
                                  delegateQueue: OperationQueue())
-        
-        let url = URL(string: "wss://socketsbay.com/wss/v2/1/demo/09031724")
-        
+
+        let url = URL(string: "wss://socketsbay.com/wss/v2/1/demo/09031724MandyWang")
         guard let url = url else { return }
         
         webSocket = session.webSocketTask(with: url)
-        
         webSocket?.resume()
     }
     
@@ -70,7 +69,7 @@ class AuctionViewController: UIViewController {
     func send() {
         DispatchQueue.global().asyncAfter(deadline: .now()+10 ) {
             self.send()
-            self.webSocket?.send(.string("Send new message: \(Int.random(in: 0...1000))"), completionHandler: { error in
+            self.webSocket?.send(.string("Send new message: Int.random(in: 0...1000))"), completionHandler: { error in
                 if let error = error {
                     print("Send error: \(error)")
                 }
@@ -86,7 +85,10 @@ class AuctionViewController: UIViewController {
                 case .data(let data):
                     print("Got data: \(data)")
                 case .string(let message):
+                    
+                    
                     print("Get string: \(message)")
+                    
                 @unknown default:
                     break
                 }
@@ -121,29 +123,34 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         12
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
             let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
-            
-            
+
+
             return cell ?? UITableViewCell()
-        
+
     }
 }
 
 
 extension AuctionViewController: URLSessionWebSocketDelegate {
-    
+
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         print("Did connect to socket")
         ping()
         receive()
         send()
     }
-    
+
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         print("Did close connection with reason: \(String(describing: reason))")
 
     }
+}
+
+
+protocol ReceieveWebSocketDelegate {
+    func receiveWebsocketData(text: String)
 }
