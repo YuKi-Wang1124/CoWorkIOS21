@@ -94,6 +94,12 @@ class ProductDetailViewController: STBaseViewController {
     @IBAction func didTouchAddToCarBtn(_ sender: UIButton) {
         if productPickerView.superview == nil {
             showProductPickerView()
+            guard let product = product else { return }
+            // MARK: post API add to cart
+            HTTPClient.shared.abTestPostAPI(
+                event: Event.addToCart.rawValue,
+                eventDetail: String(product.id)
+            )
         } else {
             guard
                 let color = pickerViewController?.selectedColor,
@@ -117,7 +123,10 @@ class ProductDetailViewController: STBaseViewController {
             )
             
             // MARK: post API add to cart (看要不要分成功失敗)
-            
+            HTTPClient.shared.abTestPostAPI(
+                event: Event.addToCart.rawValue,
+                eventDetail: String(product.id)
+            )
         }
     }
 

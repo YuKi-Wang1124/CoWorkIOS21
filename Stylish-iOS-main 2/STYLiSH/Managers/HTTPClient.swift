@@ -90,4 +90,32 @@ class HTTPClient {
                 }
             }).resume()
     }
+    
+    func abTestPostAPI(event: String, eventDetail: String) {
+        var abTestData: ABTest = ABTest()
+        abTestData.event = event
+        abTestData.eventDetail = eventDetail
+        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail") ?? ""
+        print(abTestData)
+        
+        let url = URL(string: "http://3.24.100.29/api/1.0/user/event")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let encoder = JSONEncoder()
+        let body = try? encoder.encode(abTestData)
+        request.httpBody = body
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data {
+                do {
+                    let decoder = JSONDecoder()
+                    let createUserResponse = try decoder.decode(EventResponse.self, from: data)
+                    print(createUserResponse)
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
+    }
 }
