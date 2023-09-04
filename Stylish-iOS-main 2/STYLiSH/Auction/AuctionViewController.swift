@@ -12,6 +12,8 @@ class AuctionViewController: UIViewController {
     
     private var webSocket: URLSessionWebSocketTask?
     
+    private var auctionDataArray = [AuctionProductData]()
+    
     var timer: Timer?
     
     var marqueeIndex = 0
@@ -22,10 +24,9 @@ class AuctionViewController: UIViewController {
     
     @IBOutlet weak var auctionTableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        fetchAuctionProducts()
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
 
@@ -139,7 +140,6 @@ extension AuctionViewController: URLSessionWebSocketDelegate {
 
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         print("Did close connection with reason: \(String(describing: reason))")
-
     }
 }
 
@@ -160,6 +160,8 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
 
         let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
+//        cell?.addPriceBtn.setTitle(auctionDataArray[0].data[indexPath.row].title, for: .normal)
+        
         cell?.addPriceBtn.addTarget(self, action: #selector(addPriceBtn), for: .touchUpInside)
         
         return cell ?? UITableViewCell()
@@ -170,5 +172,81 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         
         print("ZZZZZZZZ")
     }
+    
+    private func fetchAuctionProducts() {
+        
+        let url = "http://3.24.100.29/api/1.0/auction/product"
+        
+        guard let url = URL(string: url) else {
+            print("no url")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            if let data = data {
+                do {
+                    let product = try JSONDecoder().decode(AuctionProductData.self, from: data)
+                    self.auctionDataArray.removeAll()
+                    
+                    self.auctionDataArray.append(product)
+                    
+                    print(self.auctionDataArray.first?.data)
+                    
+
+                } catch {
+                    print("Error decoding JSON: \(error.localizedDescription)")
+                }
+            }
+        }.resume()
+    }
 }
 
+
+
+struct AuctionProductData: Codable {
+    let data: [AuctionProduct]
+}
+
+struct AuctionProduct: Codable {
+//    let category: String
+//    let description: String
+    let endTime: Int
+//    let id: String
+//    let imageBase64: String?
+//    let images: String
+    let mainImage: String
+    let minBidUnit: Int
+//    let note: String
+//    let place: String
+    let price: Int
+//    let source: String
+//    let story: String
+//    let texture: String
+    let title: String
+//    let wash: String
+
+    enum CodingKeys: String, CodingKey {
+//        case category
+//        case description
+        case endTime = "end_time"
+//        case id
+//        case imageBase64 = "image_base64"
+//        case images
+        case mainImage = "main_image"
+        case minBidUnit = "min_bid_unit"
+//        case note
+//        case place
+        case price
+//        case source
+//        case story
+//        case texture
+        case title
+//        case wash
+    }
+}
