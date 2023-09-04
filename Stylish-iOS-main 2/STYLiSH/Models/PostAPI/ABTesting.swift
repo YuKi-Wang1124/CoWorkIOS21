@@ -22,13 +22,13 @@ struct ABTest: Codable {
     var event: String = String()
     var eventDetail: String = String()
     var userEmail: String = String()
-    var deviceID: String = UIDevice.current.identifierForVendor?.uuidString.lowercased() ?? ""
+    var userID: String = UserDefaults.standard.string(forKey: "DeviceID") ?? "invalid ID"
 
     enum CodingKeys: String, CodingKey {
         case system, version, category, event
         case eventDetail = "event_detail"
         case userEmail = "user_email"
-        case deviceID = "device_id"
+        case userID = "user_id"
     }
 }
 

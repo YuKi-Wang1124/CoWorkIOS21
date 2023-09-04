@@ -69,8 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
-
         return true
     }
 
@@ -80,5 +78,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
         return ApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // device ID
+        let id = UUID()
+        UserDefaults.standard.set(id.uuidString.lowercased(), forKey: "DeviceID")
     }
 }

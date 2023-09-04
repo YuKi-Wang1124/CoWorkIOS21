@@ -34,13 +34,11 @@ class AuctionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+      
         self.title = "拍賣"
         fetchAuctionProducts()
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
-
 
         let session = URLSession(configuration: .default,
                                  delegate: self,
@@ -58,11 +56,15 @@ class AuctionViewController: UIViewController {
         timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
             self.nextTitle()
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer?.invalidate()
     }
     
     func ping() {
@@ -78,7 +80,6 @@ class AuctionViewController: UIViewController {
     }
     
     func send() {
-        
         let jsonDictionary: [String: Any] = [
             "type": "bid_increment",
             "number": 100
@@ -98,6 +99,8 @@ class AuctionViewController: UIViewController {
     }
     
     func receive() {
+        var messages: String?
+        
         webSocket?.receive(completionHandler: { [weak self] result in
             switch result {
             case .success(let message):
@@ -107,6 +110,25 @@ class AuctionViewController: UIViewController {
                 case .string(let message):
                     
                     print("Get string: \(message)")
+                    messages = message
+                    
+                    
+                    // MARK: delegate priceArray 更新
+                    if let data = message.data(using: .utf8) {
+                        do {
+                            let decoder = JSONDecoder()
+                            let changePrice = try decoder.decode(ChangePrice.self, from: data)
+                            let newPrice = changePrice.number
+                            self?.priceArray[0] = String(newPrice)
+                            print(self?.priceArray)
+                            DispatchQueue.main.async {
+                                self?.auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                            }
+                            
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
                     
                 @unknown default:
                     break
@@ -114,15 +136,26 @@ class AuctionViewController: UIViewController {
             case .failure(let error):
                 print("Receive error: \(error)")
             }
-            
             self?.receive()
         })
+        
+        if let messages = messages {
+            print(priceArray)
+            let messengeDict = convertToDictionary(text: messages)
+            priceArray[0] = messengeDict?["number"] as? String ?? "price error"
+            auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+        }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-            super.viewDidDisappear(animated)
-            
-            timer?.invalidate()
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
     }
     
     func nextTitle() {
@@ -134,32 +167,28 @@ class AuctionViewController: UIViewController {
         marqueeLabel.text = marqueeTitleArray[marqueeIndex]
         marqueeLabel.layer.add(transition, forKey: "nextTitle")
     }
-    
 }
 
-
-
-
 extension AuctionViewController: URLSessionWebSocketDelegate {
-
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didOpenWithProtocol protocol: String?) {
         print("Did connect to socket")
         ping()
         receive()
     }
 
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
+                    reason: Data?) {
         print("Did close connection with reason: \(String(describing: reason))")
     }
 }
 
-
 protocol ReceieveWebSocketDelegate {
-    
     func receiveWebsocketData(text: String)
-    
 }
-
 
 extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -168,13 +197,15 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
+        let cell = auctionTableView.dequeueReusableCell(
+            withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
         cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexPath.row], for: .normal)
         cell?.timeLabel.text = timeArray[indexPath.row]
         cell?.productLabel.text = titleArray[indexPath.row]
         cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
-        cell?.productImageView.loadImage(imageArray[indexPath.row], placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
+        cell?.productImageView.loadImage(imageArray[indexPath.row],
+                                         placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
         cell?.addPriceBtn.addTarget(self, action: #selector(addPriceBtn), for: .touchUpInside)
         
         return cell ?? UITableViewCell()
@@ -182,7 +213,6 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     
     @objc func addPriceBtn() {
         send()
-        
         print("ZZZZZZZZ")
     }
     
@@ -216,7 +246,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         self.titleArray.append($0.title)
                         self.imageArray.append($0.mainImage)
                         self.minBidUnit.append(String($0.minBidUnit))
-                        self.priceArray.append(String($0.price))
+                        self.priceArray.append(String($0.startBid))
                         
                         let timestamp = $0.endTime
                         let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
@@ -260,7 +290,7 @@ struct AuctionProduct: Codable {
     let minBidUnit: Int
 //    let note: String
 //    let place: String
-    let price: Int
+    let startBid: Int
 //    let source: String
 //    let story: String
 //    let texture: String
@@ -278,11 +308,16 @@ struct AuctionProduct: Codable {
         case minBidUnit = "min_bid_unit"
 //        case note
 //        case place
-        case price
+        case startBid = "start_bid"
 //        case source
 //        case story
 //        case texture
         case title
 //        case wash
     }
+}
+
+struct ChangePrice: Codable {
+    var type: String = String()
+    var number: Int = Int()
 }
