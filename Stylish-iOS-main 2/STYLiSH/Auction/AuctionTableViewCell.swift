@@ -42,6 +42,7 @@ class AuctionTableViewCell: UITableViewCell {
             updateCountdownLabel()
         } else {
             countdownTimer?.invalidate()
+            createNotificationContent()
         }
     }
     
@@ -51,4 +52,18 @@ class AuctionTableViewCell: UITableViewCell {
         timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
     }
     
+    func createNotificationContent() {
+        let content = UNMutableNotificationContent()
+        content.title = "STYLiSH"
+        content.subtitle = (productLabel.text ?? "") + "拍賣結束囉"
+        content.body = (productLabel.text ?? "") + "拍賣結束囉，來看看自己得標了沒"
+        content.badge = 1
+        content.sound = UNNotificationSound.defaultCritical
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
 }

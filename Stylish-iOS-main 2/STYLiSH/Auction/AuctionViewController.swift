@@ -35,10 +35,9 @@ class AuctionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchAuctionProducts()
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
-
+        fetchAuctionProducts()
 
         let session = URLSession(configuration: .default,
                                  delegate: self,
@@ -124,18 +123,18 @@ class AuctionViewController: UIViewController {
     }
     
     func nextTitle() {
-        marqueeIndex = (marqueeIndex + 1) % marqueeTitleArray.count
-        let transition = CATransition()
-        transition.duration = 0.8
-        transition.type = .push
-        transition.subtype = .fromRight
-        marqueeLabel.text = marqueeTitleArray[marqueeIndex]
-        marqueeLabel.layer.add(transition, forKey: "nextTitle")
+        if marqueeTitleArray.isEmpty == false {
+            marqueeIndex = (marqueeIndex + 1) % marqueeTitleArray.count
+            let transition = CATransition()
+            transition.duration = 0.8
+            transition.type = .push
+            transition.subtype = .fromRight
+            marqueeLabel.text = marqueeTitleArray[marqueeIndex]
+            marqueeLabel.layer.add(transition, forKey: "nextTitle")
+        }
     }
     
 }
-
-
 
 
 extension AuctionViewController: URLSessionWebSocketDelegate {
@@ -150,14 +149,6 @@ extension AuctionViewController: URLSessionWebSocketDelegate {
         print("Did close connection with reason: \(String(describing: reason))")
     }
 }
-
-
-protocol ReceieveWebSocketDelegate {
-    
-    func receiveWebsocketData(text: String)
-    
-}
-
 
 extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
