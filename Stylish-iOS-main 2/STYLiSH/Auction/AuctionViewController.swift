@@ -14,23 +14,33 @@ class AuctionViewController: UIViewController {
     
     private var auctionDataArray = [AuctionProductData]()
     
+    private var titleArray = [String]()
+    private var priceArray = [String]()
+    private var imageArray = [String]()
+    private var minBidUnit = [String]()
+    private var timeArray = [String]()
+
     var timer: Timer?
     
     var marqueeIndex = 0
     
+    var cellCount = 0
+    
     @IBOutlet weak var marqueeLabel: UILabel!
     
-    var marqueeTitleArray = ["冬季新品洋裝拍賣中      ", "夏季新品洋裝拍賣中      "]
+    var marqueeTitleArray = [String]()
     
     @IBOutlet weak var auctionTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        
+        self.title = "拍賣"
         fetchAuctionProducts()
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
 
-        marqueeLabel.text = marqueeTitleArray[marqueeIndex]
 
         let session = URLSession(configuration: .default,
                                  delegate: self,
@@ -153,15 +163,18 @@ protocol ReceieveWebSocketDelegate {
 
 extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        12
+        cellCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
-//        cell?.addPriceBtn.setTitle(auctionDataArray[0].data[indexPath.row].title, for: .normal)
-        
+        cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexPath.row], for: .normal)
+        cell?.timeLabel.text = timeArray[indexPath.row]
+        cell?.productLabel.text = titleArray[indexPath.row]
+        cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
+        cell?.productImageView.loadImage(imageArray[indexPath.row], placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
         cell?.addPriceBtn.addTarget(self, action: #selector(addPriceBtn), for: .touchUpInside)
         
         return cell ?? UITableViewCell()
@@ -198,6 +211,29 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                     
                     print(self.auctionDataArray.first?.data)
                     
+                    self.auctionDataArray.first?.data.forEach {
+                        self.marqueeTitleArray.append($0.title + "拍賣中" + "            " )
+                        self.titleArray.append($0.title)
+                        self.imageArray.append($0.mainImage)
+                        self.minBidUnit.append(String($0.minBidUnit))
+                        self.priceArray.append(String($0.price))
+                        
+                        let timestamp = $0.endTime
+                        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.locale = Locale.current
+                        dateFormatter.dateStyle = .medium
+                        dateFormatter.timeStyle = .medium
+                        let localTime = dateFormatter.string(from: date)
+                        self.timeArray.append(localTime)
+                    }
+                    
+                    self.cellCount = self.titleArray.count
+                    
+                    DispatchQueue.main.async {
+                        self.marqueeLabel.text = self.marqueeTitleArray[self.marqueeIndex]
+                        self.auctionTableView.reloadData()
+                    }
 
                 } catch {
                     print("Error decoding JSON: \(error.localizedDescription)")
