@@ -17,6 +17,8 @@ class ProductListViewController: STCompondViewController {
     var provider: ProductListDataProvider?
 
     private var paging: Int? = 0
+    
+    var categoryType = String()
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -103,7 +105,14 @@ class ProductListViewController: STCompondViewController {
         )
         guard let detailVC = productDetailVC as? ProductDetailViewController else { return }
         detailVC.product = product
+        detailVC.fromCategory = categoryType
         show(detailVC, sender: nil)
+        
+        HTTPClient.shared.abTestPostAPI(
+            category: categoryType,
+            event: Event.viewItem.rawValue,
+            eventDetail: String(product.id)
+        )
     }
 
     // MARK: - UITableViewDataSource

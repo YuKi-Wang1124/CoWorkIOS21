@@ -49,6 +49,8 @@ class ProductDetailViewController: STBaseViewController {
             galleryView.datas = product.images
         }
     }
+    
+    var fromCategory = String()
 
     private var pickerViewController: ProductPickerController?
 
@@ -116,8 +118,12 @@ class ProductDetailViewController: STBaseViewController {
                 }
             )
             
-            // MARK: post API add to cart (看要不要分成功失敗)
-            
+            // MARK: post API add to cart
+            HTTPClient.shared.abTestPostAPI(
+                category: fromCategory,
+                event: Event.addToCart.rawValue,
+                eventDetail: String(product.id)
+            )
         }
     }
 

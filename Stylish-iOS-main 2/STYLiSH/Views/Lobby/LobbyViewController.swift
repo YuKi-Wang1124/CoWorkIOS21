@@ -113,21 +113,21 @@ extension LobbyViewController: LobbyViewDelegate {
         return lobbyCell
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 67.0 }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 67.0 }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return 258.0 }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return 0.01 }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(
-                withIdentifier: String(describing: LobbyTableViewHeaderView.self)
-            ) as? LobbyTableViewHeaderView else {
-                return nil
-        }
-        headerView.titleLabel.text = datas[section].title
-        return headerView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+//                withIdentifier: String(describing: LobbyTableViewHeaderView.self)
+//            ) as? LobbyTableViewHeaderView else {
+//                return nil
+//        }
+//        headerView.titleLabel.text = datas[section].title
+//        return headerView
+//    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
@@ -141,31 +141,11 @@ extension LobbyViewController: LobbyViewDelegate {
         show(detailVC, sender: nil)
         
         // MARK: post API
-        let url = URL(string: "http://3.24.100.29/api/1.0/user/event")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let encoder = JSONEncoder()
-        
-        var abTestData: ABTest = ABTest()
-        abTestData.event = Event.viewItem.rawValue
-        abTestData.eventDetail = String(datas[indexPath.section].products[indexPath.row].id)
-        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail") ?? ""
-
-        let body = try? encoder.encode(abTestData)
-        request.httpBody = body
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data {
-                do {
-                    let decoder = JSONDecoder()
-                    let createUserResponse = try decoder.decode(EventResponse.self, from: data)
-                    print(createUserResponse)
-                } catch {
-                    print(error)
-                }
-            }
-        }.resume()
+        HTTPClient.shared.abTestPostAPI(
+            category: "hot",
+            event: Event.viewItem.rawValue,
+            eventDetail: String(datas[indexPath.section].products[indexPath.row].id)
+        )
     }
 }
 
@@ -173,6 +153,7 @@ extension LobbyViewController: LobbyGridViewDelegate {
     func triggerRefresh(_ lobbyGridView: LobbyGridView) {
         fetchData()
     }
+    
     // MARK: - UICOllectionViewDataSource and UICOllectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         datasGird.count
@@ -208,32 +189,11 @@ extension LobbyViewController: LobbyGridViewDelegate {
         showProductDetailViewController(product: product)
         
         // MARK: post API
-        let url = URL(string: "http://3.24.100.29/api/1.0/user/event")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let encoder = JSONEncoder()
-        
-        var abTestData: ABTest = ABTest()
-        abTestData.event = Event.viewItem.rawValue
-        abTestData.eventDetail = String(product.id)
-        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail") ?? ""
-        print(abTestData)
-
-        let body = try? encoder.encode(abTestData)
-        request.httpBody = body
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data {
-                do {
-                    let decoder = JSONDecoder()
-                    let createUserResponse = try decoder.decode(EventResponse.self, from: data)
-                    print(createUserResponse)
-                } catch {
-                    print(error)
-                }
-            }
-        }.resume()
+        HTTPClient.shared.abTestPostAPI(
+            category: "hot",
+            event: Event.viewItem.rawValue,
+            eventDetail: String(product.id)
+        )
     }
     
     private func showProductDetailViewController(product: Product) {
@@ -242,12 +202,8 @@ extension LobbyViewController: LobbyGridViewDelegate {
         )
         guard let detailVC = productDetailVC as? ProductDetailViewController else { return }
         detailVC.product = product
+        detailVC.fromCategory = "Hot"
         show(detailVC, sender: nil)
     }
 }
 
-enum Event: String {
-    case viewItem = "view_item"
-    case addToCart = "add_to_cart"
-    case checkout = "checkout"
-}
