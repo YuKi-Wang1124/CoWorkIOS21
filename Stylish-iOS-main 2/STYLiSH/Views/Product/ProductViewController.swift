@@ -81,7 +81,7 @@ class ProductViewController: UIViewController {
     
     var cellCount = 0
     
-    var searchDataArray = [SearchData]()
+    private var searchDataArray = [SearchData]()
     
     // MARK: - View Life Cycle
 
@@ -254,18 +254,13 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
             cell?.priceLabel.text = "NTD" + "\(searchDataArray[0].data[indexPath.row].price)"
             cell?.imageView.loadImage(searchDataArray[0].data[indexPath.row].images[0], placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
         }
-        
         return cell ?? UICollectionViewCell()
     }
 
     private func fetchSearchProducts(text: String) {
-        
         let baseURL = "http://3.24.100.29/api/1.0/products/search"
         let keywordEncoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlString = "\(baseURL)?keyword=\(keywordEncoded)"
-        
-
-        
         guard let url = URL(string: urlString) else {
             print("no url")
             return
@@ -273,12 +268,10 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
         var request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
             }
-            
             if let data = data {
                 do {
                     let product = try JSONDecoder().decode(SearchData.self, from: data)
