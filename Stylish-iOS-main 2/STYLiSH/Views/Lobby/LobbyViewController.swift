@@ -146,30 +146,24 @@ extension LobbyViewController: LobbyViewDelegate {
         let url = URL(string: "http://3.24.100.29/api/1.0/user/event")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let encoder = JSONEncoder()
         
-        var version = ""
-        
-        if UserDefaults.standard.bool(forKey: "IsGridLobby") {
-            version = "grid"
-        } else {
-            version = "linear"
-        }
-        
         var abTestData: ABTest = ABTest()
-        abTestData.version = version
+        abTestData.event = Event.viewItem.rawValue
+        abTestData.eventDetail = String(datas[indexPath.section].products[indexPath.row].id)
+        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail")!
+
         let body = try? encoder.encode(abTestData)
         request.httpBody = body
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            print(response)
             if let data {
                 do {
                     let decoder = JSONDecoder()
-                    let createUserResponse = try decoder.decode(ABTest.self, from: data)
+                    let createUserResponse = try decoder.decode(EventResponse.self, from: data)
                     print(createUserResponse)
-                } catch  {
+                } catch {
                     print(error)
                 }
             }
@@ -219,30 +213,24 @@ extension LobbyViewController: LobbyGridViewDelegate {
         let url = URL(string: "http://3.24.100.29/api/1.0/user/event")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let encoder = JSONEncoder()
         
-        var version = ""
-        
-        if UserDefaults.standard.bool(forKey: "IsGridLobby") {
-            version = "grid"
-        } else {
-            version = "linear"
-        }
-        
         var abTestData: ABTest = ABTest()
-        abTestData.version = version
+        abTestData.event = Event.viewItem.rawValue
+        abTestData.eventDetail = String(datas[indexPath.section].products[indexPath.row].id)
+        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail")!
+
         let body = try? encoder.encode(abTestData)
         request.httpBody = body
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            print(response)
             if let data {
                 do {
                     let decoder = JSONDecoder()
-                    let createUserResponse = try decoder.decode(ABTest.self, from: data)
+                    let createUserResponse = try decoder.decode(EventResponse.self, from: data)
                     print(createUserResponse)
-                } catch  {
+                } catch {
                     print(error)
                 }
             }
@@ -257,4 +245,10 @@ extension LobbyViewController: LobbyGridViewDelegate {
         detailVC.product = product
         show(detailVC, sender: nil)
     }
+}
+
+enum Event: String {
+    case viewItem = "view_item"
+    case addToCart = "add_to_cart"
+    case checkout = "checkout"
 }
