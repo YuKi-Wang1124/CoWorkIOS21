@@ -35,7 +35,7 @@ class AuctionViewController: UIViewController {
                                  delegate: self,
                                  delegateQueue: OperationQueue())
 
-        let url = URL(string: "wss://socketsbay.com/wss/v2/1/demo/09031724MandyWang")
+        let url = URL(string: "ws://3.24.100.29:9000/api/1.0/update_bid")
         guard let url = url else { return }
         
         webSocket = session.webSocketTask(with: url)
@@ -67,13 +67,22 @@ class AuctionViewController: UIViewController {
     }
     
     func send() {
-        DispatchQueue.global().asyncAfter(deadline: .now()+10 ) {
-            self.send()
-            self.webSocket?.send(.string("Send new message: Int.random(in: 0...1000))"), completionHandler: { error in
+        
+        let jsonDictionary: [String: Any] = [
+            "type": "bid_increment",
+            "number": 100
+        ]
+        
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            
+            webSocket?.send(.data(data)) { error in
                 if let error = error {
                     print("Send error: \(error)")
                 }
-            })
+            }
+        } catch {
+            print("JSON serialization error: \(error)")
         }
     }
     
@@ -85,7 +94,6 @@ class AuctionViewController: UIViewController {
                 case .data(let data):
                     print("Got data: \(data)")
                 case .string(let message):
-                    
                     
                     print("Get string: \(message)")
                     
@@ -119,20 +127,6 @@ class AuctionViewController: UIViewController {
 }
 
 
-extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        12
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-            let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
-
-
-            return cell ?? UITableViewCell()
-
-    }
-}
 
 
 extension AuctionViewController: URLSessionWebSocketDelegate {
@@ -141,7 +135,6 @@ extension AuctionViewController: URLSessionWebSocketDelegate {
         print("Did connect to socket")
         ping()
         receive()
-        send()
     }
 
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
@@ -152,5 +145,29 @@ extension AuctionViewController: URLSessionWebSocketDelegate {
 
 
 protocol ReceieveWebSocketDelegate {
+    
     func receiveWebsocketData(text: String)
+    
+}
+
+
+extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        12
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
+        
+        cell?.addPriceBtn.addTarget(self, action: #selector(addPriceBtn), for: .touchUpInside)
+        
+        return cell ?? UITableViewCell()
+    }
+    
+    @objc func addPriceBtn() {
+        send()
+        
+        print("ZZZZZZZZ")
+    }
 }
