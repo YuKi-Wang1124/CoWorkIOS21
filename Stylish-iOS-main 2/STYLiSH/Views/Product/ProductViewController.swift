@@ -287,21 +287,10 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
                     
                     self.searchDataArray.append(product)
                     
-//                    if self.searchDataArray.count == 0 {
-//                        DispatchQueue.main.async {
-//                            self.cellCount = 1
-//                        }
-//                    } else {
-//                        
-//                    }
-                    
                     DispatchQueue.main.async {
-                        
                         self.cellCount = product.data.count
-                        
                         self.collectionView.reloadData()
                     }
-                    
                 } catch {
                     print("Error decoding JSON: \(error.localizedDescription)")
                 }
