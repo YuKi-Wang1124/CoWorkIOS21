@@ -220,7 +220,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         self.titleArray.append($0.title)
                         self.imageArray.append($0.mainImage)
                         self.minBidUnit.append(String($0.minBidUnit))
-                        self.priceArray.append(String($0.price))
+                        self.priceArray.append(String($0.startBid))
                         
                         let currentTimeStamp = Date().timeIntervalSince1970
                         let endTimestamp = $0.endTime / 1000
@@ -261,7 +261,7 @@ struct AuctionProduct: Codable {
     let minBidUnit: Int
 //    let note: String
 //    let place: String
-    let price: Int
+    let startBid: Int
 //    let source: String
 //    let story: String
 //    let texture: String
@@ -279,7 +279,7 @@ struct AuctionProduct: Codable {
         case minBidUnit = "min_bid_unit"
 //        case note
 //        case place
-        case price
+        case startBid = "start_bid"
 //        case source
 //        case story
 //        case texture
