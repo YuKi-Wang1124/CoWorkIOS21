@@ -91,8 +91,9 @@ class HTTPClient {
             }).resume()
     }
     
-    func abTestPostAPI(event: String, eventDetail: String) {
+    func abTestPostAPI(category: String, event: String, eventDetail: String) {
         var abTestData: ABTest = ABTest()
+        abTestData.category = category
         abTestData.event = event
         abTestData.eventDetail = eventDetail
         abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail") ?? ""

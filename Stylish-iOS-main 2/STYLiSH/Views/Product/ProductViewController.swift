@@ -28,8 +28,6 @@ class ProductViewController: UIViewController {
         static let accessories = "SegueAccessories"
         static let all = "SegueAll"
     }
-
-   
     
     @IBOutlet weak var indicatorView: UIView!
 
@@ -83,6 +81,9 @@ class ProductViewController: UIViewController {
     
     private var searchDataArray = [SearchData]()
     
+    var whichCategory = "all"
+    let categories = ["all", "men", "women", "accessories"]
+    
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -103,7 +104,6 @@ class ProductViewController: UIViewController {
         collectionView.dataSource = self
         
         serchView.addSubview(collectionView)
-
         serchView.isHidden = true
        
     }
@@ -146,21 +146,26 @@ class ProductViewController: UIViewController {
             provider = ProductsProvider(
                 productType: ProductsProvider.ProductType.men,
                 dataProvider: marketProvider)
+            whichCategory = "men"
         } else if identifier == Segue.women {
             provider = ProductsProvider(
                 productType: ProductsProvider.ProductType.women,
                 dataProvider: marketProvider)
+            whichCategory = "women"
         } else if identifier == Segue.accessories {
             provider = ProductsProvider(
                 productType: ProductsProvider.ProductType.accessories,
                 dataProvider: marketProvider)
+            whichCategory = "accessories"
         }  else if identifier == Segue.all {
             provider = ProductsProvider(
                 productType: ProductsProvider.ProductType.all,
                 dataProvider: marketProvider)
+            whichCategory = "all"
         }
         
         productListVC.provider = provider
+        productListVC.categoryType = whichCategory
     }
 
     // MARK: - Private method
@@ -228,7 +233,6 @@ extension ProductViewController: UISearchResultsUpdating {
         }
     }
 }
-
 
 extension ProductViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 

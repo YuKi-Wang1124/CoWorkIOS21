@@ -113,21 +113,21 @@ extension LobbyViewController: LobbyViewDelegate {
         return lobbyCell
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 67.0 }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { return 67.0 }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { return 258.0 }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { return 0.01 }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(
-                withIdentifier: String(describing: LobbyTableViewHeaderView.self)
-            ) as? LobbyTableViewHeaderView else {
-                return nil
-        }
-        headerView.titleLabel.text = datas[section].title
-        return headerView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+//                withIdentifier: String(describing: LobbyTableViewHeaderView.self)
+//            ) as? LobbyTableViewHeaderView else {
+//                return nil
+//        }
+//        headerView.titleLabel.text = datas[section].title
+//        return headerView
+//    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
@@ -142,6 +142,7 @@ extension LobbyViewController: LobbyViewDelegate {
         
         // MARK: post API
         HTTPClient.shared.abTestPostAPI(
+            category: "hot",
             event: Event.viewItem.rawValue,
             eventDetail: String(datas[indexPath.section].products[indexPath.row].id)
         )
@@ -189,6 +190,7 @@ extension LobbyViewController: LobbyGridViewDelegate {
         
         // MARK: post API
         HTTPClient.shared.abTestPostAPI(
+            category: "hot",
             event: Event.viewItem.rawValue,
             eventDetail: String(product.id)
         )
@@ -200,12 +202,8 @@ extension LobbyViewController: LobbyGridViewDelegate {
         )
         guard let detailVC = productDetailVC as? ProductDetailViewController else { return }
         detailVC.product = product
+        detailVC.fromCategory = "Hot"
         show(detailVC, sender: nil)
     }
 }
 
-enum Event: String {
-    case viewItem = "view_item"
-    case addToCart = "add_to_cart"
-    case checkout = "checkout"
-}
