@@ -152,7 +152,7 @@ extension LobbyViewController: LobbyViewDelegate {
         var abTestData: ABTest = ABTest()
         abTestData.event = Event.viewItem.rawValue
         abTestData.eventDetail = String(datas[indexPath.section].products[indexPath.row].id)
-        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail")!
+        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail") ?? ""
 
         let body = try? encoder.encode(abTestData)
         request.httpBody = body
@@ -218,8 +218,9 @@ extension LobbyViewController: LobbyGridViewDelegate {
         
         var abTestData: ABTest = ABTest()
         abTestData.event = Event.viewItem.rawValue
-        abTestData.eventDetail = String(datas[indexPath.section].products[indexPath.row].id)
-        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail")!
+        abTestData.eventDetail = String(product.id)
+        abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail") ?? ""
+        print(abTestData)
 
         let body = try? encoder.encode(abTestData)
         request.httpBody = body
