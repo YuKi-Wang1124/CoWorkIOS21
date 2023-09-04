@@ -282,11 +282,8 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
             if let data = data {
                 do {
                     let product = try JSONDecoder().decode(SearchData.self, from: data)
-                    
                     self.searchDataArray.removeAll()
-                    
                     self.searchDataArray.append(product)
-                    
                     DispatchQueue.main.async {
                         self.cellCount = product.data.count
                         self.collectionView.reloadData()
@@ -297,7 +294,6 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
             }
         }.resume()
     }
-    
 }
 
 
