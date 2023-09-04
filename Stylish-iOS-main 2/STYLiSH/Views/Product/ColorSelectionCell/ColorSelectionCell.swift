@@ -73,6 +73,8 @@ class ColorSelectionCell: BasicSelectionCell {
         }
         colorObjects[indexPath.row].isSelected = !colorObjects[indexPath.row].isSelected
         touchHandler?(indexPath)
+        
+        // MARK: post API color selection??
 
         collectionView.reloadData()
     }

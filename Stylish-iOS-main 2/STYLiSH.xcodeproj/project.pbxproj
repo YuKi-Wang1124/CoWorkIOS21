@@ -124,6 +124,7 @@
 		3CED80AF2301301300B7DA8E /* Trolley.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CED80B12301301300B7DA8E /* Trolley.storyboard */; };
 		3CFAC67322EEF71C00785FAB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFAC67222EEF71C00785FAB /* String+Extension.swift */; };
 		58A77AA0262F3CC800B88679 /* LSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */; };
+		C84AB14B2AA4388300DCE7EB /* ABTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84AB14A2AA4388300DCE7EB /* ABTesting.swift */; };
 		C89D995D2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89D995C2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift */; };
 		CC59E7442AA1B1030086D7D5 /* Auction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC59E7432AA1B1030086D7D5 /* Auction.storyboard */; };
 		CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */; };
@@ -264,6 +265,7 @@
 		3CFAC67222EEF71C00785FAB /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_STYLiSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LSColor+Extension.swift"; sourceTree = "<group>"; };
+		C84AB14A2AA4388300DCE7EB /* ABTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABTesting.swift; sourceTree = "<group>"; };
 		C89D995C2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyCompondViewController.swift; sourceTree = "<group>"; };
 		CC59E7432AA1B1030086D7D5 /* Auction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auction.storyboard; sourceTree = "<group>"; };
 		CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionViewController.swift; sourceTree = "<group>"; };
@@ -589,6 +591,7 @@
 				3CEBE075222F714A0064EF82 /* Local Storage */,
 				3C9C0D512215377B00595689 /* Profile */,
 				3CED4C0D2214220600121D4B /* Parser */,
+				C84AB1492AA4386200DCE7EB /* PostAPI */,
 				3CED4C08221418EE00121D4B /* Product */,
 			);
 			path = Models;
@@ -719,6 +722,14 @@
 				3CA25518222A484300B286F6 /* ProductsListProvider.swift */,
 			);
 			path = APIProviders;
+			sourceTree = "<group>";
+		};
+		C84AB1492AA4386200DCE7EB /* PostAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C84AB14A2AA4388300DCE7EB /* ABTesting.swift */,
+			);
+			path = PostAPI;
 			sourceTree = "<group>";
 		};
 		CC59E7472AA1B20D0086D7D5 /* Auction */ = {
@@ -935,6 +946,7 @@
 				3C33691F2227DC7B008A5A7A /* TrolleySelectionView.swift in Sources */,
 				3C831C6422E9AF8F00112298 /* STOrderUserInputCell.swift in Sources */,
 				3C4B10E222292EBB009942B7 /* STTapPayViewController.swift in Sources */,
+				C84AB14B2AA4388300DCE7EB /* ABTesting.swift in Sources */,
 				3C831C8A22EAAF7A00112298 /* STPaymentInfoTableViewCell.swift in Sources */,
 				3C990F6C22E5C78200F2FCEA /* ProductDetailView.swift in Sources */,
 				3C546BE722EAC79D0082C655 /* STOrderHeaderView.swift in Sources */,

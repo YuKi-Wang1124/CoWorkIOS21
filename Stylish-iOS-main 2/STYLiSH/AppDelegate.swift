@@ -9,6 +9,7 @@
 import UIKit
 import AdSupport
 import FBSDKCoreKit
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        // lobby style
         let isGridLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
         print(isGridLobby)
         if let isGridLobby = isGridLobby {
@@ -41,6 +43,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let setedLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
             print(setedLobby)
         }
+        
+        // user email
+        if AccessToken.current?.tokenString == nil {
+            UserDefaults.standard.set(nil, forKey: "UserEmail")
+        } else {
+            var string = String()
+            let graphRequest = FBSDKLoginKit.GraphRequest(
+                graphPath: "me",
+                parameters: ["fields": "email, name"],
+                tokenString: AccessToken.current?.tokenString,
+                version: nil,
+                httpMethod: .get
+            )
+            graphRequest.start { (connection, result, error) -> Void in
+                if error == nil {
+                    guard let userDict = result as? [String: Any] else { return }
+                    if let email = userDict["email"] as? String {
+                        string = email
+                        print(string)
+                        UserDefaults.standard.set(email, forKey: "UserEmail")
+                    }
+                } else {
+                    print("error \(error)")
+                }
+            }
+        }
+        
 
         return true
     }

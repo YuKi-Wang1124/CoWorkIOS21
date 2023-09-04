@@ -115,6 +115,9 @@ class ProductDetailViewController: STBaseViewController {
                     }
                 }
             )
+            
+            // MARK: post API add to cart (看要不要分成功失敗)
+            
         }
     }
 
@@ -188,6 +191,8 @@ extension ProductDetailViewController: ProductPickerControllerDelegate {
                 self?.productPickerView.removeFromSuperview()
             }
         )
+        
+        // MARK: post API dismiss
     }
 
     func valueChange(_ controller: ProductPickerController) {

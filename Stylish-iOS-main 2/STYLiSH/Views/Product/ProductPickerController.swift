@@ -56,6 +56,7 @@ class ProductPickerController: UIViewController {
             manipulaterCell(cell, type: .size)
             selectedSize = nil
             delegate?.valueChange(self)
+            // MARK: post API select color
         }
     }
 
@@ -66,6 +67,7 @@ class ProductPickerController: UIViewController {
             guard let cell = tableView.cellForRow(at: indexPath) else { return }
             manipulaterCell(cell, type: .amount)
             delegate?.valueChange(self)
+            // MARK: post API select size
         }
     }
 
@@ -73,6 +75,7 @@ class ProductPickerController: UIViewController {
         guard let index = datas.firstIndex(of: .amount) else { return nil }
         let indexPath = IndexPath(row: index, section: 0)
         guard let cell = tableView.cellForRow(at: indexPath) as? AmountSelectionCell else { return nil }
+        // MARK: post API select amount
         return cell.amount
     }
 
