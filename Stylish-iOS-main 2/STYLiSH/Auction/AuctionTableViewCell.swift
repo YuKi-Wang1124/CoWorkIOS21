@@ -10,6 +10,7 @@ import UIKit
 
 class AuctionTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var hideView: UIView!
     
     @IBOutlet weak var productImageView: UIImageView!
     
@@ -22,16 +23,32 @@ class AuctionTableViewCell: UITableViewCell {
     @IBOutlet weak var addPriceBtn: UIButton!
     
     @IBOutlet weak var confirmBtn: UIButton!
-    
+
+    var countdownTimer: Timer?
+    var secondsRemaining = 0
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-      
     }
-
+    
+    @objc func updateTimer() {
+        if secondsRemaining > 0 {
+            secondsRemaining -= 1
+            updateCountdownLabel()
+        } else {
+            countdownTimer?.invalidate()
+        }
+    }
+    
+    func updateCountdownLabel() {
+        let minutes = secondsRemaining / 60
+        let seconds = secondsRemaining % 60
+        timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
+    }
     
 }
