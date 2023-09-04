@@ -57,7 +57,6 @@ class LobbyViewController: STBaseViewController {
         marketProvider.fetchHots(completion: { [weak self] result in
             switch result {
             case .success(let hots):
-                
                 if UserDefaults.standard.bool(forKey: "IsGridLobby") { // collection view
                     var productList: [Product] = []
                     for hot in hots {
@@ -69,7 +68,6 @@ class LobbyViewController: STBaseViewController {
                 } else {
                     self?.datas = hots
                 }
-                
             case .failure:
                 LKProgressHUD.showFailure(text: "讀取資料失敗！")
             }
