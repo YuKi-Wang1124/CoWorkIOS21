@@ -262,6 +262,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         var request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
+            print(response)
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
@@ -311,40 +312,44 @@ struct AuctionProductData: Codable {
 }
 
 struct AuctionProduct: Codable {
-//    let category: String
-//    let description: String
+    let auctionID: Int
+    let category: String
+    let description: String
     let endTime: Int
-//    let id: String
+    let id: String
 //    let imageBase64: String?
-//    let images: String
+    let images: String
     let mainImage: String
     let minBidUnit: Int
-//    let note: String
-//    let place: String
+    let note: String
+    let place: String
     let startBid: Int
-//    let source: String
-//    let story: String
-//    let texture: String
+    let startTime: Int
+    let source: String
+    let story: String
+    let texture: String
     let title: String
-//    let wash: String
+    let wash: String
 
     enum CodingKeys: String, CodingKey {
-//        case category
-//        case description
+        case auctionID = "auction_id"
+        case category
+        case description
         case endTime = "end_time"
-//        case id
+        case id
 //        case imageBase64 = "image_base64"
-//        case images
+        case images
         case mainImage = "main_image"
         case minBidUnit = "min_bid_unit"
-//        case note
-//        case place
+        case note
+        case place
+        case source
         case startBid = "start_bid"
-//        case source
-//        case story
-//        case texture
+        case startTime = "start_time"
+        case story
+        case texture
         case title
-//        case wash
+        case wash
     }
 }
 

@@ -51,7 +51,9 @@ class TrolleyViewController: STBaseViewController {
 
         fetchData()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "登出", style: .done, target: self, action: #selector(logout))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "登出", style: .done, target: self, action: #selector(logout)
+        )
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGray
     }
 
@@ -67,6 +69,7 @@ class TrolleyViewController: STBaseViewController {
         loginManager.logOut()
         UserDefaults.standard.set("", forKey: "UserEmail")
         UserDefaults.standard.set(nil, forKey: "STYLiSHToken")
+        LKProgressHUD.showSuccess(text: "登出成功！")
     }
     
     private func fetchData() {
