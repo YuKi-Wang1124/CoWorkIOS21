@@ -21,6 +21,10 @@ class AuctionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var addPriceBtn: UIButton!
     
+    @IBOutlet weak var addAmountLabel: UILabel!
+    
+    @IBOutlet weak var totalPriceLabel: UILabel!
+    
     @IBOutlet weak var confirmBtn: UIButton!
     
     override func awakeFromNib() {

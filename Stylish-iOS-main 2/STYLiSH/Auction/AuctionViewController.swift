@@ -32,6 +32,9 @@ class AuctionViewController: UIViewController {
     
     @IBOutlet weak var auctionTableView: UITableView!
     
+    var totalAddAmount = 0
+    var updatePriceIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -39,6 +42,7 @@ class AuctionViewController: UIViewController {
         fetchAuctionProducts()
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
+        auctionTableView.allowsSelection = false
 
         let session = URLSession(configuration: .default,
                                  delegate: self,
@@ -79,10 +83,10 @@ class AuctionViewController: UIViewController {
         webSocket?.cancel(with: .goingAway, reason: "Demo ended".data(using: .utf8))
     }
     
-    func send() {
+    func send(addAmount: Int) {
         let jsonDictionary: [String: Any] = [
             "type": "bid_increment",
-            "number": 100
+            "number": addAmount
         ]
         
         do {
@@ -99,8 +103,6 @@ class AuctionViewController: UIViewController {
     }
     
     func receive() {
-        var messages: String?
-        
         webSocket?.receive(completionHandler: { [weak self] result in
             switch result {
             case .success(let message):
@@ -110,8 +112,6 @@ class AuctionViewController: UIViewController {
                 case .string(let message):
                     
                     print("Get string: \(message)")
-                    messages = message
-                    
                     
                     // MARK: delegate priceArray 更新
                     if let data = message.data(using: .utf8) {
@@ -119,7 +119,7 @@ class AuctionViewController: UIViewController {
                             let decoder = JSONDecoder()
                             let changePrice = try decoder.decode(ChangePrice.self, from: data)
                             let newPrice = changePrice.number
-                            self?.priceArray[0] = String(newPrice)
+                            self?.priceArray[self?.updatePriceIndex ?? 0] = String(newPrice)
                             print(self?.priceArray)
                             DispatchQueue.main.async {
                                 self?.auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
@@ -138,24 +138,6 @@ class AuctionViewController: UIViewController {
             }
             self?.receive()
         })
-        
-        if let messages = messages {
-            print(priceArray)
-            let messengeDict = convertToDictionary(text: messages)
-            priceArray[0] = messengeDict?["number"] as? String ?? "price error"
-            auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-        }
-    }
-    
-    func convertToDictionary(text: String) -> [String: Any]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
     }
     
     func nextTitle() {
@@ -206,14 +188,46 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
         cell?.productImageView.loadImage(imageArray[indexPath.row],
                                          placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
-        cell?.addPriceBtn.addTarget(self, action: #selector(addPriceBtn), for: .touchUpInside)
+        cell?.addPriceBtn.addTarget(self, action: #selector(addPriceAction), for: .touchUpInside)
+        cell?.addPriceBtn.tag = indexPath.row
+        cell?.confirmBtn.addTarget(self, action: #selector(comfirmAction), for: .touchUpInside)
+        
+        if totalAddAmount != 0 {
+            cell?.confirmBtn.isHidden = false
+            cell?.addAmountLabel.isHidden = false
+            cell?.addAmountLabel.text = "+ \(totalAddAmount)"
+            cell?.totalPriceLabel.isHidden = false
+            cell?.totalPriceLabel.text = "以 \((Int(priceArray[indexPath.row]) ?? 0) + totalAddAmount) 元競標"
+        } else {
+            cell?.addAmountLabel.isHidden = true
+            cell?.totalPriceLabel.isHidden = true
+            cell?.confirmBtn.isHidden = true
+        }
         
         return cell ?? UITableViewCell()
     }
     
-    @objc func addPriceBtn() {
-        send()
+    @objc func addPriceAction(_ sender: UIButton) {
+        let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
+        let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
+        if let indexPath = indexPath {
+            totalAddAmount += Int(minBidUnit[indexPath.row]) ?? 0
+            auctionTableView.reloadRows(at: [indexPath], with: .none)
+        }
         print("ZZZZZZZZ")
+    }
+    
+    @objc func comfirmAction(_ sender: UIButton) {
+        let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
+        let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
+
+        if let indexPath = indexPath {
+            auctionTableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
+        updatePriceIndex = indexPath?.row ?? 0
+        send(addAmount: totalAddAmount)
+        totalAddAmount = 0
     }
     
     private func fetchAuctionProducts() {
