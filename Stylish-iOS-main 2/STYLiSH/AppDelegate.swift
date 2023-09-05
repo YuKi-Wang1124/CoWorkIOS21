@@ -31,18 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        // device ID
+        let id = UUID()
+        UserDefaults.standard.set(id.uuidString.lowercased(), forKey: "DeviceID")
+        
         // lobby style
-        let isGridLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
-        print(isGridLobby)
-        if let isGridLobby = isGridLobby {
-            print("Not First launch")
-            print(isGridLobby)
-        } else {
-            UserDefaults.standard.set(Bool.random(), forKey: "IsGridLobby")
-            print("First launch")
-            let setedLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
-            print(setedLobby)
-        }
+        UserDefaults.standard.set(Bool.random(), forKey: "IsGridLobby")
         
         // user email
         if AccessToken.current?.tokenString == nil {
@@ -89,5 +83,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // device ID
         let id = UUID()
         UserDefaults.standard.set(id.uuidString.lowercased(), forKey: "DeviceID")
+        
+        // lobby style
+        UserDefaults.standard.set(Bool.random(), forKey: "IsGridLobby")
+//        let isGridLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
+//        print(isGridLobby)
+//        if let isGridLobby = isGridLobby {
+//            print("Not First launch")
+//            print(isGridLobby)
+//        } else {
+//            UserDefaults.standard.set(Bool.random(), forKey: "IsGridLobby")
+//            print("First launch")
+//            let setedLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
+//            print(setedLobby)
+//        }
     }
 }

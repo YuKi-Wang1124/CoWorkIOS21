@@ -110,8 +110,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dzT-mV-MUn" userLabel="Cell Hide View">
                                                     <rect key="frame" x="0.0" y="0.0" width="393" height="250"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="待拍賣商品" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yJ-NA-1xd">
-                                                            <rect key="frame" x="0.0" y="112" width="393" height="26.333333333333343"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="待拍賣商品" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yJ-NA-1xd">
+                                                            <rect key="frame" x="0.0" y="126.99999999999999" width="393" height="26.333333333333329"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -120,7 +120,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="1yJ-NA-1xd" firstAttribute="leading" secondItem="dzT-mV-MUn" secondAttribute="leading" id="QxW-SF-hqs"/>
-                                                        <constraint firstItem="1yJ-NA-1xd" firstAttribute="centerY" secondItem="dzT-mV-MUn" secondAttribute="centerY" id="dUP-Eh-JOY"/>
+                                                        <constraint firstItem="1yJ-NA-1xd" firstAttribute="centerY" secondItem="dzT-mV-MUn" secondAttribute="centerY" constant="15" id="dUP-Eh-JOY"/>
                                                         <constraint firstAttribute="trailing" secondItem="1yJ-NA-1xd" secondAttribute="trailing" id="sI1-Wb-wnl"/>
                                                     </constraints>
                                                 </view>
@@ -174,6 +174,7 @@
                                             <outlet property="cancelBtn" destination="6I9-vv-orQ" id="Hbi-wN-0QT"/>
                                             <outlet property="confirmBtn" destination="Vz2-i6-Cdu" id="L8n-dC-Piu"/>
                                             <outlet property="hideView" destination="dzT-mV-MUn" id="2uo-56-P8d"/>
+                                            <outlet property="hideViewLabel" destination="1yJ-NA-1xd" id="sHA-17-NFV"/>
                                             <outlet property="priceLabel" destination="D7P-EY-sZT" id="JTd-Th-LCN"/>
                                             <outlet property="productImageView" destination="c3O-h8-l0h" id="etA-1P-Ycq"/>
                                             <outlet property="productLabel" destination="7HK-e8-E5b" id="OPg-fM-lWJ"/>

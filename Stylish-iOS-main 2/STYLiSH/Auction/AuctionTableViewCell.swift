@@ -12,6 +12,8 @@ class AuctionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var hideView: UIView!
     
+    @IBOutlet weak var hideViewLabel: UILabel!
+    
     @IBOutlet weak var productImageView: UIImageView!
     
     @IBOutlet weak var timeLabel: UILabel!
@@ -35,14 +37,16 @@ class AuctionTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        if secondsRemaining != 0 {
-            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-        }
+        print("a: ",secondsRemaining)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        print("c: ",secondsRemaining)
+        if secondsRemaining != 0 {
+            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+            print("b: ",secondsRemaining)
+        }
     }
     
     @objc func updateTimer() {
@@ -56,9 +60,10 @@ class AuctionTableViewCell: UITableViewCell {
     }
     
     func updateCountdownLabel() {
-        let minutes = secondsRemaining / 60
+        let hours = secondsRemaining / 60 / 60
+        let minutes = secondsRemaining / 60 % 60
         let seconds = secondsRemaining % 60
-        timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
+        timeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
     func createNotificationContent() {
@@ -69,7 +74,7 @@ class AuctionTableViewCell: UITableViewCell {
 //        content.badge = 1
         content.sound = UNNotificationSound.defaultCritical
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
         

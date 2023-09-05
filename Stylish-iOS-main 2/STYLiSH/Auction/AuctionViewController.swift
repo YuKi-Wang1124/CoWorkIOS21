@@ -19,6 +19,8 @@ class AuctionViewController: UIViewController {
     private var minBidUnit = [String]()
     var marqueeTitleArray = [String]()
     private var timeDiffArray = [Int]()
+    private var startTimeArray = [Int]()
+    private var endTimeArray = [Int]()
 
     var timer: Timer?
     var marqueeIndex = 0
@@ -29,6 +31,8 @@ class AuctionViewController: UIViewController {
     
     var totalAddAmount = 0
     var updatePriceIndex = 0
+    
+    var auctionSuccessCheckoutDeadline: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,10 +81,11 @@ class AuctionViewController: UIViewController {
         webSocket?.cancel(with: .goingAway, reason: "Demo ended".data(using: .utf8))
     }
     
-    func send(addAmount: Int) {
+    func sendBid(addAmount: Int) {
         let jsonDictionary: [String: Any] = [
             "type": "bid_increment",
-            "number": addAmount
+            "number": addAmount,
+            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
         ]
         
         do {
@@ -174,16 +179,46 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = auctionTableView.dequeueReusableCell(
             withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
-        if indexPath.row == 0 {
-            cell?.hideView.isHidden = true
-            cell?.secondsRemaining = timeDiffArray[indexPath.row]
+        if startTimeArray[indexPath.row] < Int(Date().timeIntervalSince1970) {
+            if endTimeArray[indexPath.row] > Int(Date().timeIntervalSince1970) {
+                // 競標中
+                cell?.hideView.isHidden = true
+                let timeDifferenceInSeconds = endTimeArray[indexPath.row] - Int(Date().timeIntervalSince1970)
+                let minutes = Int(timeDifferenceInSeconds) / 60
+                let seconds = Int(timeDifferenceInSeconds) % 60
+                let totalSeconds = minutes * 60 + seconds
+                cell?.secondsRemaining = 10
+            } else {
+                // 競標結束
+                cell?.timeLabel.text = "競標結束！"
+                if let auctionSuccessCheckoutDeadline = auctionSuccessCheckoutDeadline {
+                    let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessCheckoutDeadline))
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+                    dateFormatter.locale = NSLocale.current
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                    let strDate = dateFormatter.string(from: date)
+                    cell?.hideViewLabel.text = "恭喜得標！\n 請於 \(strDate) 以前結帳"
+                } else {
+                    cell?.hideViewLabel.text = "您未得標"
+                }
+            }
         } else {
+            // 競標還沒開始
             cell?.timeLabel.text = "尚未開始競標"
+            let startTimeStamp = startTimeArray[indexPath.row]
+            let date = Date(timeIntervalSince1970: TimeInterval(startTimeStamp))
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" 
+            let strDate = dateFormatter.string(from: date)
+            cell?.hideViewLabel.text = "即將於 \(strDate) 開始競標"
         }
         
         cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexPath.row], for: .normal)
         
-        cell?.secondsRemaining = timeDiffArray[indexPath.row]
+        //cell?.secondsRemaining = timeDiffArray[indexPath.row]
         
         cell?.productLabel.text = titleArray[indexPath.row]
         cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
@@ -231,7 +266,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         updatePriceIndex = indexPath?.row ?? 0
-        send(addAmount: totalAddAmount)
+        sendBid(addAmount: totalAddAmount)
         totalAddAmount = 0
         
         LKProgressHUD.showSuccess(text: "競標成功！")
@@ -246,8 +281,6 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         if let indexPath = indexPath {
             auctionTableView.reloadRows(at: [indexPath], with: .none)
         }
-    
-        
     }
     
     private func fetchAuctionProducts() {
@@ -259,10 +292,9 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        var request = URLRequest(url: url)
+        let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            print(response)
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
@@ -285,6 +317,9 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         
                         let currentTimeStamp = Date().timeIntervalSince1970
                         let endTimestamp = $0.endTime / 1000
+                        let startTimestamp = $0.startTime / 1000
+                        self.startTimeArray.append(startTimestamp)
+                        self.endTimeArray.append(endTimestamp)
                         let timeDifferenceInSeconds = Double(endTimestamp) - currentTimeStamp
                         let minutes = Int(timeDifferenceInSeconds) / 60
                         let seconds = Int(timeDifferenceInSeconds) % 60
@@ -304,6 +339,25 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }.resume()
+    }
+    
+    private func fetchLatestPrice() {
+        let jsonDictionary: [String: Any] = [
+            "type": "initialize",
+            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+        ]
+        
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            
+            webSocket?.send(.data(data)) { error in
+                if let error = error {
+                    print("Send error: \(error)")
+                }
+            }
+        } catch {
+            print("JSON serialization error: \(error)")
+        }
     }
 }
 
