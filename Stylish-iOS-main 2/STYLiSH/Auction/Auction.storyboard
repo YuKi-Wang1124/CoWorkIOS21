@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Auction View Controller-->
+        <!--拍賣-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController storyboardIdentifier="Auction" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="AuctionViewController" customModule="STYLiSH" customModuleProvider="target" sceneMemberID="viewController">
@@ -97,7 +97,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="bg4-n4-tkO"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                                     <color key="textColor" systemColor="systemRedColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -107,13 +107,34 @@
                                                     <color key="textColor" name="B2"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dzT-mV-MUn" userLabel="Cell Hide View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="250"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="待拍賣商品" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yJ-NA-1xd">
+                                                            <rect key="frame" x="0.0" y="112" width="393" height="26.333333333333343"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.56000000000000005" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="1yJ-NA-1xd" firstAttribute="leading" secondItem="dzT-mV-MUn" secondAttribute="leading" id="QxW-SF-hqs"/>
+                                                        <constraint firstItem="1yJ-NA-1xd" firstAttribute="centerY" secondItem="dzT-mV-MUn" secondAttribute="centerY" id="dUP-Eh-JOY"/>
+                                                        <constraint firstAttribute="trailing" secondItem="1yJ-NA-1xd" secondAttribute="trailing" id="sI1-Wb-wnl"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Vz2-i6-Cdu" firstAttribute="top" secondItem="VkU-y7-Ldo" secondAttribute="bottom" constant="16" id="23I-cc-50Y"/>
+                                                <constraint firstItem="dzT-mV-MUn" firstAttribute="left" secondItem="IRX-Ys-LMc" secondAttribute="left" id="2zH-aP-0fc"/>
                                                 <constraint firstItem="eNR-GA-7mk" firstAttribute="top" secondItem="eDF-xj-ekg" secondAttribute="bottom" constant="8" id="6Lm-Fg-YIS"/>
                                                 <constraint firstItem="eNR-GA-7mk" firstAttribute="leading" secondItem="c3O-h8-l0h" secondAttribute="trailing" constant="16" id="71P-3M-64v"/>
+                                                <constraint firstAttribute="bottom" secondItem="dzT-mV-MUn" secondAttribute="bottom" id="8ts-qZ-X1W"/>
                                                 <constraint firstItem="eDF-xj-ekg" firstAttribute="leading" secondItem="c3O-h8-l0h" secondAttribute="trailing" constant="16" id="9as-PZ-uSZ"/>
+                                                <constraint firstItem="dzT-mV-MUn" firstAttribute="top" secondItem="IRX-Ys-LMc" secondAttribute="top" id="D51-0C-9xk"/>
                                                 <constraint firstItem="VkU-y7-Ldo" firstAttribute="top" secondItem="tda-7P-M0x" secondAttribute="bottom" constant="6" id="FwK-BG-ecy"/>
+                                                <constraint firstAttribute="right" secondItem="dzT-mV-MUn" secondAttribute="right" id="JIg-7l-AT5"/>
                                                 <constraint firstAttribute="bottom" secondItem="tnX-Pv-iLe" secondAttribute="bottom" constant="72" id="MUn-Vh-A4Y"/>
                                                 <constraint firstItem="7HK-e8-E5b" firstAttribute="top" secondItem="eNR-GA-7mk" secondAttribute="bottom" constant="16" id="Qpt-gy-9aB"/>
                                                 <constraint firstAttribute="bottom" secondItem="Vz2-i6-Cdu" secondAttribute="bottom" constant="16" id="VZt-4P-rHF"/>
@@ -140,6 +161,7 @@
                                             <outlet property="addAmountLabel" destination="tda-7P-M0x" id="iiH-O3-4fv"/>
                                             <outlet property="addPriceBtn" destination="tnX-Pv-iLe" id="kIg-mo-VCJ"/>
                                             <outlet property="confirmBtn" destination="Vz2-i6-Cdu" id="L8n-dC-Piu"/>
+                                            <outlet property="hideView" destination="dzT-mV-MUn" id="2uo-56-P8d"/>
                                             <outlet property="priceLabel" destination="D7P-EY-sZT" id="JTd-Th-LCN"/>
                                             <outlet property="productImageView" destination="c3O-h8-l0h" id="etA-1P-Ycq"/>
                                             <outlet property="productLabel" destination="7HK-e8-E5b" id="OPg-fM-lWJ"/>
@@ -162,7 +184,7 @@
                             <constraint firstItem="qFp-fK-qLq" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Zln-ZN-vlc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="0Ne-dz-XyP"/>
+                    <navigationItem key="navigationItem" title="拍賣" id="0Ne-dz-XyP"/>
                     <connections>
                         <outlet property="auctionTableView" destination="YuD-m8-DOD" id="5wN-OQ-oTD"/>
                         <outlet property="marqueeLabel" destination="dIi-Uz-cwZ" id="UF6-vl-pjQ"/>

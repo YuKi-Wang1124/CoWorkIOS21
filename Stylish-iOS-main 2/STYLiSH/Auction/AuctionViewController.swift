@@ -13,23 +13,18 @@ class AuctionViewController: UIViewController {
     private var webSocket: URLSessionWebSocketTask?
     
     private var auctionDataArray = [AuctionProductData]()
-    
     private var titleArray = [String]()
     private var priceArray = [String]()
     private var imageArray = [String]()
     private var minBidUnit = [String]()
-    private var timeArray = [String]()
+    var marqueeTitleArray = [String]()
+    private var timeDiffArray = [Int]()
 
     var timer: Timer?
-    
     var marqueeIndex = 0
-    
     var cellCount = 0
     
     @IBOutlet weak var marqueeLabel: UILabel!
-    
-    var marqueeTitleArray = [String]()
-    
     @IBOutlet weak var auctionTableView: UITableView!
     
     var totalAddAmount = 0
@@ -37,12 +32,11 @@ class AuctionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-        self.title = "拍賣"
-        fetchAuctionProducts()
+
+        auctionTableView.allowsSelection = false
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
-        auctionTableView.allowsSelection = false
+        fetchAuctionProducts()
 
         let session = URLSession(configuration: .default,
                                  delegate: self,
@@ -141,13 +135,15 @@ class AuctionViewController: UIViewController {
     }
     
     func nextTitle() {
-        marqueeIndex = (marqueeIndex + 1) % marqueeTitleArray.count
-        let transition = CATransition()
-        transition.duration = 0.8
-        transition.type = .push
-        transition.subtype = .fromRight
-        marqueeLabel.text = marqueeTitleArray[marqueeIndex]
-        marqueeLabel.layer.add(transition, forKey: "nextTitle")
+        if marqueeTitleArray.isEmpty == false {
+            marqueeIndex = (marqueeIndex + 1) % marqueeTitleArray.count
+            let transition = CATransition()
+            transition.duration = 0.8
+            transition.type = .push
+            transition.subtype = .fromRight
+            marqueeLabel.text = marqueeTitleArray[marqueeIndex]
+            marqueeLabel.layer.add(transition, forKey: "nextTitle")
+        }
     }
 }
 
@@ -168,10 +164,6 @@ extension AuctionViewController: URLSessionWebSocketDelegate {
     }
 }
 
-protocol ReceieveWebSocketDelegate {
-    func receiveWebsocketData(text: String)
-}
-
 extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cellCount
@@ -182,10 +174,20 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = auctionTableView.dequeueReusableCell(
             withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
+        if indexPath.row == 0 {
+            cell?.hideView.isHidden = true
+            cell?.secondsRemaining = timeDiffArray[indexPath.row]
+        } else {
+            cell?.timeLabel.text = "尚未開始競標"
+        }
+        
         cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexPath.row], for: .normal)
-        cell?.timeLabel.text = timeArray[indexPath.row]
+        
+        cell?.secondsRemaining = timeDiffArray[indexPath.row]
+        
         cell?.productLabel.text = titleArray[indexPath.row]
         cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
+
         cell?.productImageView.loadImage(imageArray[indexPath.row],
                                          placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
         cell?.addPriceBtn.addTarget(self, action: #selector(addPriceAction), for: .touchUpInside)
@@ -262,14 +264,13 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         self.minBidUnit.append(String($0.minBidUnit))
                         self.priceArray.append(String($0.startBid))
                         
-                        let timestamp = $0.endTime
-                        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.locale = Locale.current
-                        dateFormatter.dateStyle = .medium
-                        dateFormatter.timeStyle = .medium
-                        let localTime = dateFormatter.string(from: date)
-                        self.timeArray.append(localTime)
+                        let currentTimeStamp = Date().timeIntervalSince1970
+                        let endTimestamp = $0.endTime / 1000
+                        let timeDifferenceInSeconds = Double(endTimestamp) - currentTimeStamp
+                        let minutes = Int(timeDifferenceInSeconds) / 60
+                        let seconds = Int(timeDifferenceInSeconds) % 60
+                        let totalSeconds = minutes * 60 + seconds
+                        self.timeDiffArray.append(totalSeconds)
                     }
                     
                     self.cellCount = self.titleArray.count
@@ -286,8 +287,6 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         }.resume()
     }
 }
-
-
 
 struct AuctionProductData: Codable {
     let data: [AuctionProduct]
