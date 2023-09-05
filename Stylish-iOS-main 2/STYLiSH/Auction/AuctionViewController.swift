@@ -32,6 +32,7 @@ class AuctionViewController: UIViewController {
     var totalAddAmount = 0
     var updatePriceIndex = 0
     
+    // 若競標成功就給值
     var auctionSuccessCheckoutDeadline: Int?
     
     override func viewDidLoad() {
@@ -187,7 +188,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                 let minutes = Int(timeDifferenceInSeconds) / 60
                 let seconds = Int(timeDifferenceInSeconds) % 60
                 let totalSeconds = minutes * 60 + seconds
-                cell?.secondsRemaining = 10
+                cell?.secondsRemaining = totalSeconds
             } else {
                 // 競標結束
                 cell?.timeLabel.text = "競標結束！"
@@ -254,7 +255,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             totalAddAmount += Int(minBidUnit[indexPath.row]) ?? 0
             auctionTableView.reloadRows(at: [indexPath], with: .none)
         }
-        print("ZZZZZZZZ")
+        print("press add btn")
     }
     
     @objc func comfirmAction(_ sender: UIButton) {
@@ -318,12 +319,12 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         let currentTimeStamp = Date().timeIntervalSince1970
                         let endTimestamp = $0.endTime / 1000
                         let startTimestamp = $0.startTime / 1000
-                        self.startTimeArray.append(startTimestamp)
-                        self.endTimeArray.append(endTimestamp)
                         let timeDifferenceInSeconds = Double(endTimestamp) - currentTimeStamp
                         let minutes = Int(timeDifferenceInSeconds) / 60
                         let seconds = Int(timeDifferenceInSeconds) % 60
                         let totalSeconds = minutes * 60 + seconds
+                        self.startTimeArray.append(startTimestamp)
+                        self.endTimeArray.append(endTimestamp)
                         self.timeDiffArray.append(totalSeconds)
                     }
                     

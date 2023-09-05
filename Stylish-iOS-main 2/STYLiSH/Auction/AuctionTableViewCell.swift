@@ -37,16 +37,18 @@ class AuctionTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("a: ",secondsRemaining)
+        print("a: ", secondsRemaining)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        print("c: ",secondsRemaining)
+        print("c: ", secondsRemaining)
+        countdownTimer = nil
         if secondsRemaining != 0 {
             countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-            print("b: ",secondsRemaining)
+            print("b: ", secondsRemaining)
         }
+        
     }
     
     @objc func updateTimer() {
@@ -74,7 +76,7 @@ class AuctionTableViewCell: UITableViewCell {
 //        content.badge = 1
         content.sound = UNNotificationSound.defaultCritical
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2, repeats: false)
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
         
