@@ -48,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if AccessToken.current?.tokenString == nil {
             UserDefaults.standard.set(nil, forKey: "UserEmail")
         } else {
-            var string = String()
             let graphRequest = FBSDKLoginKit.GraphRequest(
                 graphPath: "me",
                 parameters: ["fields": "email, name"],
@@ -60,8 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if error == nil {
                     guard let userDict = result as? [String: Any] else { return }
                     if let email = userDict["email"] as? String {
-                        string = email
-                        print(string)
                         UserDefaults.standard.set(email, forKey: "UserEmail")
                     }
                 } else {

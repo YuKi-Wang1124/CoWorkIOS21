@@ -21,7 +21,7 @@ struct ABTest: Codable {
     var category: String = String()
     var event: String = String()
     var eventDetail: String = String()
-    var userEmail: String = String()
+    var userEmail: String = UserDefaults.standard.string(forKey: "UserEmail") ?? ""
     var userID: String = UserDefaults.standard.string(forKey: "DeviceID") ?? "invalid ID"
 
     enum CodingKeys: String, CodingKey {

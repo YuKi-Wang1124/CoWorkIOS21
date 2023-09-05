@@ -209,4 +209,3 @@ extension LobbyViewController: LobbyGridViewDelegate {
         show(detailVC, sender: nil)
     }
 }
-
