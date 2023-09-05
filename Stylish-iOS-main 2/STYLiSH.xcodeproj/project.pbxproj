@@ -130,6 +130,7 @@
 		CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */; };
 		CC59E74D2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */; };
 		CC59E7532AA357A20086D7D5 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */; };
+		CC59E7572AA6B81C0086D7D5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7562AA6B81C0086D7D5 /* MapViewController.swift */; };
 		D306B883B370DFD3ED8ACD74 /* Pods_STYLiSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */; };
 /* End PBXBuildFile section */
 
@@ -271,6 +272,7 @@
 		CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionViewController.swift; sourceTree = "<group>"; };
 		CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionTableViewCell.swift; sourceTree = "<group>"; };
 		CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		CC59E7562AA6B81C0086D7D5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		E921004E251C9FC3CBC174F5 /* Pods-STYLiSH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.release.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.release.xcconfig"; sourceTree = "<group>"; };
 		F551E8F447D7C8DC42B53B98 /* Pods-STYLiSH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.debug.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -550,6 +552,7 @@
 			isa = PBXGroup;
 			children = (
 				CC59E7472AA1B20D0086D7D5 /* Auction */,
+				CC59E7582AA6B8470086D7D5 /* Map */,
 				3CB8011F2229A0580029A552 /* Third Party Wrappers */,
 				3C09F51F22115A9F00C5B3E2 /* Extensions */,
 				3CD2913122113D12008B8A2D /* Resource */,
@@ -741,6 +744,14 @@
 				CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */,
 			);
 			path = Auction;
+			sourceTree = "<group>";
+		};
+		CC59E7582AA6B8470086D7D5 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				CC59E7562AA6B81C0086D7D5 /* MapViewController.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		F26A8A19BFED7C956C38BFE8 /* Frameworks */ = {
@@ -998,6 +1009,7 @@
 				3CE7A51322305916009FF003 /* UserProvider.swift in Sources */,
 				3CE7A51E22308D34009FF003 /* OrderObject.swift in Sources */,
 				3CD9BB35223B882C0012C00D /* AuthViewController.swift in Sources */,
+				CC59E7572AA6B81C0086D7D5 /* MapViewController.swift in Sources */,
 				58A77AA0262F3CC800B88679 /* LSColor+Extension.swift in Sources */,
 				3CB801212229A0970029A552 /* KingFisherWrapper.swift in Sources */,
 				3CFAC67322EEF71C00785FAB /* String+Extension.swift in Sources */,

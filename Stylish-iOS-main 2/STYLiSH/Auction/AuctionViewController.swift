@@ -13,28 +13,23 @@ class AuctionViewController: UIViewController {
     private var webSocket: URLSessionWebSocketTask?
     
     private var auctionDataArray = [AuctionProductData]()
-    
     private var titleArray = [String]()
     private var priceArray = [String]()
     private var imageArray = [String]()
     private var minBidUnit = [String]()
+    var marqueeTitleArray = [String]()
     private var timeDiffArray = [Int]()
 
     var timer: Timer?
-    
     var marqueeIndex = 0
-    
     var cellCount = 0
     
     @IBOutlet weak var marqueeLabel: UILabel!
-    
-    var marqueeTitleArray = [String]()
-    
     @IBOutlet weak var auctionTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
         fetchAuctionProducts()
@@ -161,6 +156,9 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         
         if indexPath.row == 0 {
             cell?.hideView.isHidden = true
+            cell?.secondsRemaining = timeDiffArray[indexPath.row]
+        } else {
+            cell?.timeLabel.text = "尚未開始競標"
         }
         
         cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexPath.row], for: .normal)
