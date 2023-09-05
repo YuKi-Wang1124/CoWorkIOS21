@@ -151,4 +151,11 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         return CGSize(width: UIScreen.width, height: 48.0)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 1 && indexPath.row == 3 {
+            let mapVC = MapViewController()
+            self.navigationController?.pushViewController(mapVC, animated: true)
+        }
+    }
 }

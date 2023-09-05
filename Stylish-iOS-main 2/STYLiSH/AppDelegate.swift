@@ -70,7 +70,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.carPlay,.sound]) { (granted, error) in
+            if granted {
+                print("允許開啟")
+            } else {
+                print("拒絕接受開啟")
+            }
+        }
+        
         return true
     }
 
