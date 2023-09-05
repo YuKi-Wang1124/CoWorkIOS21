@@ -225,7 +225,8 @@ class ProductViewController: UIViewController {
 extension ProductViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text,
-           searchText.isEmpty == false {
+            searchText.isEmpty == false  {
+
             serchView.isHidden = false
             fetchSearchProducts(text: searchText)
         } else {
@@ -260,7 +261,7 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
         }
         return cell ?? UICollectionViewCell()
     }
-
+    
     private func fetchSearchProducts(text: String) {
         let baseURL = "http://3.24.100.29/api/1.0/products/search"
         let keywordEncoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
