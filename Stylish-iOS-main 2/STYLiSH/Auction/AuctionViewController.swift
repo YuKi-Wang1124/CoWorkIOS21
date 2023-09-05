@@ -27,9 +27,13 @@ class AuctionViewController: UIViewController {
     @IBOutlet weak var marqueeLabel: UILabel!
     @IBOutlet weak var auctionTableView: UITableView!
     
+    var totalAddAmount = 0
+    var updatePriceIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        auctionTableView.allowsSelection = false
         auctionTableView.dataSource = self
         auctionTableView.delegate = self
         fetchAuctionProducts()
@@ -50,11 +54,15 @@ class AuctionViewController: UIViewController {
         timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
             self.nextTitle()
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer?.invalidate()
     }
     
     func ping() {
@@ -69,11 +77,10 @@ class AuctionViewController: UIViewController {
         webSocket?.cancel(with: .goingAway, reason: "Demo ended".data(using: .utf8))
     }
     
-    func send() {
-        
+    func send(addAmount: Int) {
         let jsonDictionary: [String: Any] = [
             "type": "bid_increment",
-            "number": 100
+            "number": addAmount
         ]
         
         do {
@@ -100,21 +107,31 @@ class AuctionViewController: UIViewController {
                     
                     print("Get string: \(message)")
                     
+                    // MARK: delegate priceArray 更新
+                    if let data = message.data(using: .utf8) {
+                        do {
+                            let decoder = JSONDecoder()
+                            let changePrice = try decoder.decode(ChangePrice.self, from: data)
+                            let newPrice = changePrice.number
+                            self?.priceArray[self?.updatePriceIndex ?? 0] = String(newPrice)
+                            print(self?.priceArray)
+                            DispatchQueue.main.async {
+                                self?.auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                            }
+                            
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    
                 @unknown default:
                     break
                 }
             case .failure(let error):
                 print("Receive error: \(error)")
             }
-            
             self?.receive()
         })
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-            super.viewDidDisappear(animated)
-            
-            timer?.invalidate()
     }
     
     func nextTitle() {
@@ -128,19 +145,21 @@ class AuctionViewController: UIViewController {
             marqueeLabel.layer.add(transition, forKey: "nextTitle")
         }
     }
-    
 }
 
-
 extension AuctionViewController: URLSessionWebSocketDelegate {
-
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didOpenWithProtocol protocol: String?) {
         print("Did connect to socket")
         ping()
         receive()
     }
 
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
+    func urlSession(_ session: URLSession,
+                    webSocketTask: URLSessionWebSocketTask,
+                    didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
+                    reason: Data?) {
         print("Did close connection with reason: \(String(describing: reason))")
     }
 }
@@ -152,7 +171,8 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = auctionTableView.dequeueReusableCell(withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
+        let cell = auctionTableView.dequeueReusableCell(
+            withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
         if indexPath.row == 0 {
             cell?.hideView.isHidden = true
@@ -167,16 +187,49 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell?.productLabel.text = titleArray[indexPath.row]
         cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
-        cell?.productImageView.loadImage(imageArray[indexPath.row], placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
-        cell?.addPriceBtn.addTarget(self, action: #selector(addPriceBtn), for: .touchUpInside)
-        cell?.selectionStyle = .none
+
+        cell?.productImageView.loadImage(imageArray[indexPath.row],
+                                         placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
+        cell?.addPriceBtn.addTarget(self, action: #selector(addPriceAction), for: .touchUpInside)
+        cell?.addPriceBtn.tag = indexPath.row
+        cell?.confirmBtn.addTarget(self, action: #selector(comfirmAction), for: .touchUpInside)
+        
+        if totalAddAmount != 0 {
+            cell?.confirmBtn.isHidden = false
+            cell?.addAmountLabel.isHidden = false
+            cell?.addAmountLabel.text = "+ \(totalAddAmount)"
+            cell?.totalPriceLabel.isHidden = false
+            cell?.totalPriceLabel.text = "以 \((Int(priceArray[indexPath.row]) ?? 0) + totalAddAmount) 元競標"
+        } else {
+            cell?.addAmountLabel.isHidden = true
+            cell?.totalPriceLabel.isHidden = true
+            cell?.confirmBtn.isHidden = true
+        }
+        
         return cell ?? UITableViewCell()
     }
     
-    @objc func addPriceBtn() {
-        send()
-        
+    @objc func addPriceAction(_ sender: UIButton) {
+        let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
+        let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
+        if let indexPath = indexPath {
+            totalAddAmount += Int(minBidUnit[indexPath.row]) ?? 0
+            auctionTableView.reloadRows(at: [indexPath], with: .none)
+        }
         print("ZZZZZZZZ")
+    }
+    
+    @objc func comfirmAction(_ sender: UIButton) {
+        let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
+        let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
+
+        if let indexPath = indexPath {
+            auctionTableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
+        updatePriceIndex = indexPath?.row ?? 0
+        send(addAmount: totalAddAmount)
+        totalAddAmount = 0
     }
     
     private func fetchAuctionProducts() {
@@ -275,4 +328,9 @@ struct AuctionProduct: Codable {
         case title
 //        case wash
     }
+}
+
+struct ChangePrice: Codable {
+    var type: String = String()
+    var number: Int = Int()
 }

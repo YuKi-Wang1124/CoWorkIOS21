@@ -35,6 +35,8 @@ class LobbyViewController: STBaseViewController {
     }
 
     private let marketProvider = MarketProvider()
+    
+    let category = "hot"
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -138,11 +140,12 @@ extension LobbyViewController: LobbyViewDelegate {
             return
         }
         detailVC.product = datas[indexPath.section].products[indexPath.row]
+        detailVC.fromCategory = category
         show(detailVC, sender: nil)
         
         // MARK: post API
         HTTPClient.shared.abTestPostAPI(
-            category: "hot",
+            category: category,
             event: Event.viewItem.rawValue,
             eventDetail: String(datas[indexPath.section].products[indexPath.row].id)
         )
@@ -190,7 +193,7 @@ extension LobbyViewController: LobbyGridViewDelegate {
         
         // MARK: post API
         HTTPClient.shared.abTestPostAPI(
-            category: "hot",
+            category: category,
             event: Event.viewItem.rawValue,
             eventDetail: String(product.id)
         )
@@ -202,8 +205,7 @@ extension LobbyViewController: LobbyGridViewDelegate {
         )
         guard let detailVC = productDetailVC as? ProductDetailViewController else { return }
         detailVC.product = product
-        detailVC.fromCategory = "Hot"
+        detailVC.fromCategory = category
         show(detailVC, sender: nil)
     }
 }
-

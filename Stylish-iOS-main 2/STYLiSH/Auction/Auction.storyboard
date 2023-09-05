@@ -55,7 +55,7 @@
                                                     <color key="textColor" name="B2"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="總計180000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VkU-y7-Ldo">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="總計180000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VkU-y7-Ldo" userLabel="Total Price Label">
                                                     <rect key="frame" x="298.33333333333331" y="166" width="78.666666666666686" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" name="B2"/>
@@ -158,6 +158,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="addAmountLabel" destination="tda-7P-M0x" id="iiH-O3-4fv"/>
                                             <outlet property="addPriceBtn" destination="tnX-Pv-iLe" id="kIg-mo-VCJ"/>
                                             <outlet property="confirmBtn" destination="Vz2-i6-Cdu" id="L8n-dC-Piu"/>
                                             <outlet property="hideView" destination="dzT-mV-MUn" id="2uo-56-P8d"/>
@@ -165,6 +166,7 @@
                                             <outlet property="productImageView" destination="c3O-h8-l0h" id="etA-1P-Ycq"/>
                                             <outlet property="productLabel" destination="7HK-e8-E5b" id="OPg-fM-lWJ"/>
                                             <outlet property="timeLabel" destination="eDF-xj-ekg" id="gng-md-sPa"/>
+                                            <outlet property="totalPriceLabel" destination="VkU-y7-Ldo" id="JeV-6Z-tQe"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

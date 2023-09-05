@@ -7,6 +7,7 @@
 //
 
 import KeychainAccess
+import FBSDKLoginKit
 
 class KeyChainManager {
 
@@ -38,6 +39,26 @@ class KeyChainManager {
                 return
             }
             service[uuid] = newValue
+        }
+    }
+    
+    func saveEmail() {
+        let graphRequest = FBSDKLoginKit.GraphRequest(
+            graphPath: "me",
+            parameters: ["fields": "email, name"],
+            tokenString: AccessToken.current?.tokenString,
+            version: nil,
+            httpMethod: .get
+        )
+        graphRequest.start { (connection, result, error) -> Void in
+            if error == nil {
+                guard let userDict = result as? [String: Any] else { return }
+                if let email = userDict["email"] as? String {
+                    UserDefaults.standard.set(email, forKey: "UserEmail")
+                }
+            } else {
+                print("error \(error)")
+            }
         }
     }
 }

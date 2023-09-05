@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class TrolleyViewController: STBaseViewController {
 
@@ -49,6 +50,9 @@ class TrolleyViewController: STBaseViewController {
         tableView.lk_registerCellWithNib(identifier: String(describing: TrolleyTableViewCell.self), bundle: nil)
 
         fetchData()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "登出", style: .done, target: self, action: #selector(logout))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGray
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,6 +62,13 @@ class TrolleyViewController: STBaseViewController {
     }
     
     // MARK: - Action
+    @objc func logout(_ sender: UIButton) {
+        let loginManager = LoginManager()
+        loginManager.logOut()
+        UserDefaults.standard.set("", forKey: "UserEmail")
+        UserDefaults.standard.set(nil, forKey: "STYLiSHToken")
+    }
+    
     private func fetchData() {
         observation = StorageManager.shared.observe(
             \.orders,

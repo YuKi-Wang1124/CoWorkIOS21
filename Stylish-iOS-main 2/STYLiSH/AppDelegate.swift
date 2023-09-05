@@ -48,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if AccessToken.current?.tokenString == nil {
             UserDefaults.standard.set(nil, forKey: "UserEmail")
         } else {
-            var string = String()
             let graphRequest = FBSDKLoginKit.GraphRequest(
                 graphPath: "me",
                 parameters: ["fields": "email, name"],
@@ -60,8 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if error == nil {
                     guard let userDict = result as? [String: Any] else { return }
                     if let email = userDict["email"] as? String {
-                        string = email
-                        print(string)
                         UserDefaults.standard.set(email, forKey: "UserEmail")
                     }
                 } else {
@@ -69,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
+
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.carPlay,.sound]) { (granted, error) in
             if granted {
                 print("允許開啟")
@@ -77,7 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("拒絕接受開啟")
             }
         }
-        
         return true
     }
 
@@ -87,5 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
         return ApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // device ID
+        let id = UUID()
+        UserDefaults.standard.set(id.uuidString.lowercased(), forKey: "DeviceID")
     }
 }

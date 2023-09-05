@@ -35,6 +35,7 @@ class AuthViewController: STBaseViewController {
             switch result {
             case .success(let token):
                 self?.onSTYLiSHSignIn(token: token)
+                KeyChainManager.shared.saveEmail()
             case .failure:
                 LKProgressHUD.showSuccess(text: "Facebook 登入失敗!")
             }
