@@ -59,10 +59,7 @@ extension STTabBarViewController {
             switch self {
             case .lobby: controller = UIStoryboard.lobby.instantiateInitialViewController()!
             case .product: controller = UIStoryboard.product.instantiateInitialViewController()!
-                
             case .auction: controller = UIStoryboard.auction.instantiateInitialViewController()!
-
-                
             case .profile: controller = UIStoryboard.profile.instantiateInitialViewController()!
             case .trolley: controller = UIStoryboard.trolley.instantiateInitialViewController()!
             }
@@ -81,11 +78,8 @@ extension STTabBarViewController {
                 return .asset(.Icons_36px_Home_Normal)
             case .product:
                 return .asset(.Icons_36px_Catalog_Normal)
-            
-                // TODO
             case .auction:
                 return .asset(.bid)
-                
             case .trolley:
                 return .asset(.Icons_36px_Cart_Normal)
             case .profile:
@@ -99,11 +93,8 @@ extension STTabBarViewController {
                 return .asset(.Icons_36px_Home_Selected)
             case .product:
                 return .asset(.Icons_36px_Catalog_Selected)
-                
-                // TODO
             case .auction:
                 return .asset(.bid)
-                
             case .trolley:
                 return .asset(.Icons_36px_Cart_Selected)
             case .profile:
@@ -115,14 +106,13 @@ extension STTabBarViewController {
 
 // MARK: - UITabBarControllerDelegate
 extension STTabBarViewController: UITabBarControllerDelegate {
-
     func tabBarController(
         _ tabBarController: UITabBarController,
         shouldSelect viewController: UIViewController
     ) -> Bool {
         guard
             let navVC = viewController as? UINavigationController,
-            navVC.viewControllers.first is ProfileViewController
+            navVC.viewControllers.first is ProfileViewController || navVC.viewControllers.first is AuctionViewController
         else {
             return true
         }

@@ -51,11 +51,13 @@ class ProductViewController: UIViewController {
     @IBOutlet weak var menBtn: UIButton!
     
     @IBOutlet weak var accessoriesBtn: UIButton!
-    
-    
-    
+
     private var containerViews: [UIView] {
-        return [menProductsContainerView, womenProductsContainerView, accessoriesProductsContainerView, allProductsContainerView]
+        return [menProductsContainerView,
+                womenProductsContainerView,
+                accessoriesProductsContainerView,
+                allProductsContainerView
+        ]
     }
 
     private var isListLayout: Bool = false {
@@ -66,7 +68,6 @@ class ProductViewController: UIViewController {
             }
         }
     }
-    
     
     let searchController = UISearchController()
 
@@ -95,10 +96,13 @@ class ProductViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = true
         searchController.searchResultsUpdater = self
         
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: serchView.frame.height), collectionViewLayout: generateLayout())
+        collectionView = UICollectionView(
+            frame: CGRect(x: 0, y: 0, width: viewWidth, height: serchView.frame.height
+                         ), collectionViewLayout: generateLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        collectionView.register(SearchCollectionViewCell.self,
+                                forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -109,7 +113,9 @@ class ProductViewController: UIViewController {
     }
     
     func generateLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)
+        )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(330))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -120,7 +126,7 @@ class ProductViewController: UIViewController {
     // MARK: - Action
     @IBAction func onChangeProducts(_ sender: UIButton) {
         
-        var productBtns = [allBtn, womenBtn, menBtn, accessoriesBtn]
+        let productBtns = [allBtn, womenBtn, menBtn, accessoriesBtn]
         
         for btn in productBtns {
             btn?.isSelected = false
@@ -216,19 +222,15 @@ class ProductViewController: UIViewController {
     }
 }
 
-
 extension ProductViewController: UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text,
-           searchText.isEmpty == false  {
-            
+            searchText.isEmpty == false  {
+
             serchView.isHidden = false
             fetchSearchProducts(text: searchText)
-            
         } else {
             serchView.isHidden = true
-
         }
     }
 }
@@ -291,5 +293,3 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
         }.resume()
     }
 }
-
-

@@ -19,6 +19,8 @@ class AuctionViewController: UIViewController {
     private var minBidUnit = [String]()
     var marqueeTitleArray = [String]()
     private var timeDiffArray = [Int]()
+    private var startTimeArray = [Int]()
+    private var endTimeArray = [Int]()
 
     var timer: Timer?
     var marqueeIndex = 0
@@ -29,6 +31,9 @@ class AuctionViewController: UIViewController {
     
     var totalAddAmount = 0
     var updatePriceIndex = 0
+    
+    // 若競標成功就給值
+    var auctionSuccessCheckoutDeadline: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,10 +82,11 @@ class AuctionViewController: UIViewController {
         webSocket?.cancel(with: .goingAway, reason: "Demo ended".data(using: .utf8))
     }
     
-    func send(addAmount: Int) {
+    func sendBid(addAmount: Int) {
         let jsonDictionary: [String: Any] = [
             "type": "bid_increment",
-            "number": addAmount
+            "number": addAmount,
+            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
         ]
         
         do {
@@ -174,16 +180,46 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = auctionTableView.dequeueReusableCell(
             withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
-        if indexPath.row == 0 {
-            cell?.hideView.isHidden = true
-            cell?.secondsRemaining = timeDiffArray[indexPath.row]
+        if startTimeArray[indexPath.row] < Int(Date().timeIntervalSince1970) {
+            if endTimeArray[indexPath.row] > Int(Date().timeIntervalSince1970) {
+                // 競標中
+                cell?.hideView.isHidden = true
+                let timeDifferenceInSeconds = endTimeArray[indexPath.row] - Int(Date().timeIntervalSince1970)
+                let minutes = Int(timeDifferenceInSeconds) / 60
+                let seconds = Int(timeDifferenceInSeconds) % 60
+                let totalSeconds = minutes * 60 + seconds
+                cell?.secondsRemaining = totalSeconds
+            } else {
+                // 競標結束
+                cell?.timeLabel.text = "競標結束！"
+                if let auctionSuccessCheckoutDeadline = auctionSuccessCheckoutDeadline {
+                    let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessCheckoutDeadline))
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+                    dateFormatter.locale = NSLocale.current
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                    let strDate = dateFormatter.string(from: date)
+                    cell?.hideViewLabel.text = "恭喜得標！\n 請於 \(strDate) 以前結帳"
+                } else {
+                    cell?.hideViewLabel.text = "您未得標"
+                }
+            }
         } else {
+            // 競標還沒開始
             cell?.timeLabel.text = "尚未開始競標"
+            let startTimeStamp = startTimeArray[indexPath.row]
+            let date = Date(timeIntervalSince1970: TimeInterval(startTimeStamp))
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+            dateFormatter.locale = NSLocale.current
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" 
+            let strDate = dateFormatter.string(from: date)
+            cell?.hideViewLabel.text = "即將於 \(strDate) 開始競標"
         }
         
         cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexPath.row], for: .normal)
         
-        cell?.secondsRemaining = timeDiffArray[indexPath.row]
+        //cell?.secondsRemaining = timeDiffArray[indexPath.row]
         
         cell?.productLabel.text = titleArray[indexPath.row]
         cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
@@ -193,6 +229,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         cell?.addPriceBtn.addTarget(self, action: #selector(addPriceAction), for: .touchUpInside)
         cell?.addPriceBtn.tag = indexPath.row
         cell?.confirmBtn.addTarget(self, action: #selector(comfirmAction), for: .touchUpInside)
+        cell?.cancelBtn.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
         
         if totalAddAmount != 0 {
             cell?.confirmBtn.isHidden = false
@@ -200,10 +237,12 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             cell?.addAmountLabel.text = "+ \(totalAddAmount)"
             cell?.totalPriceLabel.isHidden = false
             cell?.totalPriceLabel.text = "以 \((Int(priceArray[indexPath.row]) ?? 0) + totalAddAmount) 元競標"
+            cell?.cancelBtn.isHidden = false
         } else {
             cell?.addAmountLabel.isHidden = true
             cell?.totalPriceLabel.isHidden = true
             cell?.confirmBtn.isHidden = true
+            cell?.cancelBtn.isHidden = true
         }
         
         return cell ?? UITableViewCell()
@@ -216,7 +255,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             totalAddAmount += Int(minBidUnit[indexPath.row]) ?? 0
             auctionTableView.reloadRows(at: [indexPath], with: .none)
         }
-        print("ZZZZZZZZ")
+        print("press add btn")
     }
     
     @objc func comfirmAction(_ sender: UIButton) {
@@ -228,8 +267,21 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         updatePriceIndex = indexPath?.row ?? 0
-        send(addAmount: totalAddAmount)
+        sendBid(addAmount: totalAddAmount)
         totalAddAmount = 0
+        
+        LKProgressHUD.showSuccess(text: "競標成功！")
+    }
+    
+    @objc func cancelAction(_ sender: UIButton) {
+        let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
+        let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
+        
+        totalAddAmount = 0
+        
+        if let indexPath = indexPath {
+            auctionTableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
     
     private func fetchAuctionProducts() {
@@ -241,7 +293,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        var request = URLRequest(url: url)
+        let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -266,10 +318,13 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         
                         let currentTimeStamp = Date().timeIntervalSince1970
                         let endTimestamp = $0.endTime / 1000
+                        let startTimestamp = $0.startTime / 1000
                         let timeDifferenceInSeconds = Double(endTimestamp) - currentTimeStamp
                         let minutes = Int(timeDifferenceInSeconds) / 60
                         let seconds = Int(timeDifferenceInSeconds) % 60
                         let totalSeconds = minutes * 60 + seconds
+                        self.startTimeArray.append(startTimestamp)
+                        self.endTimeArray.append(endTimestamp)
                         self.timeDiffArray.append(totalSeconds)
                     }
                     
@@ -286,6 +341,25 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }.resume()
     }
+    
+    private func fetchLatestPrice() {
+        let jsonDictionary: [String: Any] = [
+            "type": "initialize",
+            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+        ]
+        
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            
+            webSocket?.send(.data(data)) { error in
+                if let error = error {
+                    print("Send error: \(error)")
+                }
+            }
+        } catch {
+            print("JSON serialization error: \(error)")
+        }
+    }
 }
 
 struct AuctionProductData: Codable {
@@ -293,40 +367,44 @@ struct AuctionProductData: Codable {
 }
 
 struct AuctionProduct: Codable {
-//    let category: String
-//    let description: String
+    let auctionID: Int
+    let category: String
+    let description: String
     let endTime: Int
-//    let id: String
+    let id: String
 //    let imageBase64: String?
-//    let images: String
+    let images: String
     let mainImage: String
     let minBidUnit: Int
-//    let note: String
-//    let place: String
+    let note: String
+    let place: String
     let startBid: Int
-//    let source: String
-//    let story: String
-//    let texture: String
+    let startTime: Int
+    let source: String
+    let story: String
+    let texture: String
     let title: String
-//    let wash: String
+    let wash: String
 
     enum CodingKeys: String, CodingKey {
-//        case category
-//        case description
+        case auctionID = "auction_id"
+        case category
+        case description
         case endTime = "end_time"
-//        case id
+        case id
 //        case imageBase64 = "image_base64"
-//        case images
+        case images
         case mainImage = "main_image"
         case minBidUnit = "min_bid_unit"
-//        case note
-//        case place
+        case note
+        case place
+        case source
         case startBid = "start_bid"
-//        case source
-//        case story
-//        case texture
+        case startTime = "start_time"
+        case story
+        case texture
         case title
-//        case wash
+        case wash
     }
 }
 
