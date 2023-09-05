@@ -169,5 +169,6 @@ class ProductListViewController: STCompondViewController {
         
         guard let product = datas[indexPath.section][indexPath.row] as? Product else { return }
         showProductDetailViewController(product: product)
+        
     }
 }

@@ -131,6 +131,9 @@
 		CC59E74D2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */; };
 		CC59E7532AA357A20086D7D5 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */; };
 		CC59E7572AA6B81C0086D7D5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7562AA6B81C0086D7D5 /* MapViewController.swift */; };
+		CC59E7662AA7043D0086D7D5 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7652AA7043D0086D7D5 /* MapTableViewCell.swift */; };
+		CC59E7682AA717BD0086D7D5 /* MapTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7672AA717BD0086D7D5 /* MapTableViewHeaderFooterView.swift */; };
+		CC59E76A2AA720EC0086D7D5 /* MyMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC59E7692AA720EC0086D7D5 /* MyMapViewController.swift */; };
 		D306B883B370DFD3ED8ACD74 /* Pods_STYLiSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */; };
 /* End PBXBuildFile section */
 
@@ -273,6 +276,9 @@
 		CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionTableViewCell.swift; sourceTree = "<group>"; };
 		CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		CC59E7562AA6B81C0086D7D5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		CC59E7652AA7043D0086D7D5 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
+		CC59E7672AA717BD0086D7D5 /* MapTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		CC59E7692AA720EC0086D7D5 /* MyMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMapViewController.swift; sourceTree = "<group>"; };
 		E921004E251C9FC3CBC174F5 /* Pods-STYLiSH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.release.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.release.xcconfig"; sourceTree = "<group>"; };
 		F551E8F447D7C8DC42B53B98 /* Pods-STYLiSH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STYLiSH.debug.xcconfig"; path = "Target Support Files/Pods-STYLiSH/Pods-STYLiSH.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -750,6 +756,9 @@
 			isa = PBXGroup;
 			children = (
 				CC59E7562AA6B81C0086D7D5 /* MapViewController.swift */,
+				CC59E7692AA720EC0086D7D5 /* MyMapViewController.swift */,
+				CC59E7672AA717BD0086D7D5 /* MapTableViewHeaderFooterView.swift */,
+				CC59E7652AA7043D0086D7D5 /* MapTableViewCell.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -964,6 +973,7 @@
 				3C5DD7CC2227EFFF0053B67A /* TrolleyViewController.swift in Sources */,
 				3C6020EA222BC00100312958 /* UILabel+Extension.swift in Sources */,
 				3CB80E76222FCBE60095F18C /* STConstant.swift in Sources */,
+				CC59E76A2AA720EC0086D7D5 /* MyMapViewController.swift in Sources */,
 				3C1ACFE422151F50005583E2 /* ProfileViewController.swift in Sources */,
 				3C34794C222E82F600969C30 /* AmountSelectionCell.swift in Sources */,
 				3C75FD0F22F1767D0068FEA5 /* CheckoutResultViewController.swift in Sources */,
@@ -973,6 +983,7 @@
 				3CEBE077222F718D0064EF82 /* StorageManager.swift in Sources */,
 				3C09F51C22114A0100C5B3E2 /* STTabBarViewController.swift in Sources */,
 				3C7036D1222C4E0A00F6C58B /* ProductPickerController.swift in Sources */,
+				CC59E7682AA717BD0086D7D5 /* MapTableViewHeaderFooterView.swift in Sources */,
 				3CC7061A2216B36800CAD850 /* ProductCollectionViewCell.swift in Sources */,
 				CC59E7462AA1B1880086D7D5 /* AuctionViewController.swift in Sources */,
 				3CED4C0F2214222A00121D4B /* STParser.swift in Sources */,
@@ -1005,6 +1016,7 @@
 				3CE7A517223061A9009FF003 /* UserRequest.swift in Sources */,
 				3C09F52122115AB700C5B3E2 /* UIImage+Extension.swift in Sources */,
 				3C6B8FE8222CE53100804EFE /* BasicSelectionCell.swift in Sources */,
+				CC59E7662AA7043D0086D7D5 /* MapTableViewCell.swift in Sources */,
 				3C41B8472216667000112F94 /* ProductViewController.swift in Sources */,
 				3CE7A51322305916009FF003 /* UserProvider.swift in Sources */,
 				3CE7A51E22308D34009FF003 /* OrderObject.swift in Sources */,
