@@ -193,6 +193,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         cell?.addPriceBtn.addTarget(self, action: #selector(addPriceAction), for: .touchUpInside)
         cell?.addPriceBtn.tag = indexPath.row
         cell?.confirmBtn.addTarget(self, action: #selector(comfirmAction), for: .touchUpInside)
+        cell?.cancelBtn.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
         
         if totalAddAmount != 0 {
             cell?.confirmBtn.isHidden = false
@@ -200,10 +201,12 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             cell?.addAmountLabel.text = "+ \(totalAddAmount)"
             cell?.totalPriceLabel.isHidden = false
             cell?.totalPriceLabel.text = "以 \((Int(priceArray[indexPath.row]) ?? 0) + totalAddAmount) 元競標"
+            cell?.cancelBtn.isHidden = false
         } else {
             cell?.addAmountLabel.isHidden = true
             cell?.totalPriceLabel.isHidden = true
             cell?.confirmBtn.isHidden = true
+            cell?.cancelBtn.isHidden = true
         }
         
         return cell ?? UITableViewCell()
@@ -230,6 +233,21 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         updatePriceIndex = indexPath?.row ?? 0
         send(addAmount: totalAddAmount)
         totalAddAmount = 0
+        
+        LKProgressHUD.showSuccess(text: "競標成功！")
+    }
+    
+    @objc func cancelAction(_ sender: UIButton) {
+        let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
+        let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
+        
+        totalAddAmount = 0
+        
+        if let indexPath = indexPath {
+            auctionTableView.reloadRows(at: [indexPath], with: .none)
+        }
+    
+        
     }
     
     private func fetchAuctionProducts() {

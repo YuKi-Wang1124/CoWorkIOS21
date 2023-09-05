@@ -216,20 +216,14 @@ class ProductViewController: UIViewController {
     }
 }
 
-
 extension ProductViewController: UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text,
-           searchText.isEmpty == false  {
-            
-            
+           searchText.isEmpty == false {
             serchView.isHidden = false
             fetchSearchProducts(text: searchText)
-            
         } else {
             serchView.isHidden = true
-
         }
     }
 }
@@ -292,5 +286,3 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
         }.resume()
     }
 }
-
-

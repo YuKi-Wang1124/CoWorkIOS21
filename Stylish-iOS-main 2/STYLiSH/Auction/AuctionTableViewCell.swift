@@ -27,6 +27,8 @@ class AuctionTableViewCell: UITableViewCell {
     @IBOutlet weak var totalPriceLabel: UILabel!
     
     @IBOutlet weak var confirmBtn: UIButton!
+    
+    @IBOutlet weak var cancelBtn: UIButton!
 
     var countdownTimer: Timer?
     var secondsRemaining = 0
