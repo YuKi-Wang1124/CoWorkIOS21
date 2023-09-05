@@ -29,7 +29,7 @@ class AuctionTableViewCell: UITableViewCell {
     @IBOutlet weak var confirmBtn: UIButton!
 
     var countdownTimer: Timer?
-    var secondsRemaining = 0
+    var secondsRemaining = 1
 
     override func awakeFromNib() {
         super.awakeFromNib()
