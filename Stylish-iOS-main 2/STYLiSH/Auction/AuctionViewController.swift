@@ -33,7 +33,7 @@ class AuctionViewController: UIViewController {
     var updatePriceIndex = 0
     
     // 若競標成功就給值
-    var auctionSuccessCheckoutDeadline: Int?
+    var auctionSuccessPrice: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,23 +83,33 @@ class AuctionViewController: UIViewController {
     }
     
     func sendBid(addAmount: Int) {
-        let jsonDictionary: [String: Any] = [
-            "type": "bid_increment",
-            "number": addAmount,
-            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
-        ]
-        
-        do {
-            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+//        let dataDictionary: [String: Any] = [
+//            "number": addAmount,
+//            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+//        ]
+//        do {
+//            let data = try JSONSerialization.data(withJSONObject: dataDictionary, options: [])
+            let jsonDictionary: [String: Any] = [
+                "type": "bid_increment",
+                "data": [
+                    "number": addAmount,
+                    "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+                ] as [String : Any]
+            ]
             
-            webSocket?.send(.data(data)) { error in
-                if let error = error {
-                    print("Send error: \(error)")
+            do {
+                let topData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+                webSocket?.send(.data(topData)) { error in
+                    if let error = error {
+                        print("Send error: \(error)")
+                    }
                 }
+            } catch {
+                print("send bid Data JSON serialization error: \(error)")
             }
-        } catch {
-            print("JSON serialization error: \(error)")
-        }
+//        } catch {
+//            print("send bid Top JSON serialization error: \(error)")
+//        }
     }
     
     func receive() {
@@ -117,16 +127,38 @@ class AuctionViewController: UIViewController {
                     if let data = message.data(using: .utf8) {
                         do {
                             let decoder = JSONDecoder()
-                            let changePrice = try decoder.decode(ChangePrice.self, from: data)
-                            let newPrice = changePrice.number
-                            self?.priceArray[self?.updatePriceIndex ?? 0] = String(newPrice)
-                            print(self?.priceArray)
-                            DispatchQueue.main.async {
-                                self?.auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-                            }
+                            let topData = try decoder.decode(TopData.self, from: data)
                             
+                            // 2nd decoder
+                            if topData.type == "latest_price" {
+                                do {
+                                    let decoder = JSONDecoder()
+                                    let data = try decoder.decode(LatestPrice.self, from: topData.data)
+                                    let newPrice = data.number
+                                    self?.priceArray[self?.updatePriceIndex ?? 0] = String(newPrice)
+                                    print(self?.priceArray)
+                                    DispatchQueue.main.async {
+                                        self?.auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                                    }
+                                } catch {
+                                    print("latest_price error: ", error.localizedDescription)
+                                }
+                            } else if topData.type == "broadcast_winner" {
+                                do {
+                                    let decoder = JSONDecoder()
+                                    let data = try decoder.decode(Winner.self, from: topData.data)
+                                    
+                                    if data.email == UserDefaults.standard.string(forKey: "UserEmail") {
+                                        // 得標
+                                    } else {
+                                        // 未得標
+                                    }
+                                } catch {
+                                    print("broadcast_winner error: ", error.localizedDescription)
+                                }
+                            }
                         } catch {
-                            print(error.localizedDescription)
+                            print("top_data error: ",error.localizedDescription)
                         }
                     }
                     
@@ -174,9 +206,8 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         cellCount * 2
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.row % 2 == 0 {
             let indexHere = indexPath.row / 2
             let cell = auctionTableView.dequeueReusableCell(
@@ -226,8 +257,8 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                 } else {
                     // 競標結束
                     cell?.timeLabel.text = "競標結束！"
-                    if let auctionSuccessCheckoutDeadline = auctionSuccessCheckoutDeadline {
-                        let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessCheckoutDeadline))
+                    if let auctionSuccessPrice = auctionSuccessPrice {
+                        let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessPrice))
                         let dateFormatter = DateFormatter()
                         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
                         dateFormatter.locale = NSLocale.current
@@ -295,7 +326,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     @objc func comfirmAction(_ sender: UIButton) {
         let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
         let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
-
+        
         if let indexPath = indexPath {
             auctionTableView.reloadRows(at: [indexPath], with: .none)
         }
@@ -337,6 +368,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             if let data = data {
                 do {
                     let product = try JSONDecoder().decode(AuctionProductData.self, from: data)
+                    
                     self.auctionDataArray.removeAll()
                     
                     self.auctionDataArray.append(product)
@@ -363,12 +395,10 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                     
                     self.cellCount = self.titleArray.count
-                    
                     DispatchQueue.main.async {
                         self.marqueeLabel.text = self.marqueeTitleArray[self.marqueeIndex]
                         self.auctionTableView.reloadData()
                     }
-
                 } catch {
                     print("Error decoding JSON: \(error.localizedDescription)")
                 }
@@ -377,21 +407,28 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func fetchLatestPrice() {
-        let jsonDictionary: [String: Any] = [
-            "type": "initialize",
+        let dataDictionary: [String: Any] = [
             "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
         ]
-        
         do {
-            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            let data = try JSONSerialization.data(withJSONObject: dataDictionary, options: [])
+            let jsonDictionary: [String: Any] = [
+                "type": "initialize",
+                "data": data
+            ]
             
-            webSocket?.send(.data(data)) { error in
-                if let error = error {
-                    print("Send error: \(error)")
+            do {
+                let topData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+                webSocket?.send(.data(topData)) { error in
+                    if let error = error {
+                        print("Send error: \(error)")
+                    }
                 }
+            } catch {
+                print("latest price data JSON serialization error: \(error)")
             }
         } catch {
-            print("JSON serialization error: \(error)")
+            print("latest price top JSON serialization error: \(error)")
         }
     }
 }
@@ -442,7 +479,28 @@ struct AuctionProduct: Codable {
     }
 }
 
-struct ChangePrice: Codable {
-    var type: String = String()
-    var number: Int = Int()
+struct TopData: Codable {
+    var type: String
+    var data: Data
 }
+
+struct LatestPrice: Codable {
+    var number: Int
+}
+
+struct Winner: Codable {
+    let email, auctionID, productID: String
+    let finalBidPrice: Int
+
+    enum CodingKeys: String, CodingKey {
+        case email
+        case auctionID = "auction_id"
+        case productID = "product_id"
+        case finalBidPrice = "final_bid_price"
+    }
+}
+
+struct Email: Codable {
+    var email: String
+}
+

@@ -48,7 +48,15 @@ class AuctionTableViewCell: UITableViewCell {
 //            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
 //            print("b: ", secondsRemaining)
 //        }
-        
+        print("c: ", secondsRemaining)
+    }
+    
+    func setTimer() {
+        countdownTimer = nil
+        if secondsRemaining != 0 {
+            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+            print("b: ", secondsRemaining)
+        }
     }
     
     @objc func updateTimer() {
