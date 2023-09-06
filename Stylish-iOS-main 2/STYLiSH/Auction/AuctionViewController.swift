@@ -37,9 +37,15 @@ class AuctionViewController: UIViewController {
     
     // 若競標成功就給值
     var auctionSuccessPrice: Int?
+    var auctionEnd = false
+    
+    var emailHere = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let uuid = UUID()
+        emailHere = uuid.uuidString.lowercased()
         
         DispatchQueue.main.async {
             self.dispatchSemaphore.wait()
@@ -106,7 +112,8 @@ class AuctionViewController: UIViewController {
                 "type": "bid_increment",
                 "data": [
                     "number": addAmount,
-                    "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+                    "email": emailHere
+                    //"email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
                 ] as [String: Any]
             ]
             
@@ -158,11 +165,12 @@ class AuctionViewController: UIViewController {
                                     print("latest_price error: ", error.localizedDescription)
                                 }
                             } else if topData.type == "broadcast_winner" {
+                                self?.auctionEnd = true
                                 do {
                                     let decoder = JSONDecoder()
                                     let data = try decoder.decode(WinnerData.self, from: message)
                                     
-                                    if data.data.email == UserDefaults.standard.string(forKey: "UserEmail") {
+                                    if data.data.email == self?.emailHere {
                                         // 得標
                                         print("我得標")
                                         self?.auctionSuccessPrice = data.data.finalBidPrice
@@ -170,9 +178,13 @@ class AuctionViewController: UIViewController {
                                         // 未得標
                                         print("我沒得標")
                                     }
+                                    print(self?.auctionSuccessPrice)
+                                    print(data.data.finalBidPrice)
+                                    print(data.data.email)
                                     DispatchQueue.main.async {
                                         self?.auctionTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .none)
                                     }
+                                    
                                 } catch {
                                     print("broadcast_winner error: ", error.localizedDescription)
                                 }
@@ -242,21 +254,23 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = auctionTableView.dequeueReusableCell(
                 withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
             if startTimeArray[indexHere] < Date().timeIntervalSince1970 {
-                if endTimeArray[indexHere] > Date().timeIntervalSince1970 {
+                //if endTimeArray[indexHere] > Date().timeIntervalSince1970 {
+                if auctionEnd == false {
                     // 競標中
                     cell?.hideView.isHidden = true
                  
                 } else {
                     // 競標結束
-
+                    cell?.hideView.isHidden = false
                     if let auctionSuccessPrice = auctionSuccessPrice {
-                        let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessPrice))
+                        let endTime = endTimeArray[indexHere]
+                        let date = Date(timeIntervalSince1970: TimeInterval(endTime))
                         let dateFormatter = DateFormatter()
                         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
                         dateFormatter.locale = NSLocale.current
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                         let strDate = dateFormatter.string(from: date)
-                        cell?.hideViewLabel.text = "恭喜得標！\n 請於 \(strDate) 以前結帳"
+                        cell?.hideViewLabel.text = "恭喜您以 \(auctionSuccessPrice) 元得標！\n 請於 24 小時內結帳:)"
                     } else {
                         cell?.hideViewLabel.text = "您未得標"
                     }
@@ -371,15 +385,15 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         let minutes = Int(timeDifferenceInSeconds) / 60
                         let seconds = Int(timeDifferenceInSeconds) % 60
                         let totalSeconds = minutes * 60 + seconds
-//                        self.timeDiffArray.append(totalSeconds)
+                        self.timeDiffArray.append(totalSeconds)
                         
-//                        self.startTimeArray.append(TimeInterval(startTimestamp))
-//                        self.endTimeArray.append(TimeInterval(endTimestamp))
+                        self.startTimeArray.append(TimeInterval(startTimestamp))
+                        self.endTimeArray.append(TimeInterval(endTimestamp))
                         print(self.startTimeArray)
                         print(self.endTimeArray)
-                        self.startTimeArray = [Date().timeIntervalSince1970, 1694145600.0, 1694232000.0]
-                        self.endTimeArray = [Date().timeIntervalSince1970+90, 1694149200.0, 1694235600.0]
-                        self.timeDiffArray = [90,60,60]
+//                        self.startTimeArray = [Date().timeIntervalSince1970, 1694145600.0, 1694232000.0]
+//                        self.endTimeArray = [Date().timeIntervalSince1970+90, 1694149200.0, 1694235600.0]
+//                        self.timeDiffArray = [90,60,60]
                         print("auction api load done")
                     }
                     
@@ -399,7 +413,8 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         let jsonDictionary: [String: Any] = [
             "type": "initialize",
             "data": [
-                "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+                //"email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+                "email": emailHere
             ] as [String: Any]
         ]
         do {

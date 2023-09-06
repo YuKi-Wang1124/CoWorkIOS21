@@ -112,7 +112,8 @@ extension STTabBarViewController: UITabBarControllerDelegate {
     ) -> Bool {
         guard
             let navVC = viewController as? UINavigationController,
-            navVC.viewControllers.first is ProfileViewController || navVC.viewControllers.first is AuctionViewController
+            navVC.viewControllers.first is ProfileViewController
+//                || navVC.viewControllers.first is AuctionViewController
         else {
             return true
         }
