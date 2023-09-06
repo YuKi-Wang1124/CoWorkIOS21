@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.carPlay,.sound]) { (granted, error) in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .carPlay, .sound]) { (granted, error) in
             if granted {
                 print("允許開啟")
             } else {
@@ -97,5 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            let setedLobby = UserDefaults.standard.object(forKey: "IsGridLobby") as? Bool
 //            print(setedLobby)
 //        }
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert])
     }
 }

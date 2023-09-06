@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class TimeTableViewCell: UITableViewCell {
 
@@ -41,7 +42,7 @@ class TimeTableViewCell: UITableViewCell {
             updateCountdownLabel()
         } else {
             countdownTimer?.invalidate()
-            createNotificationContent()
+            //createNotificationContent()
         }
     }
     
@@ -53,18 +54,34 @@ class TimeTableViewCell: UITableViewCell {
     }
     
     func createNotificationContent() {
-        let content = UNMutableNotificationContent()
-        content.title = "STYLiSH"
-        content.subtitle = "競拍賣結束囉"
-        content.body = "競拍結束囉，來看看自己得標了沒"
-//        content.badge = 1
-        content.sound = UNNotificationSound.defaultCritical
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2, repeats: false)
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+//        let content = UNMutableNotificationContent()
+//        content.title = "STYLiSH"
+//        content.subtitle = "競拍賣結束囉"
+//        content.body = "競拍結束囉，來看看自己得標了沒"
+////        content.badge = 1
+//        content.sound = UNNotificationSound.defaultCritical
+//        // Add an attachment to the notification content
+//        if let url = Bundle.main.url(forResource: "dune",
+//                                        withExtension: "png") {
+//            if let attachment = try? UNNotificationAttachment(identifier: "dune",
+//                                                                url: url,
+//                                                                options: nil) {
+//                content.attachments = [attachment]
+//            }
+//        }
+//
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2, repeats: false)
+//        let uuidString = UUID().uuidString
+//        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+//
+//        UNUserNotificationCenter.current().add(request) { (error) in
+//            if error != nil {
+//                print("cell notify Error")
+//            } else {
+//                print("cell notify Success")
+//            }
+//        }
+        print("cell notify")
     }
     
     override func prepareForReuse() {

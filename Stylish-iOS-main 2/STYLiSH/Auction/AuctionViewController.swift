@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import UserNotifications
 
-class AuctionViewController: UIViewController {
+class AuctionViewController: UIViewController, UNUserNotificationCenterDelegate {
     
     private var webSocket: URLSessionWebSocketTask?
     
@@ -43,6 +44,9 @@ class AuctionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //successNotificationContent()
+        UNUserNotificationCenter.current().delegate = self
         
         let uuid = UUID()
         emailHere = uuid.uuidString.lowercased()
@@ -89,6 +93,16 @@ class AuctionViewController: UIViewController {
         timer?.invalidate()
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+    }
+    
     func ping() {
         webSocket?.sendPing { error in
             if let error = error {
@@ -102,34 +116,24 @@ class AuctionViewController: UIViewController {
     }
     
     func sendBid(addAmount: Int) {
-//        let dataDictionary: [String: Any] = [
-//            "number": addAmount,
-//            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
-//        ]
-//        do {
-//            let data = try JSONSerialization.data(withJSONObject: dataDictionary, options: [])
-            let jsonDictionary: [String: Any] = [
-                "type": "bid_increment",
-                "data": [
-                    "number": addAmount,
-                    "email": emailHere
-                    //"email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
-                ] as [String: Any]
-            ]
-            
-            do {
-                let topData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
-                webSocket?.send(.data(topData)) { error in
-                    if let error = error {
-                        print("Send error: \(error)")
-                    }
+        let jsonDictionary: [String: Any] = [
+            "type": "bid_increment",
+            "data": [
+                "number": addAmount,
+                "email": emailHere
+            ] as [String: Any]
+        ]
+        
+        do {
+            let topData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            webSocket?.send(.data(topData)) { error in
+                if let error = error {
+                    print("Send error: \(error)")
                 }
-            } catch {
-                print("send bid Data JSON serialization error: \(error)")
             }
-//        } catch {
-//            print("send bid Top JSON serialization error: \(error)")
-//        }
+        } catch {
+            print("send bid Data JSON serialization error: \(error)")
+        }
     }
     
     func receive() {
@@ -174,9 +178,11 @@ class AuctionViewController: UIViewController {
                                         // 得標
                                         print("我得標")
                                         self?.auctionSuccessPrice = data.data.finalBidPrice
+                                        self?.successNotificationContent(body: "恭喜您以 \(self?.auctionSuccessPrice ?? 20) 元得標！\n 請於 24 小時內結帳：）")
                                     } else {
                                         // 未得標
                                         print("我沒得標")
+                                        self?.successNotificationContent(body: "您未得標...")
                                     }
                                     print(self?.auctionSuccessPrice)
                                     print(data.data.finalBidPrice)
@@ -213,6 +219,67 @@ class AuctionViewController: UIViewController {
             marqueeLabel.text = marqueeTitleArray[marqueeIndex]
             marqueeLabel.layer.add(transition, forKey: "nextTitle")
         }
+    }
+    
+    func successNotificationContent(body: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "STYLiSH"
+        content.subtitle = "競拍賣結束囉"
+        content.body = body
+//        content.badge = 1
+        content.sound = UNNotificationSound.defaultCritical
+        // Add an attachment to the notification content
+        if let url = Bundle.main.url(forResource: "dune",
+                                        withExtension: "png") {
+            if let attachment = try? UNNotificationAttachment(identifier: "dune",
+                                                                url: url,
+                                                                options: nil) {
+                content.attachments = [attachment]
+            }
+        }
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2, repeats: false)
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if error != nil {
+                print("success Error")
+            } else {
+                print("success Success")
+            }
+        }
+        print("success notify")
+    }
+    func failNotificationContent() {
+//        let content = UNMutableNotificationContent()
+//        content.title = "STYLiSH"
+//        content.subtitle = "競拍賣結束囉"
+//        content.body = "您未得標..."
+////        content.badge = 1
+//        content.sound = UNNotificationSound.defaultCritical
+//        // Add an attachment to the notification content
+//        if let url = Bundle.main.url(forResource: "dune",
+//                                        withExtension: "png") {
+//            if let attachment = try? UNNotificationAttachment(identifier: "dune",
+//                                                                url: url,
+//                                                                options: nil) {
+//                content.attachments = [attachment]
+//            }
+//        }
+//
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2, repeats: false)
+//        let uuidString = UUID().uuidString
+//        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+//
+//        UNUserNotificationCenter.current().add(request) { (error) in
+//            if error != nil {
+//                print("fail Error")
+//            } else {
+//                print("fail Success")
+//            }
+//        }
+        print("fail notify")
     }
 }
 
@@ -254,7 +321,12 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = auctionTableView.dequeueReusableCell(
                 withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
             if startTimeArray[indexHere] < Date().timeIntervalSince1970 {
-                //if endTimeArray[indexHere] > Date().timeIntervalSince1970 {
+                if endTimeArray[indexHere] <= Date().timeIntervalSince1970 {
+                    auctionEnd = true
+                } else {
+                    auctionEnd = false
+                }
+                
                 if auctionEnd == false {
                     // 競標中
                     cell?.hideView.isHidden = true
@@ -270,7 +342,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         dateFormatter.locale = NSLocale.current
                         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
                         let strDate = dateFormatter.string(from: date)
-                        cell?.hideViewLabel.text = "恭喜您以 \(auctionSuccessPrice) 元得標！\n 請於 24 小時內結帳:)"
+                        cell?.hideViewLabel.text = "恭喜您以 \(auctionSuccessPrice) 元得標！\n 請於 24 小時內結帳：）"
                     } else {
                         cell?.hideViewLabel.text = "您未得標"
                     }
@@ -335,7 +407,6 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             auctionTableView.reloadRows(at: [indexPath], with: .none)
         }
         
-        // updatePriceIndex = indexPath?.row ?? 0
         sendBid(addAmount: totalAddAmount)
         totalAddAmount = 0
         
@@ -368,6 +439,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             if let data = data {
                 do {
                     let product = try JSONDecoder().decode(AuctionProductData.self, from: data)
+                    print(product)
                     self.auctionDataArray.removeAll()
                     self.auctionDataArray.append(product)
                     self.auctionDataArray.first?.data.forEach {
@@ -386,14 +458,13 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         let seconds = Int(timeDifferenceInSeconds) % 60
                         let totalSeconds = minutes * 60 + seconds
                         self.timeDiffArray.append(totalSeconds)
-                        
                         self.startTimeArray.append(TimeInterval(startTimestamp))
                         self.endTimeArray.append(TimeInterval(endTimestamp))
                         print(self.startTimeArray)
                         print(self.endTimeArray)
 //                        self.startTimeArray = [Date().timeIntervalSince1970, 1694145600.0, 1694232000.0]
 //                        self.endTimeArray = [Date().timeIntervalSince1970+90, 1694149200.0, 1694235600.0]
-//                        self.timeDiffArray = [90,60,60]
+//                        self.timeDiffArray = [30, 60, 60]
                         print("auction api load done")
                     }
                     
