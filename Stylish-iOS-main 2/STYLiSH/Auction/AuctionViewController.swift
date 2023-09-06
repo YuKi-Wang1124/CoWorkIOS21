@@ -19,8 +19,8 @@ class AuctionViewController: UIViewController {
     private var minBidUnit = [String]()
     var marqueeTitleArray = [String]()
     private var timeDiffArray = [Int]()
-    private var startTimeArray = [Int]()
-    private var endTimeArray = [Int]()
+    private var startTimeArray = [TimeInterval]()
+    private var endTimeArray = [TimeInterval]()
 
     var timer: Timer?
     var marqueeIndex = 0
@@ -32,17 +32,26 @@ class AuctionViewController: UIViewController {
     var totalAddAmount = 0
     var updatePriceIndex = 0
     
+    let dispatchSemaphore = DispatchSemaphore(value: 1)
+    
+    
     // 若競標成功就給值
     var auctionSuccessPrice: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        DispatchQueue.main.async {
+            self.dispatchSemaphore.wait()
+            self.fetchAuctionProducts()
+            
+            self.dispatchSemaphore.wait()
+            self.auctionTableView.dataSource = self
+        }
+        
         auctionTableView.allowsSelection = false
-        auctionTableView.dataSource = self
         auctionTableView.delegate = self
-        fetchAuctionProducts()
-
+        
         let session = URLSession(configuration: .default,
                                  delegate: self,
                                  delegateQueue: OperationQueue())
@@ -138,7 +147,7 @@ class AuctionViewController: UIViewController {
                                     self?.priceArray[self?.updatePriceIndex ?? 0] = String(newPrice)
                                     print(self?.priceArray)
                                     DispatchQueue.main.async {
-                                        self?.auctionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                                        self?.auctionTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .none)
                                     }
                                 } catch {
                                     print("latest_price error: ", error.localizedDescription)
@@ -161,7 +170,6 @@ class AuctionViewController: UIViewController {
                             print("top_data error: ",error.localizedDescription)
                         }
                     }
-                    
                 @unknown default:
                     break
                 }
@@ -204,59 +212,37 @@ extension AuctionViewController: URLSessionWebSocketDelegate {
 
 extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cellCount * 2
+        cellCount + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row % 2 == 0 {
-            let indexHere = indexPath.row / 2
+        
+        if indexPath.row == 0 {
             let cell = auctionTableView.dequeueReusableCell(
                 withIdentifier: TimeTableViewCell.identifier) as? TimeTableViewCell
+            print(timeDiffArray)
+            print(startTimeArray)
+            print(endTimeArray)
+            print(indexPath.row)
             
-            if startTimeArray[indexHere] < Int(Date().timeIntervalSince1970) {
-                if endTimeArray[indexHere] > Int(Date().timeIntervalSince1970) {
-                    // 競標中
-                    // cell?.hideView.isHidden = true
-                    let timeDifferenceInSeconds = endTimeArray[indexHere] - Int(Date().timeIntervalSince1970)
-                    let minutes = Int(timeDifferenceInSeconds) / 60
-                    let seconds = Int(timeDifferenceInSeconds) % 60
-                    let totalSeconds = minutes * 60 + seconds
-                    cell?.secondsRemaining = totalSeconds
-                } else {
-                    // 競標結束
-                    cell?.timeLabel.text = "競標結束！"
-                }
-            } else {
-                // 競標還沒開始
-                let startTimeStamp = startTimeArray[indexHere]
-                let date = Date(timeIntervalSince1970: TimeInterval(startTimeStamp))
-                let dateFormatter = DateFormatter()
-                dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-                dateFormatter.locale = NSLocale.current
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                let strDate = dateFormatter.string(from: date)
-                
-            }
-                
+            cell?.secondsRemaining = timeDiffArray[indexPath.row]
+            cell?.setTimer()
+            
             return cell!
             
         } else {
-            let indexHere = indexPath.row / 2
+            let indexHere = indexPath.row - 1
             let cell = auctionTableView.dequeueReusableCell(
                 withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
-            
-            if startTimeArray[indexHere] < Int(Date().timeIntervalSince1970) {
-                if endTimeArray[indexHere] > Int(Date().timeIntervalSince1970) {
+            print(startTimeArray)
+            print(indexHere)
+            if startTimeArray[indexHere] < Date().timeIntervalSince1970 {
+                if endTimeArray[indexHere] > Date().timeIntervalSince1970 {
                     // 競標中
                     cell?.hideView.isHidden = true
-                    let timeDifferenceInSeconds = endTimeArray[indexHere] - Int(Date().timeIntervalSince1970)
-                    let minutes = Int(timeDifferenceInSeconds) / 60
-                    let seconds = Int(timeDifferenceInSeconds) % 60
-                    let totalSeconds = minutes * 60 + seconds
-                    cell?.secondsRemaining = totalSeconds
+                 
                 } else {
                     // 競標結束
-                    cell?.timeLabel.text = "競標結束！"
                     if let auctionSuccessPrice = auctionSuccessPrice {
                         let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessPrice))
                         let dateFormatter = DateFormatter()
@@ -282,9 +268,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexHere], for: .normal)
-            
-            //cell?.secondsRemaining = timeDiffArray[indexHere]
-            
+                        
             cell?.productLabel.text = titleArray[indexHere]
             cell?.priceLabel.text = "NTD " + priceArray[indexHere]
             
@@ -350,48 +334,50 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func fetchAuctionProducts() {
-        
         let url = "http://3.24.100.29/api/1.0/auction/product"
-        
         guard let url = URL(string: url) else {
             print("no url")
             return
         }
-        
         let request = URLRequest(url: url)
-        
         URLSession.shared.dataTask(with: request) { data, response, error in
+            print(response)
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
             }
+            print(data)
             if let data = data {
                 do {
                     let product = try JSONDecoder().decode(AuctionProductData.self, from: data)
-                    
                     self.auctionDataArray.removeAll()
-                    
                     self.auctionDataArray.append(product)
-                    
                     print(self.auctionDataArray.first?.data)
-                    
                     self.auctionDataArray.first?.data.forEach {
                         self.marqueeTitleArray.append($0.title + "拍賣中" + "            " )
+                        self.dispatchSemaphore.signal()
                         self.titleArray.append($0.title)
                         self.imageArray.append($0.mainImage)
                         self.minBidUnit.append(String($0.minBidUnit))
                         self.priceArray.append(String($0.startBid))
-                        
+
                         let currentTimeStamp = Date().timeIntervalSince1970
                         let endTimestamp = $0.endTime / 1000
                         let startTimestamp = $0.startTime / 1000
+                        print(startTimestamp)
                         let timeDifferenceInSeconds = Double(endTimestamp) - currentTimeStamp
                         let minutes = Int(timeDifferenceInSeconds) / 60
                         let seconds = Int(timeDifferenceInSeconds) % 60
                         let totalSeconds = minutes * 60 + seconds
-                        self.startTimeArray.append(startTimestamp)
-                        self.endTimeArray.append(endTimestamp)
+                        print("====================")
+                        print(totalSeconds)
                         self.timeDiffArray.append(totalSeconds)
+                        
+                        self.startTimeArray.append(TimeInterval(startTimestamp))
+                        self.endTimeArray.append(TimeInterval(endTimestamp))
+                        print(self.endTimeArray)
+                        print("zzzzzzzzzzzzzz")
+                        
                     }
                     
                     self.cellCount = self.titleArray.count

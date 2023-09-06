@@ -17,13 +17,22 @@ class TimeTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        createNotificationContent()
+        setTimer()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+    }
+    
+    
+    func setTimer() {
+        countdownTimer = nil
+        if secondsRemaining != 0 {
+            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+            print("b: ", secondsRemaining)
+        }
     }
     
     @objc func updateTimer() {
@@ -57,5 +66,24 @@ class TimeTableViewCell: UITableViewCell {
         
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        secondsRemaining = 0
+    }
 
+    func createNotificationContent() {
+        let content = UNMutableNotificationContent()
+        content.title = "STYLiSH"
+        content.subtitle = (productLabel.text ?? "") + "競拍賣結束囉"
+        content.body = (productLabel.text ?? "") + "競拍結束囉，來看看自己得標了沒"
+//        content.badge = 1
+        content.sound = UNNotificationSound.defaultCritical
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2, repeats: false)
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
 }
