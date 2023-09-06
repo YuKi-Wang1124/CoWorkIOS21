@@ -124,6 +124,7 @@
 		3CED80AF2301301300B7DA8E /* Trolley.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CED80B12301301300B7DA8E /* Trolley.storyboard */; };
 		3CFAC67322EEF71C00785FAB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFAC67222EEF71C00785FAB /* String+Extension.swift */; };
 		58A77AA0262F3CC800B88679 /* LSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */; };
+		C806D3BF2AA816EC00B7EF6D /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C806D3BE2AA816EC00B7EF6D /* TimeTableViewCell.swift */; };
 		C84AB14B2AA4388300DCE7EB /* ABTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84AB14A2AA4388300DCE7EB /* ABTesting.swift */; };
 		C89D995D2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89D995C2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift */; };
 		CC59E7442AA1B1030086D7D5 /* Auction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC59E7432AA1B1030086D7D5 /* Auction.storyboard */; };
@@ -269,6 +270,7 @@
 		3CFAC67222EEF71C00785FAB /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		42C2B4AF3EF2ABFF2BB9F7AB /* Pods_STYLiSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_STYLiSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A77A9F262F3CC800B88679 /* LSColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LSColor+Extension.swift"; sourceTree = "<group>"; };
+		C806D3BE2AA816EC00B7EF6D /* TimeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		C84AB14A2AA4388300DCE7EB /* ABTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABTesting.swift; sourceTree = "<group>"; };
 		C89D995C2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyCompondViewController.swift; sourceTree = "<group>"; };
 		CC59E7432AA1B1030086D7D5 /* Auction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auction.storyboard; sourceTree = "<group>"; };
@@ -745,6 +747,7 @@
 			isa = PBXGroup;
 			children = (
 				CC59E7432AA1B1030086D7D5 /* Auction.storyboard */,
+				C806D3BE2AA816EC00B7EF6D /* TimeTableViewCell.swift */,
 				CC59E74C2AA1CE6E0086D7D5 /* AuctionTableViewCell.swift */,
 				CC59E7522AA357A20086D7D5 /* SearchCollectionViewCell.swift */,
 				CC59E7452AA1B1880086D7D5 /* AuctionViewController.swift */,
@@ -949,6 +952,7 @@
 				3CE7A507223042CE009FF003 /* STBaseTextField.swift in Sources */,
 				C89D995D2AA1EBFC00A6EB3C /* LobbyCompondViewController.swift in Sources */,
 				3CB80E78222FCCC20095F18C /* Bundle+Extension.swift in Sources */,
+				C806D3BF2AA816EC00B7EF6D /* TimeTableViewCell.swift in Sources */,
 				3CE7A519223064C7009FF003 /* UserObject.swift in Sources */,
 				3CB801272229AFF10029A552 /* UICollectionView+Extension.swift in Sources */,
 				3C8F191B22E5BA9F00EECE90 /* LobbyView.swift in Sources */,
