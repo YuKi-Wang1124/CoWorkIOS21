@@ -43,12 +43,14 @@ class AuctionTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         print("c: ", secondsRemaining)
+    }
+    
+    func setTimer() {
         countdownTimer = nil
         if secondsRemaining != 0 {
             countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
             print("b: ", secondsRemaining)
         }
-        
     }
     
     @objc func updateTimer() {
