@@ -71,19 +71,4 @@ class TimeTableViewCell: UITableViewCell {
         super.prepareForReuse()
         secondsRemaining = 0
     }
-
-    func createNotificationContent() {
-        let content = UNMutableNotificationContent()
-        content.title = "STYLiSH"
-        content.subtitle = (productLabel.text ?? "") + "競拍賣結束囉"
-        content.body = (productLabel.text ?? "") + "競拍結束囉，來看看自己得標了沒"
-//        content.badge = 1
-        content.sound = UNNotificationSound.defaultCritical
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.2, repeats: false)
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-    }
 }
