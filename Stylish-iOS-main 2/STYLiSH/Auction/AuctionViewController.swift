@@ -83,15 +83,18 @@ class AuctionViewController: UIViewController {
     }
     
     func sendBid(addAmount: Int) {
-        let dataDictionary: [String: Any] = [
-            "number": addAmount,
-            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
-        ]
-        do {
-            let data = try JSONSerialization.data(withJSONObject: dataDictionary, options: [])
+//        let dataDictionary: [String: Any] = [
+//            "number": addAmount,
+//            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+//        ]
+//        do {
+//            let data = try JSONSerialization.data(withJSONObject: dataDictionary, options: [])
             let jsonDictionary: [String: Any] = [
                 "type": "bid_increment",
-                "data": data
+                "data": [
+                    "number": addAmount,
+                    "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+                ] as [String : Any]
             ]
             
             do {
@@ -104,9 +107,9 @@ class AuctionViewController: UIViewController {
             } catch {
                 print("send bid Data JSON serialization error: \(error)")
             }
-        } catch {
-            print("send bid Top JSON serialization error: \(error)")
-        }
+//        } catch {
+//            print("send bid Top JSON serialization error: \(error)")
+//        }
     }
     
     func receive() {
