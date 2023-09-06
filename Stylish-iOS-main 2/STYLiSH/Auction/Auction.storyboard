@@ -75,7 +75,7 @@
                                                         <constraint firstAttribute="height" constant="168" id="r5Y-bC-Jfj"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70S-Gk-cIa">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70S-Gk-cIa">
                                                     <rect key="frame" x="179" y="56.666666666666664" width="45.666666666666657" height="25.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <color key="textColor" name="B2"/>
@@ -144,7 +144,6 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="70S-Gk-cIa" firstAttribute="leading" secondItem="MnB-Gw-9Q5" secondAttribute="trailing" constant="16" id="1Yl-rx-46W"/>
                                                 <constraint firstAttribute="trailing" secondItem="MnB-Gw-9Q5" secondAttribute="trailing" constant="230" id="6ES-yC-m0X"/>
                                                 <constraint firstItem="PE1-wN-E6f" firstAttribute="leading" secondItem="MnB-Gw-9Q5" secondAttribute="trailing" constant="16" id="77o-3h-Xjg"/>
                                                 <constraint firstItem="Cn2-2Q-dAJ" firstAttribute="top" secondItem="YLs-96-bM5" secondAttribute="topMargin" constant="16" id="7fY-d1-bLd"/>

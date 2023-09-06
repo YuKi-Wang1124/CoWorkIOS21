@@ -32,12 +32,10 @@ class AuctionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cancelBtn: UIButton!
 
-    var countdownTimer: Timer?
-    var secondsRemaining = 1
+
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("a: ", secondsRemaining)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -48,33 +46,33 @@ class AuctionTableViewCell: UITableViewCell {
 //            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
 //            print("b: ", secondsRemaining)
 //        }
-        print("c: ", secondsRemaining)
+//        print("c: ", secondsRemaining)
     }
-    
-    func setTimer() {
-        countdownTimer = nil
-        if secondsRemaining != 0 {
-            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-            print("b: ", secondsRemaining)
-        }
-    }
-    
-    @objc func updateTimer() {
-        if secondsRemaining > 0 {
-            secondsRemaining -= 1
-            updateCountdownLabel()
-        } else {
-            countdownTimer?.invalidate()
-            createNotificationContent()
-        }
-    }
-    
-    func updateCountdownLabel() {
-        let hours = secondsRemaining / 60 / 60
-        let minutes = secondsRemaining / 60 % 60
-        let seconds = secondsRemaining % 60
-        timeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-    }
+//    
+//    func setTimer() {
+//        countdownTimer = nil
+//        if secondsRemaining != 0 {
+//            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+//            print("b: ", secondsRemaining)
+//        }
+//    }
+//    
+//    @objc func updateTimer() {
+//        if secondsRemaining > 0 {
+//            secondsRemaining -= 1
+//            updateCountdownLabel()
+//        } else {
+//            countdownTimer?.invalidate()
+//            createNotificationContent()
+//        }
+//    }
+//    
+//    func updateCountdownLabel() {
+//        let hours = secondsRemaining / 60 / 60
+//        let minutes = secondsRemaining / 60 % 60
+//        let seconds = secondsRemaining % 60
+//        timeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+//    }
     
     func createNotificationContent() {
         let content = UNMutableNotificationContent()

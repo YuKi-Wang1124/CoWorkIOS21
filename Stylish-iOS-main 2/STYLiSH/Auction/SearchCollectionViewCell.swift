@@ -58,7 +58,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14),
             imageView.topAnchor.constraint(equalTo: view.topAnchor,constant: 18),
-            
             imageView.heightAnchor.constraint(equalToConstant: 230),
 
             productNameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
