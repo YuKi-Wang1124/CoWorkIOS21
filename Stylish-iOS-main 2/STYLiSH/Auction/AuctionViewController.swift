@@ -52,6 +52,8 @@ class AuctionViewController: UIViewController {
         
         webSocket = session.webSocketTask(with: url)
         webSocket?.resume()
+        
+        //fetchLatestPrice()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,17 +126,17 @@ class AuctionViewController: UIViewController {
                     print("Get string: \(message)")
                     
                     // MARK: delegate priceArray 更新
-                    if let data = message.data(using: .utf8) {
+                    if let message = message.data(using: .utf8) {
                         do {
                             let decoder = JSONDecoder()
-                            let topData = try decoder.decode(TopData.self, from: data)
+                            let topData = try decoder.decode(TopData.self, from: message)
                             
                             // 2nd decoder
                             if topData.type == "latest_price" {
                                 do {
                                     let decoder = JSONDecoder()
-                                    let data = try decoder.decode(LatestPrice.self, from: topData.data)
-                                    let newPrice = data.number
+                                    let data = try decoder.decode(LatestPriceData.self, from: message)
+                                    let newPrice = data.data.number
                                     self?.priceArray[self?.updatePriceIndex ?? 0] = String(newPrice)
                                     print(self?.priceArray)
                                     DispatchQueue.main.async {
@@ -146,10 +148,11 @@ class AuctionViewController: UIViewController {
                             } else if topData.type == "broadcast_winner" {
                                 do {
                                     let decoder = JSONDecoder()
-                                    let data = try decoder.decode(Winner.self, from: topData.data)
+                                    let data = try decoder.decode(WinnerData.self, from: message)
                                     
-                                    if data.email == UserDefaults.standard.string(forKey: "UserEmail") {
+                                    if data.data.email == UserDefaults.standard.string(forKey: "UserEmail") {
                                         // 得標
+                                        self?.auctionSuccessPrice = data.data.finalBidPrice
                                     } else {
                                         // 未得標
                                     }
@@ -256,7 +259,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                     cell?.secondsRemaining = totalSeconds
                 } else {
                     // 競標結束
-                    cell?.timeLabel.text = "競標結束！"
+                    //cell?.timeLabel.text = "競標結束！"
                     if let auctionSuccessPrice = auctionSuccessPrice {
                         let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessPrice))
                         let dateFormatter = DateFormatter()
@@ -407,28 +410,21 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func fetchLatestPrice() {
-        let dataDictionary: [String: Any] = [
-            "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+        let jsonDictionary: [String: Any] = [
+            "type": "initialize",
+            "data": [
+                "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
+            ] as [String : Any]
         ]
         do {
-            let data = try JSONSerialization.data(withJSONObject: dataDictionary, options: [])
-            let jsonDictionary: [String: Any] = [
-                "type": "initialize",
-                "data": data
-            ]
-            
-            do {
-                let topData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
-                webSocket?.send(.data(topData)) { error in
-                    if let error = error {
-                        print("Send error: \(error)")
-                    }
+            let topData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            webSocket?.send(.data(topData)) { error in
+                if let error = error {
+                    print("Send error: \(error)")
                 }
-            } catch {
-                print("latest price data JSON serialization error: \(error)")
             }
         } catch {
-            print("latest price top JSON serialization error: \(error)")
+            print("latest price data JSON serialization error: \(error)")
         }
     }
 }
@@ -481,7 +477,17 @@ struct AuctionProduct: Codable {
 
 struct TopData: Codable {
     var type: String
-    var data: Data
+    //var data: LatestPrice
+}
+
+struct LatestPriceData: Codable {
+    var type: String
+    var data: LatestPrice
+}
+
+struct WinnerData: Codable {
+    var type: String
+    var data: Winner
 }
 
 struct LatestPrice: Codable {
