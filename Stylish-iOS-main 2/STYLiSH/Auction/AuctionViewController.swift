@@ -172,80 +172,114 @@ extension AuctionViewController: URLSessionWebSocketDelegate {
 
 extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cellCount
+        cellCount * 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = auctionTableView.dequeueReusableCell(
-            withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
         
-        if startTimeArray[indexPath.row] < Int(Date().timeIntervalSince1970) {
-            if endTimeArray[indexPath.row] > Int(Date().timeIntervalSince1970) {
-                // 競標中
-                cell?.hideView.isHidden = true
-                let timeDifferenceInSeconds = endTimeArray[indexPath.row] - Int(Date().timeIntervalSince1970)
-                let minutes = Int(timeDifferenceInSeconds) / 60
-                let seconds = Int(timeDifferenceInSeconds) % 60
-                let totalSeconds = minutes * 60 + seconds
-                cell?.secondsRemaining = totalSeconds
-            } else {
-                // 競標結束
-                cell?.timeLabel.text = "競標結束！"
-                if let auctionSuccessCheckoutDeadline = auctionSuccessCheckoutDeadline {
-                    let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessCheckoutDeadline))
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-                    dateFormatter.locale = NSLocale.current
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                    let strDate = dateFormatter.string(from: date)
-                    cell?.hideViewLabel.text = "恭喜得標！\n 請於 \(strDate) 以前結帳"
+        if indexPath.row % 2 == 0 {
+            let indexHere = indexPath.row / 2
+            let cell = auctionTableView.dequeueReusableCell(
+                withIdentifier: TimeTableViewCell.identifier) as? TimeTableViewCell
+            
+            if startTimeArray[indexHere] < Int(Date().timeIntervalSince1970) {
+                if endTimeArray[indexHere] > Int(Date().timeIntervalSince1970) {
+                    // 競標中
+                    // cell?.hideView.isHidden = true
+                    let timeDifferenceInSeconds = endTimeArray[indexHere] - Int(Date().timeIntervalSince1970)
+                    let minutes = Int(timeDifferenceInSeconds) / 60
+                    let seconds = Int(timeDifferenceInSeconds) % 60
+                    let totalSeconds = minutes * 60 + seconds
+                    cell?.secondsRemaining = totalSeconds
                 } else {
-                    cell?.hideViewLabel.text = "您未得標"
+                    // 競標結束
+                    cell?.timeLabel.text = "競標結束！"
                 }
+            } else {
+                // 競標還沒開始
+                let startTimeStamp = startTimeArray[indexHere]
+                let date = Date(timeIntervalSince1970: TimeInterval(startTimeStamp))
+                let dateFormatter = DateFormatter()
+                dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                let strDate = dateFormatter.string(from: date)
+                
             }
+                
+            return cell!
+            
         } else {
-            // 競標還沒開始
-            cell?.timeLabel.text = "尚未開始競標"
-            let startTimeStamp = startTimeArray[indexPath.row]
-            let date = Date(timeIntervalSince1970: TimeInterval(startTimeStamp))
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-            dateFormatter.locale = NSLocale.current
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" 
-            let strDate = dateFormatter.string(from: date)
-            cell?.hideViewLabel.text = "即將於 \(strDate) 開始競標"
+            let indexHere = indexPath.row / 2
+            let cell = auctionTableView.dequeueReusableCell(
+                withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
+            
+            if startTimeArray[indexHere] < Int(Date().timeIntervalSince1970) {
+                if endTimeArray[indexHere] > Int(Date().timeIntervalSince1970) {
+                    // 競標中
+                    cell?.hideView.isHidden = true
+                    let timeDifferenceInSeconds = endTimeArray[indexHere] - Int(Date().timeIntervalSince1970)
+                    let minutes = Int(timeDifferenceInSeconds) / 60
+                    let seconds = Int(timeDifferenceInSeconds) % 60
+                    let totalSeconds = minutes * 60 + seconds
+                    cell?.secondsRemaining = totalSeconds
+                } else {
+                    // 競標結束
+                    cell?.timeLabel.text = "競標結束！"
+                    if let auctionSuccessCheckoutDeadline = auctionSuccessCheckoutDeadline {
+                        let date = Date(timeIntervalSince1970: TimeInterval(auctionSuccessCheckoutDeadline))
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+                        dateFormatter.locale = NSLocale.current
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                        let strDate = dateFormatter.string(from: date)
+                        cell?.hideViewLabel.text = "恭喜得標！\n 請於 \(strDate) 以前結帳"
+                    } else {
+                        cell?.hideViewLabel.text = "您未得標"
+                    }
+                }
+            } else {
+                // 競標還沒開始
+                let startTimeStamp = startTimeArray[indexHere]
+                let date = Date(timeIntervalSince1970: TimeInterval(startTimeStamp))
+                let dateFormatter = DateFormatter()
+                dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+                let strDate = dateFormatter.string(from: date)
+                cell?.hideViewLabel.text = "即將於 \(strDate) 開始競標"
+            }
+            
+            cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexHere], for: .normal)
+            
+            //cell?.secondsRemaining = timeDiffArray[indexHere]
+            
+            cell?.productLabel.text = titleArray[indexHere]
+            cell?.priceLabel.text = "NTD " + priceArray[indexHere]
+            
+            cell?.productImageView.loadImage(imageArray[indexHere],
+                                             placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
+            cell?.addPriceBtn.addTarget(self, action: #selector(addPriceAction), for: .touchUpInside)
+            cell?.addPriceBtn.tag = indexHere
+            cell?.confirmBtn.addTarget(self, action: #selector(comfirmAction), for: .touchUpInside)
+            cell?.cancelBtn.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+            
+            if totalAddAmount != 0 {
+                cell?.confirmBtn.isHidden = false
+                cell?.addAmountLabel.isHidden = false
+                cell?.addAmountLabel.text = "+ \(totalAddAmount)"
+                cell?.totalPriceLabel.isHidden = false
+                cell?.totalPriceLabel.text = "以 \((Int(priceArray[indexHere]) ?? 0) + totalAddAmount) 元競標"
+                cell?.cancelBtn.isHidden = false
+            } else {
+                cell?.addAmountLabel.isHidden = true
+                cell?.totalPriceLabel.isHidden = true
+                cell?.confirmBtn.isHidden = true
+                cell?.cancelBtn.isHidden = true
+            }
+            
+            return cell ?? UITableViewCell()
         }
-        
-        cell?.addPriceBtn.setTitle("+ " + minBidUnit[indexPath.row], for: .normal)
-        
-        //cell?.secondsRemaining = timeDiffArray[indexPath.row]
-        
-        cell?.productLabel.text = titleArray[indexPath.row]
-        cell?.priceLabel.text = "NTD " + priceArray[indexPath.row]
-
-        cell?.productImageView.loadImage(imageArray[indexPath.row],
-                                         placeHolder: UIImage(imageLiteralResourceName: "Image_Placeholder"))
-        cell?.addPriceBtn.addTarget(self, action: #selector(addPriceAction), for: .touchUpInside)
-        cell?.addPriceBtn.tag = indexPath.row
-        cell?.confirmBtn.addTarget(self, action: #selector(comfirmAction), for: .touchUpInside)
-        cell?.cancelBtn.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
-        
-        if totalAddAmount != 0 {
-            cell?.confirmBtn.isHidden = false
-            cell?.addAmountLabel.isHidden = false
-            cell?.addAmountLabel.text = "+ \(totalAddAmount)"
-            cell?.totalPriceLabel.isHidden = false
-            cell?.totalPriceLabel.text = "以 \((Int(priceArray[indexPath.row]) ?? 0) + totalAddAmount) 元競標"
-            cell?.cancelBtn.isHidden = false
-        } else {
-            cell?.addAmountLabel.isHidden = true
-            cell?.totalPriceLabel.isHidden = true
-            cell?.confirmBtn.isHidden = true
-            cell?.cancelBtn.isHidden = true
-        }
-        
-        return cell ?? UITableViewCell()
     }
     
     @objc func addPriceAction(_ sender: UIButton) {

@@ -1,54 +1,29 @@
 //
-//  AuctionTableViewCell.swift
+//  TimeTableViewCell.swift
 //  STYLiSH
 //
-//  Created by 王昱淇 on 2023/9/1.
+//  Created by 李童 on 2023/9/6.
 //  Copyright © 2023 AppWorks School. All rights reserved.
 //
 
 import UIKit
 
-class AuctionTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var hideView: UIView!
-    
-    @IBOutlet weak var hideViewLabel: UILabel!
-    
-    @IBOutlet weak var productImageView: UIImageView!
-    
+class TimeTableViewCell: UITableViewCell {
+
     @IBOutlet weak var timeLabel: UILabel!
     
-    @IBOutlet weak var productLabel: UILabel!
-    
-    @IBOutlet weak var priceLabel: UILabel!
-    
-    @IBOutlet weak var addPriceBtn: UIButton!
-    
-    @IBOutlet weak var addAmountLabel: UILabel!
-    
-    @IBOutlet weak var totalPriceLabel: UILabel!
-    
-    @IBOutlet weak var confirmBtn: UIButton!
-    
-    @IBOutlet weak var cancelBtn: UIButton!
-
     var countdownTimer: Timer?
     var secondsRemaining = 1
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("a: ", secondsRemaining)
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-//        print("c: ", secondsRemaining)
-//        countdownTimer = nil
-//        if secondsRemaining != 0 {
-//            countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-//            print("b: ", secondsRemaining)
-//        }
-        
+
+        // Configure the view for the selected state
     }
     
     @objc func updateTimer() {
@@ -71,8 +46,8 @@ class AuctionTableViewCell: UITableViewCell {
     func createNotificationContent() {
         let content = UNMutableNotificationContent()
         content.title = "STYLiSH"
-        content.subtitle = (productLabel.text ?? "") + "競拍賣結束囉"
-        content.body = (productLabel.text ?? "") + "競拍結束囉，來看看自己得標了沒"
+        content.subtitle = "競拍賣結束囉"
+        content.body = "競拍結束囉，來看看自己得標了沒"
 //        content.badge = 1
         content.sound = UNNotificationSound.defaultCritical
         
@@ -82,4 +57,5 @@ class AuctionTableViewCell: UITableViewCell {
         
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
+
 }
