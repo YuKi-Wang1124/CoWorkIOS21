@@ -30,7 +30,7 @@ class AuctionViewController: UIViewController {
     @IBOutlet weak var auctionTableView: UITableView!
     
     var totalAddAmount = 0
-    var updatePriceIndex = 0
+    //var updatePriceIndex = 1
     
     let dispatchSemaphore = DispatchSemaphore(value: 1)
     
@@ -47,22 +47,24 @@ class AuctionViewController: UIViewController {
             
             self.dispatchSemaphore.wait()
             self.auctionTableView.dataSource = self
-        }
-        
-        auctionTableView.allowsSelection = false
-        auctionTableView.delegate = self
-        
-        let session = URLSession(configuration: .default,
-                                 delegate: self,
-                                 delegateQueue: OperationQueue())
+            self.dispatchSemaphore.signal()
+            
+            self.auctionTableView.allowsSelection = false
+            self.auctionTableView.delegate = self
+            
+            let session = URLSession(configuration: .default,
+                                     delegate: self,
+                                     delegateQueue: OperationQueue())
 
-        let url = URL(string: "ws://3.24.100.29:9000/api/1.0/update_bid")
-        guard let url = url else { return }
-        
-        webSocket = session.webSocketTask(with: url)
-        webSocket?.resume()
-        
-        //fetchLatestPrice()
+            let url = URL(string: "ws://3.24.100.29:9000/api/1.0/update_bid")
+            guard let url = url else { return }
+            
+            self.webSocket = session.webSocketTask(with: url)
+            self.webSocket?.resume()
+            
+            self.dispatchSemaphore.wait()
+            self.fetchLatestPrice()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,7 +107,7 @@ class AuctionViewController: UIViewController {
                 "data": [
                     "number": addAmount,
                     "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
-                ] as [String : Any]
+                ] as [String: Any]
             ]
             
             do {
@@ -146,11 +148,12 @@ class AuctionViewController: UIViewController {
                                     let decoder = JSONDecoder()
                                     let data = try decoder.decode(LatestPriceData.self, from: message)
                                     let newPrice = data.data.number
-                                    self?.priceArray[self?.updatePriceIndex ?? 0] = String(newPrice)
+                                    self?.priceArray[0] = String(newPrice)
                                     print(self?.priceArray)
                                     DispatchQueue.main.async {
                                         self?.auctionTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .none)
                                     }
+                                    print("更新價格 label")
                                 } catch {
                                     print("latest_price error: ", error.localizedDescription)
                                 }
@@ -161,16 +164,21 @@ class AuctionViewController: UIViewController {
                                     
                                     if data.data.email == UserDefaults.standard.string(forKey: "UserEmail") {
                                         // 得標
+                                        print("我得標")
                                         self?.auctionSuccessPrice = data.data.finalBidPrice
                                     } else {
                                         // 未得標
+                                        print("我沒得標")
+                                    }
+                                    DispatchQueue.main.async {
+                                        self?.auctionTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .none)
                                     }
                                 } catch {
                                     print("broadcast_winner error: ", error.localizedDescription)
                                 }
                             }
                         } catch {
-                            print("top_data error: ",error.localizedDescription)
+                            print("top_data error: ", error.localizedDescription)
                         }
                     }
                 @unknown default:
@@ -223,12 +231,8 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.row == 0 {
             let cell = auctionTableView.dequeueReusableCell(
                 withIdentifier: TimeTableViewCell.identifier) as? TimeTableViewCell
-            print(timeDiffArray)
-            print(startTimeArray)
-            print(endTimeArray)
-            print(indexPath.row)
             
-            cell?.secondsRemaining = timeDiffArray[indexPath.row]
+            cell?.secondsRemaining = Double(timeDiffArray[indexPath.row])
             cell?.setTimer()
             
             return cell!
@@ -237,8 +241,6 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             let indexHere = indexPath.row - 1
             let cell = auctionTableView.dequeueReusableCell(
                 withIdentifier: AuctionTableViewCell.identifier) as? AuctionTableViewCell
-            print(startTimeArray)
-            print(indexHere)
             if startTimeArray[indexHere] < Date().timeIntervalSince1970 {
                 if endTimeArray[indexHere] > Date().timeIntervalSince1970 {
                     // 競標中
@@ -305,7 +307,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         let buttonPosition: CGPoint = sender.convert(CGPoint.zero, to: self.auctionTableView)
         let indexPath = self.auctionTableView.indexPathForRow(at: buttonPosition)
         if let indexPath = indexPath {
-            totalAddAmount += Int(minBidUnit[indexPath.row]) ?? 0
+            totalAddAmount += Int(minBidUnit[0]) ?? 0
             auctionTableView.reloadRows(at: [indexPath], with: .none)
         }
         print("press add btn")
@@ -319,7 +321,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             auctionTableView.reloadRows(at: [indexPath], with: .none)
         }
         
-        updatePriceIndex = indexPath?.row ?? 0
+        // updatePriceIndex = indexPath?.row ?? 0
         sendBid(addAmount: totalAddAmount)
         totalAddAmount = 0
         
@@ -345,18 +347,15 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
         }
         let request = URLRequest(url: url)
         URLSession.shared.dataTask(with: request) { data, response, error in
-            print(response)
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
             }
-            print(data)
             if let data = data {
                 do {
                     let product = try JSONDecoder().decode(AuctionProductData.self, from: data)
                     self.auctionDataArray.removeAll()
                     self.auctionDataArray.append(product)
-                    print(self.auctionDataArray.first?.data)
                     self.auctionDataArray.first?.data.forEach {
                         self.marqueeTitleArray.append($0.title + "拍賣中" + "            " )
                         self.dispatchSemaphore.signal()
@@ -368,20 +367,20 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                         let currentTimeStamp = Date().timeIntervalSince1970
                         let endTimestamp = $0.endTime / 1000
                         let startTimestamp = $0.startTime / 1000
-                        print(startTimestamp)
                         let timeDifferenceInSeconds = Double(endTimestamp) - currentTimeStamp
                         let minutes = Int(timeDifferenceInSeconds) / 60
                         let seconds = Int(timeDifferenceInSeconds) % 60
                         let totalSeconds = minutes * 60 + seconds
-                        print("====================")
-                        print(totalSeconds)
-                        self.timeDiffArray.append(totalSeconds)
+//                        self.timeDiffArray.append(totalSeconds)
                         
-                        self.startTimeArray.append(TimeInterval(startTimestamp))
-                        self.endTimeArray.append(TimeInterval(endTimestamp))
+//                        self.startTimeArray.append(TimeInterval(startTimestamp))
+//                        self.endTimeArray.append(TimeInterval(endTimestamp))
+                        print(self.startTimeArray)
                         print(self.endTimeArray)
-                        print("zzzzzzzzzzzzzz")
-                        
+                        self.startTimeArray = [Date().timeIntervalSince1970, 1694145600.0, 1694232000.0]
+                        self.endTimeArray = [Date().timeIntervalSince1970+90, 1694149200.0, 1694235600.0]
+                        self.timeDiffArray = [90,60,60]
+                        print("auction api load done")
                     }
                     
                     self.cellCount = self.titleArray.count
@@ -401,7 +400,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
             "type": "initialize",
             "data": [
                 "email": UserDefaults.standard.string(forKey: "UserEmail") ?? "email error"
-            ] as [String : Any]
+            ] as [String: Any]
         ]
         do {
             let topData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
@@ -409,6 +408,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
                 if let error = error {
                     print("Send error: \(error)")
                 }
+                self.dispatchSemaphore.signal()
             }
         } catch {
             print("latest price data JSON serialization error: \(error)")

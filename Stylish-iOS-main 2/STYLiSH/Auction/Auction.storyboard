@@ -75,7 +75,7 @@
                                                         <constraint firstAttribute="height" constant="168" id="r5Y-bC-Jfj"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70S-Gk-cIa">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70S-Gk-cIa">
                                                     <rect key="frame" x="179" y="56.666666666666664" width="45.666666666666657" height="25.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <color key="textColor" name="B2"/>
@@ -94,10 +94,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QMq-VE-vue">
-                                                    <rect key="frame" x="179" y="89" width="100" height="40"/>
+                                                    <rect key="frame" x="179" y="89" width="70" height="40"/>
                                                     <color key="backgroundColor" name="B5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="Pa8-NJ-f2I"/>
+                                                        <constraint firstAttribute="width" constant="70" id="Pa8-NJ-f2I"/>
                                                         <constraint firstAttribute="height" constant="40" id="mh6-Me-jhP"/>
                                                     </constraints>
                                                     <color key="tintColor" name="B1"/>
@@ -163,6 +163,7 @@
                                                 <constraint firstItem="S3h-8D-QP3" firstAttribute="top" secondItem="YLs-96-bM5" secondAttribute="top" id="cEr-Om-JLD"/>
                                                 <constraint firstAttribute="trailing" secondItem="S3h-8D-QP3" secondAttribute="trailing" id="fsb-o6-3n2"/>
                                                 <constraint firstItem="FlR-1o-413" firstAttribute="top" secondItem="3qJ-Co-v3D" secondAttribute="bottom" constant="10" id="ftZ-DW-Qh0"/>
+                                                <constraint firstItem="70S-Gk-cIa" firstAttribute="leading" secondItem="MnB-Gw-9Q5" secondAttribute="trailing" constant="16" id="g01-ji-KGx"/>
                                                 <constraint firstItem="PE1-wN-E6f" firstAttribute="centerY" secondItem="5TO-CP-3IS" secondAttribute="centerY" id="gMy-9J-miD"/>
                                                 <constraint firstItem="S3h-8D-QP3" firstAttribute="leading" secondItem="YLs-96-bM5" secondAttribute="leading" id="gRy-Lb-Xrf"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="5TO-CP-3IS" secondAttribute="bottom" constant="5" id="gy5-Bd-yal"/>

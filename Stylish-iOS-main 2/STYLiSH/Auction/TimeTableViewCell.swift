@@ -13,7 +13,7 @@ class TimeTableViewCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     
     var countdownTimer: Timer?
-    var secondsRemaining = 1
+    var secondsRemaining = 1.0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,7 +37,7 @@ class TimeTableViewCell: UITableViewCell {
     
     @objc func updateTimer() {
         if secondsRemaining > 0 {
-            secondsRemaining -= 1
+            secondsRemaining -= 0.5
             updateCountdownLabel()
         } else {
             countdownTimer?.invalidate()
@@ -46,10 +46,10 @@ class TimeTableViewCell: UITableViewCell {
     }
     
     func updateCountdownLabel() {
-        let hours = secondsRemaining / 60 / 60
-        let minutes = secondsRemaining / 60 % 60
-        let seconds = secondsRemaining % 60
-        timeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        //let hours = secondsRemaining / 60 / 60
+        let minutes = Int(secondsRemaining / 60) % 60
+        let seconds = Int(secondsRemaining) % 60
+        timeLabel.text = String(format: "%02d:%02d", minutes, seconds)
     }
     
     func createNotificationContent() {
