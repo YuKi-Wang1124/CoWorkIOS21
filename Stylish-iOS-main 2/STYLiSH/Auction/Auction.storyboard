@@ -75,11 +75,11 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnX-Pv-iLe">
-                                                    <rect key="frame" x="179" y="148" width="70" height="30"/>
+                                                    <rect key="frame" x="179" y="148" width="74" height="30"/>
                                                     <color key="backgroundColor" name="B5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="bwj-xg-UGY"/>
-                                                        <constraint firstAttribute="width" constant="70" id="rdT-99-gEd"/>
+                                                        <constraint firstAttribute="width" constant="74" id="rdT-99-gEd"/>
                                                     </constraints>
                                                     <color key="tintColor" name="B1"/>
                                                     <state key="normal" title="Button"/>
