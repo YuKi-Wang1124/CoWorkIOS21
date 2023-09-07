@@ -45,7 +45,7 @@ class AuctionViewController: UIViewController, UNUserNotificationCenterDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //successNotificationContent()
+        // successNotificationContent(body: "您未得標...")
         UNUserNotificationCenter.current().delegate = self
         
         let uuid = UUID()
