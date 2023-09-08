@@ -111,7 +111,7 @@
 //        detailVC.product = datas[indexPath.section].products[indexPath.row]
 //        show(detailVC, sender: nil)
 //
-////        let url = URL(string: "http://3.24.100.29:8000/get_headers")!
+////        let url = URL(string: "http://54.66.145.204:8000/get_headers")!
 ////        var request = URLRequest(url: url)
 ////        request.httpMethod = "POST"
 ////        request.setValue("application/json", forHTTPHeaderField: "Content-Type")

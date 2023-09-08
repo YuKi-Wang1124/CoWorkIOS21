@@ -263,7 +263,7 @@ extension ProductViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     private func fetchSearchProducts(text: String) {
-        let baseURL = "http://3.24.100.29/api/1.0/products/search"
+        let baseURL = "http://54.66.145.204/api/1.0/products/search"
         let keywordEncoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let urlString = "\(baseURL)?keyword=\(keywordEncoded)"
         guard let url = URL(string: urlString) else {

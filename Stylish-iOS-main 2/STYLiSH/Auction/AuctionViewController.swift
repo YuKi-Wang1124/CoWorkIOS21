@@ -66,7 +66,7 @@ class AuctionViewController: UIViewController, UNUserNotificationCenterDelegate 
                                      delegate: self,
                                      delegateQueue: OperationQueue())
 
-            let url = URL(string: "ws://3.24.100.29:9000/api/1.0/update_bid")
+            let url = URL(string: "ws://54.66.145.204:9000/api/1.0/update_bid")
             guard let url = url else { return }
             
             self.webSocket = session.webSocketTask(with: url)
@@ -425,7 +425,7 @@ extension AuctionViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func fetchAuctionProducts() {
-        let url = "http://3.24.100.29/api/1.0/auction/product"
+        let url = "http://54.66.145.204/api/1.0/auction/product"
         guard let url = URL(string: url) else {
             print("no url")
             return

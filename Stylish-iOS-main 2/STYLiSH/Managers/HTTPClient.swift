@@ -99,7 +99,7 @@ class HTTPClient {
         abTestData.userEmail = UserDefaults.standard.string(forKey: "UserEmail") ?? ""
         print(abTestData)
         
-        let url = URL(string: "http://3.24.100.29/api/1.0/user/event")!
+        let url = URL(string: "http://54.66.145.204/api/1.0/user/event")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
